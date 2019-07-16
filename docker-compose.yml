@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     volumes:
-      - ./:/var/www/html
+      - ./dist:/var/www/html
     ports:
       - 8080:80
     links:
@@ -15,7 +15,7 @@ services:
   db:
     image: mysql:latest
     volumes:
-      - ./db/mysql_data:/var/lib/mysql
+      - ./dist/db/mysql_data:/var/lib/mysql
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     ports:
