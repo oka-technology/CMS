@@ -5,26 +5,14 @@ use webproLastAssignmentdb;
 /* create tables */
 create table userInfo (
   id int auto_increment not null primary key,
-  name varchar(255) not null,
+  name varchar(255) not null unique,
   password varchar(255) not null,
-  authority_id int not null
-);
-
-create table authority (
-  id int auto_increment not null primary key,
-  name varchar(255) not null
-);
-insert into authority (name) values ("administrator");
-insert into authority (name) values ("editor");
-insert into authority (name) values ("reader");
-
-create table userInfo_authority (
-  userInfo_id int not null,
-  authority_id int not null,
-  foreign key (userInfo_id)
-    references userInfo(id),
-  foreign key (authority_id)
-    references authority(id)
+  authority int not null
+  /* 
+  administrator:1, 
+  editor:2, 
+  reader:4 
+  */
 );
 
 create table categories (
@@ -41,3 +29,10 @@ create table contents (
   foreign key (category_id)
     references categories(id)
 );
+
+/* create dbuser */
+create user user identified by 'password';
+grant all privileges on webproLastAssignmentdb.* to 'user'@'%' identified by 'password';
+
+/* create user */
+insert into userInfo (name, password, authority) values ('default@dhu', 'password', 7);
