@@ -1,7 +1,7 @@
 <?php
   session_start();
   if ($_SESSION['user']) {
-    if ($_SESSION['userAuthority'] == 1){
+    if ($_SESSION['authority'] == 1){
       header('Location: userList.php');
     } else {
       header('Location: contentsList.php');
