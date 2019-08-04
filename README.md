@@ -1,5 +1,10 @@
 # Webpro last assignment
 
+## Default user
+
+- Email: default@dhu
+- password: password
+
 ## Table
 
 ### userInfo table
@@ -21,8 +26,3 @@
 - title
 - registrationDate
 - mainContents
-
-## Default user
-
-- Email: default@dhu
-- password: password
