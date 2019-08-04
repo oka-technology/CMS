@@ -1,7 +1,14 @@
 <?php
+  function convertAuthority($authorityNum){
+    $authorityBinary = decbin((int) $authorityNum);
+    $authorityBinaryFilled = sprintf('%03d', $authorityBinary);
+    $authorityBinaryArray = str_split($authorityBinaryFilled);
+    return $authorityBinaryArray;
+  }
+
   session_start();
   if ($_SESSION['user']) {
-    if ($_SESSION['authority'] == 1){
+    if (convertAuthority($_SESSION['authority'])[2] == 1){
       header('Location: userList.php');
     } else {
       header('Location: contentsList.php');
