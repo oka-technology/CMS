@@ -37,6 +37,7 @@
     <input type="checkbox" name="authority[]" value="1">管理者
     <input type="checkbox" name="authority[]" value="2">編集者
     <input type="checkbox" name="authority[]" value="4">閲覧者
-    <button type="submit">登録</button>
+    <input type="submit" value="登録">
+  </form>
 </body>
 </html>
