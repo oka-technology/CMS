@@ -10,7 +10,8 @@ create table userInfo (
   id int auto_increment not null primary key,
   name varchar(255) not null unique,
   password varchar(255) not null,
-  authority int not null
+  authority int not null,
+  salt varchar(255) not null
   /* 
   administrator:1, 
   editor:2, 
@@ -38,4 +39,4 @@ create user user identified by 'password';
 grant all privileges on webproLastAssignmentdb.* to 'user'@'%' identified by 'password';
 
 /* create user */
-insert into userInfo (name, password, authority) values ('default@dhu', 'password', 7);
+insert into userInfo (name, password, authority, salt) values ('default@dhu', 'deQcvEr1PRPSM', 7, 'default');

@@ -26,7 +26,10 @@
   if ($loginId == null || $password == null || $authority == null) {
     echo '<p>未設定の箇所があります</p><p><a href="addUser.php">戻る</a></p>';
     exit();
-  } 
+  }
+
+  $salt = createSalt();
+  $encrypted_password = crypt($password, $salt);
 
   $authorityNum = 0;
   for ($i=0; $i < count($authority); $i++) { 
@@ -40,9 +43,9 @@
       'password'
     );
     $stmt = $dbh->prepare(
-      "insert into userInfo (name, password, authority) values (?, ?, ?);"
+      "insert into userInfo (name, password, authority, salt) values (?, ?, ?, ?);"
     );
-    $stmt->execute([$loginId, $password, $authorityNum]);
+    $stmt->execute([$loginId, $encrypted_password, $authorityNum, $salt]);
     header('Location: addUser.php');
     exit();
   } catch (PDOException $e) {

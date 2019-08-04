@@ -18,11 +18,15 @@
     );
     $stmt->execute([$loginId]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    if ($password === $row['password']) {
+    $encrypted_password = crypt($password, $row['salt']);
+    if ($encrypted_password === $row['password']) {
       $_SESSION['user'] = $loginId;
       $_SESSION['authority'] = $row['authority'];
+      header('Location: index.php');
+      exit();
+    } else {
+      echo '<p>idまたはパスワードが違います</p><p><a href="index.php">戻る</a></p>';
     }
-    header('Location: index.php');
   } catch (PDOException $e) {
     var_dump($e);
   }
