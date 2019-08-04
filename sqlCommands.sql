@@ -1,5 +1,8 @@
+set character_set_database=utf8mb4;
+set character_set_server=utf8mb4;
+
 /* create db */
-create database webproLastAssignmentdb default charset utf8;
+create database webproLastAssignmentdb default charset utf8mb4;
 use webproLastAssignmentdb;
 
 /* create tables */
