@@ -31,9 +31,9 @@
     );
     $stmt->execute();
 
-    $contentsHTML = "";
     while($rowOfContents = $stmt->fetch(PDO::FETCH_ASSOC)){
-      $userInfoHTML .= "<li>
+      $contentsHTML .=  "
+        <li>
           <ul>
             <li>{$rowOfContents['id']}</li>
             <li>{$rowOfContents['name']}</li>
@@ -42,7 +42,8 @@
             <li><a href='seeContents.php?id={$rowOfContents['id']}'>閲覧</a></li>
             <li><a href='editContents.php?id={$rowOfContents['id']}'>編集</a></li>
           </ul>
-        </li>";
+        </li>
+      ";
     }
 ?>
 
@@ -64,7 +65,7 @@
         <li>登録日</li>
       </ul>
     </li>
-    <?= $userInfoHTML ?>
+    <?= $contentsHTML ?>
 </body>
 </html>
 
