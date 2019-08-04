@@ -1,18 +1,10 @@
 <?php
 
-  session_start();
-  $authority = $_SESSION['authority'];
-
   function convertAuthority($authorityNum){
     $authorityBinary = decbin((int) $authorityNum);
     $authorityBinaryFilled = sprintf('%03d', $authorityBinary);
     $authorityBinaryArray = str_split($authorityBinaryFilled);
     return $authorityBinaryArray;
-  }
-
-  if (convertAuthority($authority)[2] != 1) {
-    header('Location: index.php');
-    exit();
   }
 
   function showAuthority ($authorityNum) {
@@ -27,6 +19,19 @@
       $returnArray[] = "管理者";
     }
     return implode(" ", $returnArray);
+  }
+
+  session_start();
+
+  if (!$_SESSION['user']) {
+    header('Location: index.php');
+    exit();
+  }
+
+  $authority = $_SESSION['authority'];
+  if (convertAuthority($authority)[2] != 1) {
+    header('Location: index.php');
+    exit();
   }
 
   try{
