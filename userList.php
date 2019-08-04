@@ -44,8 +44,6 @@
     $stmt = $dbh->prepare('select * from userInfo');
     $stmt->execute();
 
-    $userInfoHTML = "";
-
     while($rowOfUserInfo = $stmt->fetch(PDO::FETCH_ASSOC)){
       $authorityString = showAuthority($rowOfUserInfo['authority']);
       $userInfoHTML .= "<li><ul>
