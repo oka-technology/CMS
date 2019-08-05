@@ -19,6 +19,8 @@
     exit();
   }
 
+  $targetID = $_GET['id'];
+
   try{
     $dbh = new PDO(
       'mysql:host=db;dbname=webproLastAssignmentdb',
@@ -28,7 +30,7 @@
     $stmt = $dbh->prepare(
       "select * from contents where contents.id = ?;"
     );
-    $stmt->execute([$_GET['id']]);
+    $stmt->execute([$targetID]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $title = $row['title'];
     $contents = $row['mainContents'];
