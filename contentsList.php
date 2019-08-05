@@ -27,7 +27,7 @@
       'password'
     );
     $stmt = $dbh->prepare(
-      'select * from contents join categories on contents.category_id = categories.id;'
+      'select contents.id, contents.title, contents.registrationDate, categories.name as categoryName from contents join categories on contents.category_id = categories.id;'
     );
     $stmt->execute();
 
@@ -36,7 +36,7 @@
         <li>
           <ul>
             <li>{$rowOfContents['id']}</li>
-            <li>{$rowOfContents['name']}</li>
+            <li>{$rowOfContents['categoryName']}</li>
             <li>{$rowOfContents['title']}</li>
             <li>{$rowOfContents['registrationDate']}</li>
             <li><a href='seeContents.php?id={$rowOfContents['id']}'>閲覧</a></li>
