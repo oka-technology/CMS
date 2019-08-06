@@ -1,9 +1,15 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
+const packageImporter = require('node-sass-package-importer');
 
 gulp.task('sass', () => (
   gulp.src('./sass/**/*.scss')
-    .pipe(sass({ outputStyle: 'expanded' }))
+    .pipe(sass({
+      outputStyle: 'expanded',
+      importer: packageImporter({
+        extensions: ['.scss', '.css']
+      })
+    }))
     .pipe(gulp.dest('./css'))
 ));
 
