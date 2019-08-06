@@ -19,6 +19,7 @@
 <html lang="ja-JP">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/style.css">
   <title>カテゴリ登録</title>
 </head>
 <body>

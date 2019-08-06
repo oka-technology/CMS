@@ -46,6 +46,7 @@
 <html lang="ja-JP">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/style.css">
   <title>コンテンツ一覧</title>
 </head>
 <body>
@@ -53,7 +54,7 @@
   <?php require_once('sideBar.php'); ?>
   <main>
     <h1>コンテンツ</h1>
-    <a href="addContents.php">新規登録</a>
+    <?php if($convertedAuthority[1] == 1){echo '<a href="addContents.php">新規登録</a>';} ?>
     <ul>
       <li>
         <ul>

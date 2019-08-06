@@ -34,6 +34,7 @@
 <html lang="ja-JP">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/style.css">
   <title>カテゴリ編集</title>
 </head>
 <body>

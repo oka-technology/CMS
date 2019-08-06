@@ -43,6 +43,7 @@
 <html lang="ja-JP">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/style.css">
   <title>カテゴリ一覧</title>
 </head>
 <body>
