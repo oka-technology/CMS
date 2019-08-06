@@ -44,11 +44,11 @@
       <?php require_once('sideBar.php'); ?>
       <main class="main">
         <h1 class="main__pageTitle">カテゴリ編集</h1>
-        <form action="editCategoryProcess.php" method="post">
-          <label for="title">タイトル</label>
-          <input type="text" id="title" name="title" value="<?= $categoryName ?>">
+        <form class="form" action="editCategoryProcess.php" method="post">
+          <label class="form__label" for="title">タイトル</label>
+          <input class="form__text" type="text" id="title" name="title" value="<?= $categoryName ?>">
           <input type="text" name="id" value="<?= $targetID ?>" hidden>
-          <input type="submit" value="登録">
+          <input class="form__button" type="submit" value="登録">
         </form>
       </main>
     </div>
