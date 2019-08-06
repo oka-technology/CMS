@@ -1,10 +1,5 @@
 <?php
-  function convertAuthority($authorityNum){
-    $authorityBinary = decbin((int) $authorityNum);
-    $authorityBinaryFilled = sprintf('%03d', $authorityBinary);
-    $authorityBinaryArray = str_split($authorityBinaryFilled);
-    return $authorityBinaryArray;
-  }
+  require_once('convertAuthority.php');
 
   session_start();
   if ($_SESSION['user']) {
@@ -24,13 +19,15 @@
   <title>Login</title>
 </head>
 <body>
-  <h1>Login</h1>
-      <form action="loginProcess.php" method="post">
-        <label htmlFor="Email">Email</label>
-        <input type="email" name="email" id="Email" placeholder="Enter Email" />
-        <label htmlFor="Password">Password</label>
-        <input type="password" id="Password" name="password" placeholder="Password" />
-        <input type="submit" value="Login" />
-      </form>
+  <main>
+    <h1>Login</h1>
+    <form action="loginProcess.php" method="post">
+      <label htmlFor="Email">Email</label>
+      <input type="email" name="email" id="Email" placeholder="Enter Email" />
+      <label htmlFor="Password">Password</label>
+      <input type="password" id="Password" name="password" placeholder="Password" />
+      <input type="submit" value="Login" />
+    </form>
+  </main>
 </body>
 </html>

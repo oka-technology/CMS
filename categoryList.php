@@ -1,10 +1,5 @@
 <?php
-  function convertAuthority($authorityNum){
-    $authorityBinary = decbin((int) $authorityNum);
-    $authorityBinaryFilled = sprintf('%03d', $authorityBinary);
-    $authorityBinaryArray = str_split($authorityBinaryFilled);
-    return $authorityBinaryArray;
-  }
+  require_once('convertAuthority.php');
 
   session_start();
 
@@ -51,16 +46,21 @@
   <title>カテゴリ一覧</title>
 </head>
 <body>
-  <h1>カテゴリ</h1>
-  <a href="addCategory.php">新規登録</a>
-  <ul>
-    <li>
-      <ul>
-        <li>ID</li>
-        <li>タイトル</li>
-      </ul>
-    </li>
-    <?= $categoryListHTML ?>
+  <?php require_once('header.php'); ?>
+  <?php require_once('sideBar.php'); ?>
+  <main>
+    <h1>カテゴリ</h1>
+    <a href="addCategory.php">新規登録</a>
+    <ul>
+      <li>
+        <ul>
+          <li>ID</li>
+          <li>タイトル</li>
+        </ul>
+      </li>
+      <?= $categoryListHTML ?>
+    </ul>
+  </main>
 </body>
 </html>
 

@@ -1,10 +1,5 @@
 <?php
-  function convertAuthority($authorityNum){
-    $authorityBinary = decbin((int) $authorityNum);
-    $authorityBinaryFilled = sprintf('%03d', $authorityBinary);
-    $authorityBinaryArray = str_split($authorityBinaryFilled);
-    return $authorityBinaryArray;
-  }
+  require_once('convertAuthority.php');
 
   session_start();
 
@@ -54,18 +49,23 @@
   <title>コンテンツ一覧</title>
 </head>
 <body>
-  <h1>コンテンツ</h1>
-  <a href="addContents.php">新規登録</a>
-  <ul>
-    <li>
-      <ul>
-        <li>ID</li>
-        <li>カテゴリ</li>
-        <li>タイトル</li>
-        <li>登録日</li>
-      </ul>
-    </li>
-    <?= $contentsHTML ?>
+  <?php require_once('header.php'); ?>
+  <?php require_once('sideBar.php'); ?>
+  <main>
+    <h1>コンテンツ</h1>
+    <a href="addContents.php">新規登録</a>
+    <ul>
+      <li>
+        <ul>
+          <li>ID</li>
+          <li>カテゴリ</li>
+          <li>タイトル</li>
+          <li>登録日</li>
+        </ul>
+      </li>
+      <?= $contentsHTML ?>
+    </ul>
+  </main>
 </body>
 </html>
 

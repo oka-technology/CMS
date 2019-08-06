@@ -1,10 +1,5 @@
 <?php
-  function convertAuthority($authorityNum){
-    $authorityBinary = decbin((int) $authorityNum);
-    $authorityBinaryFilled = sprintf('%03d', $authorityBinary);
-    $authorityBinaryArray = str_split($authorityBinaryFilled);
-    return $authorityBinaryArray;
-  }
+  require_once('convertAuthority.php');
 
   session_start();
 
@@ -42,13 +37,17 @@
   <title>カテゴリ編集</title>
 </head>
 <body>
-  <h1>カテゴリ編集</h1>
-  <form action="editCategoryProcess.php" method="post">
-    <label for="title">タイトル</label>
-    <input type="text" id="title" name="title" value="<?= $categoryName ?>">
-    <input type="text" name="id" value="<?= $targetID ?>" hidden>
-    <input type="submit" value="登録">
-  </form>
+  <?php require_once('header.php'); ?>
+  <?php require_once('sideBar.php'); ?>
+  <main>
+    <h1>カテゴリ編集</h1>
+    <form action="editCategoryProcess.php" method="post">
+      <label for="title">タイトル</label>
+      <input type="text" id="title" name="title" value="<?= $categoryName ?>">
+      <input type="text" name="id" value="<?= $targetID ?>" hidden>
+      <input type="submit" value="登録">
+    </form>
+  </main>
 </body>
 </html>
 

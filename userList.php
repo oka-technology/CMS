@@ -57,21 +57,23 @@
 <body>
   <?php require_once('header.php'); ?>
   <?php require_once('sideBar.php'); ?>
-  <article>
-    <h1>ユーザ</h1>
-    <a href="addUser.php">新規登録</a>
-    <ul>
-      <li>
-        <ul>
-          <li>ID</li>
-          <li>User</li>
-          <li>権限</li>
-        </ul>
-      </li>
-      <?= $userInfoHTML ?>
-    </ul>
-
-  </article>
+  <main>
+    <article>
+      <h1>ユーザ</h1>
+      <a href="addUser.php">新規登録</a>
+      <ul>
+        <li>
+          <ul>
+            <li>ID</li>
+            <li>User</li>
+            <li>権限</li>
+          </ul>
+        </li>
+        <?= $userInfoHTML ?>
+      </ul>
+  
+    </article>
+  </main>
 </body>
 </html>
 

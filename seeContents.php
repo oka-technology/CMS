@@ -1,10 +1,5 @@
 <?php
-  function convertAuthority($authorityNum){
-    $authorityBinary = decbin((int) $authorityNum);
-    $authorityBinaryFilled = sprintf('%03d', $authorityBinary);
-    $authorityBinaryArray = str_split($authorityBinaryFilled);
-    return $authorityBinaryArray;
-  }
+  require_once('convertAuthority.php');
 
   session_start();
 
@@ -44,8 +39,13 @@
   <title><?= $title ?></title>
 </head>
 <body>
-  <h1><?= $title ?></h1>
-  <p><?= str_replace("\r\n", '</br>', $contents); ?></p>
+  <?php require_once('header.php'); ?>
+  <?php require_once('sideBar.php'); ?>
+  <p>
+    <h1><?= $title ?></h1>
+    <p><?= str_replace("\r\n", '</br>', $contents); ?></p>
+  </p>
+</body>
 </html>
 
 <?php

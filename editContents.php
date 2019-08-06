@@ -1,10 +1,5 @@
 <?php
-  function convertAuthority($authorityNum){
-    $authorityBinary = decbin((int) $authorityNum);
-    $authorityBinaryFilled = sprintf('%03d', $authorityBinary);
-    $authorityBinaryArray = str_split($authorityBinaryFilled);
-    return $authorityBinaryArray;
-  }
+  require_once('convertAuthority.php');
 
   session_start();
 
@@ -55,19 +50,23 @@
   <title>コンテンツ編集</title>
 </head>
 <body>
-  <h1>コンテンツ編集</h1>
-  <form action="editContentsProcess.php" method="post">
-    <label for="category">カテゴリ</label>
-    <select name="category" id="category">
-      <?= $selectCategoryHTML ?>
-    </select>
-    <label for="title">タイトル</label>
-    <input type="text" name="title" id="title" value="<?= $title ?>">
-    <label for="contents">内容</label>
-    <textarea name="contents" id="contents"><?= $contents ?></textarea>
-    <input type="text" name="id" value="<?= $targetID ?>" hidden>
-    <input type="submit" value="登録">
-  </form>
+  <?php require_once('header.php'); ?>
+  <?php require_once('sideBar.php'); ?>
+  <main>
+    <h1>コンテンツ編集</h1>
+    <form action="editContentsProcess.php" method="post">
+      <label for="category">カテゴリ</label>
+      <select name="category" id="category">
+        <?= $selectCategoryHTML ?>
+      </select>
+      <label for="title">タイトル</label>
+      <input type="text" name="title" id="title" value="<?= $title ?>">
+      <label for="contents">内容</label>
+      <textarea name="contents" id="contents"><?= $contents ?></textarea>
+      <input type="text" name="id" value="<?= $targetID ?>" hidden>
+      <input type="submit" value="登録">
+    </form>
+  </main>
 </html>
 
 <?php
