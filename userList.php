@@ -1,11 +1,5 @@
 <?php
-
-  function convertAuthority($authorityNum){
-    $authorityBinary = decbin((int) $authorityNum);
-    $authorityBinaryFilled = sprintf('%03d', $authorityBinary);
-    $authorityBinaryArray = str_split($authorityBinaryFilled);
-    return $authorityBinaryArray;
-  }
+  require_once('convertAuthority.php');
 
   function showAuthority ($authorityNum) {
     $returnArray = array();
@@ -61,6 +55,8 @@
   <title>ユーザー一覧</title>
 </head>
 <body>
+  <?php require_once('header.php'); ?>
+  <?php require_once('sideBar.php'); ?>
   <article>
     <h1>ユーザ</h1>
     <a href="addUser.php">新規登録</a>
