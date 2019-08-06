@@ -32,9 +32,9 @@
       <label for="password">パスワード</label>
       <input type="password" id="password" name="password">
       <label>権限</label>
-      <input type="checkbox" name="authority[]" value="1">管理者
-      <input type="checkbox" name="authority[]" value="2">編集者
-      <input type="checkbox" name="authority[]" value="4">閲覧者
+      <input id="check1" type="checkbox" name="authority[]" value="1"><label for="check1">管理者</label>
+      <input id="check2" type="checkbox" name="authority[]" value="2"><label for="check2">編集者</label>
+      <input id="check3" type="checkbox" name="authority[]" value="4"><label for="check3">閲覧者</label>
       <input type="submit" value="登録">
     </form>
   </main>
