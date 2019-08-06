@@ -1,6 +1,6 @@
 # Webpro last assignment
 
-```
+```sh
 docker-compose up
 ```
 
