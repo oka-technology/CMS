@@ -3,7 +3,6 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./Dockerfile
     volumes:
       - ./public:/var/www/html
     ports:
@@ -15,6 +14,7 @@ services:
   db:
     image: mysql:5.7
     volumes:
+      - ./initdb.d:/docker-entrypoint-initdb.d
       - ./db/mysql_data:/var/lib/mysql
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
