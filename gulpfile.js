@@ -10,7 +10,7 @@ gulp.task('sass', () => (
         extensions: ['.scss', '.css']
       })
     }))
-    .pipe(gulp.dest('./css'))
+    .pipe(gulp.dest('./public/css'))
 ));
 
 gulp.task('watch', async () => {

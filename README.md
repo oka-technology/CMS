@@ -1,5 +1,9 @@
 # Webpro last assignment
 
+```
+docker-compose up
+```
+
 ## Default user
 
 - Email: default@dhu
