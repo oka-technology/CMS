@@ -39,16 +39,18 @@
 </head>
 <body>
   <?php require_once('header.php'); ?>
-  <?php require_once('sideBar.php'); ?>
-  <main>
-    <h1>カテゴリ編集</h1>
-    <form action="editCategoryProcess.php" method="post">
-      <label for="title">タイトル</label>
-      <input type="text" id="title" name="title" value="<?= $categoryName ?>">
-      <input type="text" name="id" value="<?= $targetID ?>" hidden>
-      <input type="submit" value="登録">
-    </form>
-  </main>
+  <div class="mainAndAsideWrapper">
+    <?php require_once('sideBar.php'); ?>
+    <main>
+      <h1>カテゴリ編集</h1>
+      <form action="editCategoryProcess.php" method="post">
+        <label for="title">タイトル</label>
+        <input type="text" id="title" name="title" value="<?= $categoryName ?>">
+        <input type="text" name="id" value="<?= $targetID ?>" hidden>
+        <input type="submit" value="登録">
+      </form>
+    </main>
+  </div>
 </body>
 </html>
 

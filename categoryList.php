@@ -48,20 +48,22 @@
 </head>
 <body>
   <?php require_once('header.php'); ?>
-  <?php require_once('sideBar.php'); ?>
-  <main>
-    <h1>カテゴリ</h1>
-    <a href="addCategory.php">新規登録</a>
-    <ul>
-      <li>
-        <ul>
-          <li>ID</li>
-          <li>タイトル</li>
-        </ul>
-      </li>
-      <?= $categoryListHTML ?>
-    </ul>
-  </main>
+  <div class="mainAndAsideWrapper">
+    <?php require_once('sideBar.php'); ?>
+    <main>
+      <h1>カテゴリ</h1>
+      <a href="addCategory.php">新規登録</a>
+      <ul>
+        <li>
+          <ul>
+            <li>ID</li>
+            <li>タイトル</li>
+          </ul>
+        </li>
+        <?= $categoryListHTML ?>
+      </ul>
+    </main>
+  </div>
 </body>
 </html>
 

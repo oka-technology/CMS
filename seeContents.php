@@ -41,11 +41,15 @@
 </head>
 <body>
   <?php require_once('header.php'); ?>
-  <?php require_once('sideBar.php'); ?>
-  <p>
-    <h1><?= $title ?></h1>
-    <p><?= str_replace("\r\n", '</br>', $contents); ?></p>
-  </p>
+  <div class="mainAndAsideWrapper">
+    <?php require_once('sideBar.php'); ?>
+    <main>
+      <p>
+        <h1><?= $title ?></h1>
+        <p><?= str_replace("\r\n", '</br>', $contents); ?></p>
+      </p>
+    </main>
+  </div>
 </body>
 </html>
 

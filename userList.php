@@ -44,9 +44,9 @@
 </head>
 <body>
   <?php require_once('header.php'); ?>
-  <?php require_once('sideBar.php'); ?>
-  <main>
-    <article>
+  <div class="mainAndAsideWrapper">
+    <?php require_once('sideBar.php'); ?>
+    <main>
       <h1>ユーザ</h1>
       <a href="addUser.php">新規登録</a>
       <ul>
@@ -59,9 +59,8 @@
         </li>
         <?= $userInfoHTML ?>
       </ul>
-  
-    </article>
-  </main>
+    </main>
+  </div>
 </body>
 </html>
 
