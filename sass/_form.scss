@@ -1,0 +1,62 @@
+.form{
+  & > *:first-child{
+    margin-top: 0;
+  }
+
+  &__button{
+    align-items: center;
+    background-color: #0528c2;
+    border-radius: 0.5rem;
+    color: #fff;
+    display: flex;
+    font-size: 1.6rem;
+    height: 4.0rem;
+    justify-content: center;
+    margin-top: 2.0rem;
+    text-decoration: none;
+    width: 10.0rem;
+
+    &--login{
+      @extend .form__button;
+      width: 100%;
+    }
+  }
+
+  &__checkbox{
+    transform: scale(1.5);
+  }
+
+  &__checkboxWrapper{
+    align-items: center;
+    display: flex;
+    margin-top: 1.0rem;
+  }
+
+  &__select{
+    font-size: 1.6rem;
+    margin-top: 1.0rem;
+  }
+
+  &__text{
+    display: block;
+    font-size: 1.6rem;
+    margin-top: 1.0rem;
+    width: 100%;
+  }
+
+  &__textarea{
+    font-size: 1.6rem;
+    resize: none;
+    height: 20.0em;
+    width: 100%;
+  }
+
+  &__label{
+    display: block;
+    font-size: 1.6rem;
+    margin-top: 2.5rem;
+    &--inline{
+      margin: 0 0 0 1.0rem;
+    }
+  }
+}
