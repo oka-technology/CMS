@@ -47,22 +47,25 @@
   <title>カテゴリ一覧</title>
 </head>
 <body>
-  <?php require_once('header.php'); ?>
-  <div class="mainAndAsideWrapper">
-    <?php require_once('sideBar.php'); ?>
-    <main>
-      <h1>カテゴリ</h1>
-      <a href="addCategory.php">新規登録</a>
-      <ul>
-        <li>
-          <ul>
-            <li>ID</li>
-            <li>タイトル</li>
-          </ul>
-        </li>
-        <?= $categoryListHTML ?>
-      </ul>
-    </main>
+  <div class="wrapper">
+    <?php require_once('header.php'); ?>
+    <div class="mainAndAsideWrapper">
+      <?php require_once('sideBar.php'); ?>
+      <main>
+        <h1>カテゴリ</h1>
+        <a href="addCategory.php">新規登録</a>
+        <ul>
+          <li>
+            <ul>
+              <li>ID</li>
+              <li>タイトル</li>
+            </ul>
+          </li>
+          <?= $categoryListHTML ?>
+        </ul>
+      </main>
+    </div>
+    <?php require_once('footer.php'); ?>
   </div>
 </body>
 </html>

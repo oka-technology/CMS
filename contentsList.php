@@ -50,24 +50,27 @@
   <title>コンテンツ一覧</title>
 </head>
 <body>
-  <?php require_once('header.php'); ?>
-  <div class="mainAndAsideWrapper">
-    <?php require_once('sideBar.php'); ?>
-    <main>
-      <h1>コンテンツ</h1>
-      <?php if($convertedAuthority[1] == 1){echo '<a href="addContents.php">新規登録</a>';} ?>
-      <ul>
-        <li>
-          <ul>
-            <li>ID</li>
-            <li>カテゴリ</li>
-            <li>タイトル</li>
-            <li>登録日</li>
-          </ul>
-        </li>
-        <?= $contentsHTML ?>
-      </ul>
-    </main>
+  <div class="wrapper">
+    <?php require_once('header.php'); ?>
+    <div class="mainAndAsideWrapper">
+      <?php require_once('sideBar.php'); ?>
+      <main>
+        <h1>コンテンツ</h1>
+        <?php if($convertedAuthority[1] == 1){echo '<a href="addContents.php">新規登録</a>';} ?>
+        <ul>
+          <li>
+            <ul>
+              <li>ID</li>
+              <li>カテゴリ</li>
+              <li>タイトル</li>
+              <li>登録日</li>
+            </ul>
+          </li>
+          <?= $contentsHTML ?>
+        </ul>
+      </main>
+    </div>
+    <?php require_once('footer.php'); ?>
   </div>
 </body>
 </html>

@@ -43,23 +43,26 @@
   <title>ユーザー一覧</title>
 </head>
 <body>
-  <?php require_once('header.php'); ?>
-  <div class="mainAndAsideWrapper">
-    <?php require_once('sideBar.php'); ?>
-    <main>
-      <h1>ユーザ</h1>
-      <a href="addUser.php">新規登録</a>
-      <ul>
-        <li>
-          <ul>
-            <li>ID</li>
-            <li>User</li>
-            <li>権限</li>
-          </ul>
-        </li>
-        <?= $userInfoHTML ?>
-      </ul>
-    </main>
+  <div class="wrapper">
+    <?php require_once('header.php'); ?>
+    <div class="mainAndAsideWrapper">
+      <?php require_once('sideBar.php'); ?>
+      <main>
+        <h1>ユーザ</h1>
+        <a href="addUser.php">新規登録</a>
+        <ul>
+          <li>
+            <ul>
+              <li>ID</li>
+              <li>User</li>
+              <li>権限</li>
+            </ul>
+          </li>
+          <?= $userInfoHTML ?>
+        </ul>
+      </main>
+    </div>
+    <?php require_once('footer.php'); ?>
   </div>
 </body>
 </html>

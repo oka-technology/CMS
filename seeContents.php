@@ -40,15 +40,18 @@
   <title><?= $title ?></title>
 </head>
 <body>
-  <?php require_once('header.php'); ?>
-  <div class="mainAndAsideWrapper">
-    <?php require_once('sideBar.php'); ?>
-    <main>
-      <p>
-        <h1><?= $title ?></h1>
-        <p><?= str_replace("\r\n", '</br>', $contents); ?></p>
-      </p>
-    </main>
+  <div class="wrapper">
+    <?php require_once('header.php'); ?>
+    <div class="mainAndAsideWrapper">
+      <?php require_once('sideBar.php'); ?>
+      <main>
+        <p>
+          <h1><?= $title ?></h1>
+          <p><?= str_replace("\r\n", '</br>', $contents); ?></p>
+        </p>
+      </main>
+    </div>
+    <?php require_once('footer.php'); ?>
   </div>
 </body>
 </html>
