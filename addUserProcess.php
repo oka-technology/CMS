@@ -23,8 +23,7 @@
     exit();
   }
 
-  $salt = createSalt();
-  $encrypted_password = crypt($password, $salt);
+  $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
   $authorityNum = 0;
   for ($i=0; $i < count($authority); $i++) { 
@@ -38,9 +37,9 @@
       'password'
     );
     $stmt = $dbh->prepare(
-      "insert into userInfo (name, password, authority, salt) values (?, ?, ?, ?);"
+      "insert into userInfo (name, password, authority) values (?, ?, ?);"
     );
-    $stmt->execute([$loginId, $encrypted_password, $authorityNum, $salt]);
+    $stmt->execute([$loginId, $hashed_password, $authorityNum]);
     header('Location: addUser.php');
     exit();
   } catch (PDOException $e) {

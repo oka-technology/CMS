@@ -18,8 +18,7 @@
     );
     $stmt->execute([$loginId]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $encrypted_password = crypt($password, $row['salt']);
-    if ($encrypted_password === $row['password']) {
+    if (password_verify($password, $row['password'])) {
       $_SESSION['user'] = $loginId;
       $_SESSION['authority'] = $row['authority'];
       header('Location: index.php');
