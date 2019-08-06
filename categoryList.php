@@ -28,11 +28,11 @@
 
     while($rowOfCategories = $stmt->fetch(PDO::FETCH_ASSOC)){
       $categoryListHTML .= "
-        <li>
-          <ul>
-            <li>{$rowOfCategories['id']}</li>
-            <li>{$rowOfCategories['name']}</li>
-            <li><a href='editCategory.php?id={$rowOfCategories['id']}'>編集</a></li>
+        <li class='list__row'>
+          <ul class='row'>
+            <li class='row__item--thin'>{$rowOfCategories['id']}</li>
+            <li class='row__item'>{$rowOfCategories['name']}</li>
+            <li'><a class='row__editButton' href='editCategory.php?id={$rowOfCategories['id']}'>編集</a></li>
           </ul>
         </li>
       ";
@@ -51,14 +51,14 @@
     <?php require_once('header.php'); ?>
     <div class="mainAndAsideWrapper">
       <?php require_once('sideBar.php'); ?>
-      <main>
-        <h1>カテゴリ</h1>
-        <a href="addCategory.php">新規登録</a>
-        <ul>
-          <li>
-            <ul>
-              <li>ID</li>
-              <li>タイトル</li>
+      <main class="main">
+        <h1 class="main__pageTitle">カテゴリ</h1>
+        <a class="main__addButton" href="addCategory.php">新規登録</a>
+        <ul class="list">
+          <li class="list__row">
+            <ul class="row">
+              <li class="row__item--title--thin">ID</li>
+              <li class="row__item--title">タイトル</li>
             </ul>
           </li>
           <?= $categoryListHTML ?>

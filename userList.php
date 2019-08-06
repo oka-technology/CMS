@@ -27,11 +27,15 @@
 
     while($rowOfUserInfo = $stmt->fetch(PDO::FETCH_ASSOC)){
       $authorityString = showAuthority($rowOfUserInfo['authority']);
-      $userInfoHTML .= "<li><ul>
-          <li>{$rowOfUserInfo['id']}</li>
-          <li>{$rowOfUserInfo['name']}</li>
-          <li>{$authorityString}</li>
-        </ul></li>";
+      $userInfoHTML .= "
+        <li class='list__row'>
+          <ul class='row'>
+            <li class='row__item--thin'>{$rowOfUserInfo['id']}</li>
+            <li class='row__item'>{$rowOfUserInfo['name']}</li>
+            <li class='row__item'>{$authorityString}</li>
+          </ul>
+        </li>
+      ";
     }
 ?>
 
@@ -47,15 +51,15 @@
     <?php require_once('header.php'); ?>
     <div class="mainAndAsideWrapper">
       <?php require_once('sideBar.php'); ?>
-      <main>
-        <h1>ユーザ</h1>
-        <a href="addUser.php">新規登録</a>
-        <ul>
-          <li>
-            <ul>
-              <li>ID</li>
-              <li>User</li>
-              <li>権限</li>
+      <main class="main">
+        <h1 class="main__pageTitle">ユーザ</h1>
+        <a class="main__addButton" href="addUser.php">新規登録</a>
+        <ul class="list">
+          <li class="list__row">
+            <ul class="row">
+              <li class="row__item--title--thin">ID</li>
+              <li class="row__item--title">User</li>
+              <li class="row__item--title">権限</li>
             </ul>
           </li>
           <?= $userInfoHTML ?>

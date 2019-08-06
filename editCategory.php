@@ -42,8 +42,8 @@
     <?php require_once('header.php'); ?>
     <div class="mainAndAsideWrapper">
       <?php require_once('sideBar.php'); ?>
-      <main>
-        <h1>カテゴリ編集</h1>
+      <main class="main">
+        <h1 class="main__pageTitle">カテゴリ編集</h1>
         <form action="editCategoryProcess.php" method="post">
           <label for="title">タイトル</label>
           <input type="text" id="title" name="title" value="<?= $categoryName ?>">

@@ -44,10 +44,10 @@
     <?php require_once('header.php'); ?>
     <div class="mainAndAsideWrapper">
       <?php require_once('sideBar.php'); ?>
-      <main>
+      <main class="main">
         <p>
-          <h1><?= $title ?></h1>
-          <p><?= str_replace("\r\n", '</br>', $contents); ?></p>
+          <h1 class="main__pageTitle"><?= $title ?></h1>
+          <p class="main__contents"><?= str_replace("\r\n", '</br>', $contents); ?></p>
         </p>
       </main>
     </div>

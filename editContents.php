@@ -55,19 +55,19 @@
     <?php require_once('header.php'); ?>
     <div class="mainAndAsideWrapper">
       <?php require_once('sideBar.php'); ?>
-      <main>
-        <h1>コンテンツ編集</h1>
-        <form action="editContentsProcess.php" method="post">
-          <label for="category">カテゴリ</label>
-          <select name="category" id="category">
+      <main class="main">
+        <h1 class="main__pageTitle">コンテンツ編集</h1>
+        <form class="form" action="editContentsProcess.php" method="post">
+          <label class="form__label" for="category">カテゴリ</label>
+          <select class="form__select" name="category" id="category">
             <?= $selectCategoryHTML ?>
           </select>
-          <label for="title">タイトル</label>
-          <input type="text" name="title" id="title" value="<?= $title ?>">
-          <label for="contents">内容</label>
-          <textarea name="contents" id="contents"><?= $contents ?></textarea>
+          <label class="form__label" for="title">タイトル</label>
+          <input class="form__text" type="text" name="title" id="title" value="<?= $title ?>">
+          <label class="form__label" for="contents">内容</label>
+          <textarea class="form__textarea" name="contents" id="contents"><?= $contents ?></textarea>
           <input type="text" name="id" value="<?= $targetID ?>" hidden>
-          <input type="submit" value="登録">
+          <input class="form__button" type="submit" value="登録">
         </form>
       </main>
     </div>

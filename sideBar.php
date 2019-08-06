@@ -15,20 +15,20 @@
 
   if($convertedAuthority[2] == 1){
     $appearHTML .= '
-      <li class="sideBar__list__item"><a href="userList.php">ユーザ一覧</a></li>  
-      <li class="sideBar__list__item"><a href="addUser.php">ユーザ登録</a></li>
+      <li class="sideBar__list__item"><a class="sideBar__list__item-link" href="userList.php">ユーザ一覧</a></li>  
+      <li class="sideBar__list__item"><a class="sideBar__list__item-link" href="addUser.php">ユーザ登録</a></li>
     ';
   }
   if($convertedAuthority[1] == 1 || $convertedAuthority[0] == 1){
     $appearHTML .= '
-      <li class="sideBar__list__item"><a href="contentsList.php">コンテンツ一覧</a></li>
+      <li class="sideBar__list__item"><a class="sideBar__list__item-link" href="contentsList.php">コンテンツ一覧</a></li>
     ';
   }
   if($convertedAuthority[1] == 1){
     $appearHTML .= '
-      <li class="sideBar__list__item"><a href="categoryList.php">カテゴリ一覧</a></li>
-      <li class="sideBar__list__item"><a href="addCategory.php">カテゴリ登録</a></li>
-      <li class="sideBar__list__item"><a href="addContents.php">コンテンツ登録</a></li>
+      <li class="sideBar__list__item"><a class="sideBar__list__item-link" href="addContents.php">コンテンツ登録</a></li>
+      <li class="sideBar__list__item"><a class="sideBar__list__item-link" href="categoryList.php">カテゴリ一覧</a></li>
+      <li class="sideBar__list__item"><a class="sideBar__list__item-link" href="addCategory.php">カテゴリ登録</a></li>
     ';
   }
 ?>

@@ -19,15 +19,15 @@
   <link rel="stylesheet" href="css/style.css">
   <title>Login</title>
 </head>
-<body>
-  <main>
-    <h1>Login</h1>
-    <form action="loginProcess.php" method="post">
-      <label htmlFor="Email">Email</label>
-      <input type="email" name="email" id="Email" placeholder="Enter Email" />
-      <label htmlFor="Password">Password</label>
-      <input type="password" id="Password" name="password" placeholder="Password" />
-      <input type="submit" value="Login" />
+<body class="login">
+  <main class="login__main">
+    <h1 class="login__pageTitle">Login</h1>
+    <form class="form" action="loginProcess.php" method="post">
+      <label class="form__label" htmlFor="Email">Email</label>
+      <input class="form__text" type="email" name="email" id="Email" placeholder="Enter Email" />
+      <label class="form__label" htmlFor="Password">Password</label>
+      <input class="form__text" type="password" id="Password" name="password" placeholder="Password" />
+      <input class="form__button--login" type="submit" value="Login" />
     </form>
   </main>
 </body>

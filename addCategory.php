@@ -28,10 +28,11 @@
     <div class="mainAndAsideWrapper">
       <?php require_once('sideBar.php'); ?>
       <main class="main">
-        <h1>カテゴリ登録</h1>
-        <form action="addCategoryProcess.php" method="post">
-          <label for="title">タイトル</label><input type="text" id="title" name="title">
-          <input type="submit" value="登録">
+        <h1 class="main__pageTitle">カテゴリ登録</h1>
+        <form class="form" action="addCategoryProcess.php" method="post">
+          <label class="form__label" for="title">タイトル</label>
+          <input class="form__text" type="text" id="title" name="title">
+          <input class="form__button" type="submit" value="登録">
         </form>
       </main>
     </div>
