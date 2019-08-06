@@ -815,6 +815,7 @@ html {
 }
 
 .form__button--login {
+  margin-top: 3.0rem;
   width: 100%;
 }
 

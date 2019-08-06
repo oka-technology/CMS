@@ -18,6 +18,7 @@
 
     &--login{
       @extend .form__button;
+      margin-top: 3.0rem;
       width: 100%;
     }
   }
