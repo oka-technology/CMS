@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { Configuration } from 'webpack';
+import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const __DEV__: boolean = process.env.NODE_ENV !== 'production';
 
@@ -12,7 +13,11 @@ export default (): Configuration => ({
     filename: 'bundle.js'
   },
 
-  plugins: [],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'style.css',
+    }),
+  ],
 
   module: {
     rules: [
@@ -34,6 +39,23 @@ export default (): Configuration => ({
           },
           'extract-loader',
           'html-loader',
+        ],
+      },
+      {
+        test: /\.s?css$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                mode: 'local',
+                localIdentName: __DEV__ ? '[path]__[local]___[hash:base64:5]' : '[hash:base64:16]',
+              },
+              sourceMap: __DEV__,
+              importLoaders: 1,
+            },
+          },
         ],
       },
     ],
