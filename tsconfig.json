@@ -4,8 +4,6 @@
     "target": "es5",
     "sourceMap": true,
     "strict": true,
-    "rootDir": ".",
-    "outDir": "dist/js",
     "jsx": "react",
     "typeRoots": [
       "node_modules/@types",
