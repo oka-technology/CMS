@@ -38,7 +38,12 @@ export default (): Configuration => ({
             },
           },
           'extract-loader',
-          'html-loader',
+          {
+            loader: 'html-loader',
+            options: {
+              minimize: true
+            }
+          },
         ],
       },
       {
@@ -54,6 +59,18 @@ export default (): Configuration => ({
               },
               sourceMap: __DEV__,
               importLoaders: 1,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.php$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'api/',
             },
           },
         ],
