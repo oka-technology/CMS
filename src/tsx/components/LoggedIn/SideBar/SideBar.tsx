@@ -11,7 +11,7 @@ const sideBar = css`
   background-color: #777;
   width: 15%;
   max-width: 20.0rem;
-  min-width: 15.0rem;
+  min-width: 13.0rem;
 `;
 
 const sideBarList = css`

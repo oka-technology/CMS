@@ -14,7 +14,7 @@ type SideBarItemProps = {
 }
 
 const listItem = css`
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   height: 4.0rem;
   margin: 0 auto;
   width: 12.0rem;
@@ -28,6 +28,7 @@ const listItemAnchor = css`
   display: block;
   height: 4.0rem;
   line-height: 4.0rem;
+  padding-left: 0.5rem;
   text-decoration: none;
 `;
 
@@ -94,9 +95,9 @@ const SideBarItem = ({authority}: SideBarItemProps): JSX.Element => {
   const item: (JSX.Element | undefined)[] = sideBarItemObject.map(object => {
     if (authorityList.some((elem: string) => object.requiredAuthority[elem] === authority[elem])) {
       return <li css={listItem} key={object.contents}>
-        {/* <Link to={object.link} css={listItemAnchor}> */}
+        <Link to={object.link} css={listItemAnchor}>
           {object.contents}
-        {/* </Link> */}
+        </Link>
       </li>
     }
   })
