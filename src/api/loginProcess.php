@@ -20,6 +20,7 @@
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (password_verify($password, $row['password'])) {
+      $_SESSION['loggedIn'] = true;
       $_SESSION['user'] = $loginId;
       $_SESSION['authority'] = $row['authority'];
       $result['loggedIn'] = true;

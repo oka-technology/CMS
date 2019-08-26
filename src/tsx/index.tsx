@@ -7,6 +7,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import '../index.html';
 import '../api/loginProcess.php';
+import '../api/checkWhetherLoggedIn.php';
 
 import LoggedIn from './components/LoggedIn/LoggedIn';
 import Login from './components/Login';
@@ -15,6 +16,12 @@ import 'sanitize.css';
 import 'sanitize.css/typography.css';
 import 'sanitize.css/forms.css';
 import './global.css';
+
+type data = {
+  loggedin: boolean,
+  loginUser: string,
+  authority: Authority,
+}
 
 const wrapper = css`
   display: flex;
@@ -27,12 +34,6 @@ const wrapper = css`
   height: 100%;
 `;
 
-const defaultAuthority: Authority = {
-  admin: false,
-  editor: false,
-  viewer: false,
-}
-
 const convertAuthority = (authority: string): Authority => {
   const authorityNum: number = parseInt(authority, 10);
   const authorityBinary: string = authorityNum.toString(2);
@@ -42,31 +43,51 @@ const convertAuthority = (authority: string): Authority => {
   return{ admin, editor, viewer, }
 }
 
-const App = (): JSX.Element => {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
-  const [loginUser, setLoginUser] = useState<string>('');
-  const [authority, setAuthority] = useState<Authority>(defaultAuthority);
+const data: data = {
+  loggedin: false,
+  loginUser: '',
+  authority: convertAuthority('0'),
+};
 
-  const onSetLoggedIn = (bool: boolean): void => {
-    setLoggedIn(bool);
-  }
-  const onSetLoginUser = (name: string): void => {
-    setLoginUser(name);
-  }
-  const onSetAuthority = (authority: string): void => {
-    setAuthority(convertAuthority(authority));
+const main = async () => {
+  await axios.post('./api/checkWhetherLoggedIn.php')
+    .then((results) => {
+      data.loggedin = results.data.loggedIn;
+      data.loginUser = results.data.userID;
+      data.authority = convertAuthority(results.data.authority);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  const App = (): JSX.Element => {
+    const [loggedIn, setLoggedIn] = useState<boolean>(data.loggedin);
+    const [loginUser, setLoginUser] = useState<string>(data.loginUser);
+    const [authority, setAuthority] = useState<Authority>(data.authority);
+
+    const onSetLoggedIn = (bool: boolean): void => {
+      setLoggedIn(bool);
+    }
+    const onSetLoginUser = (name: string): void => {
+      setLoginUser(name);
+    }
+    const onSetAuthority = (authority: string): void => {
+      setAuthority(convertAuthority(authority));
+    }
+
+    return(
+      <div css={wrapper}>
+        <HashRouter>
+          <Switch>
+            <Route exact path='/LoggedIn' render={ props => <LoggedIn loggedIn={loggedIn} loginUser={loginUser} authority={authority} />} />
+            <Route exact path='/' render={ props => <Login loggedIn={loggedIn} onSetLoggedIn={onSetLoggedIn} onSetLoginUser={onSetLoginUser} onSetAuthority={onSetAuthority} />} />    
+          </Switch>
+        </HashRouter>
+      </div>
+    );
   }
 
-  return(
-    <div css={wrapper}>
-      <HashRouter>
-        <Switch>
-          <Route exact path='/LoggedIn' render={ props => <LoggedIn loggedIn={loggedIn} loginUser={loginUser} authority={authority} />} />
-          <Route exact path='/' render={ props => <Login loggedIn={loggedIn} onSetLoggedIn={onSetLoggedIn} onSetLoginUser={onSetLoginUser} onSetAuthority={onSetAuthority} />} />    
-        </Switch>
-      </HashRouter>
-    </div>
-  );
+  ReactDOM.render(<App />, document.querySelector('#App'));
 }
 
-ReactDOM.render(<App />, document.querySelector('#App'));
+main();
