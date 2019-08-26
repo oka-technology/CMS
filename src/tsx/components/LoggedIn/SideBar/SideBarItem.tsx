@@ -24,7 +24,7 @@ const listItem = css`
 `;
 
 const listItemAnchor = css`
-  color: #ddd;
+  color: #eee;
   display: block;
   height: 4.0rem;
   line-height: 4.0rem;
