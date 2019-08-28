@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
-import { useEffect, Fragment, useState, ChangeEvent } from 'react';
+import { useEffect, Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
@@ -33,8 +33,9 @@ const title = css`
 `;
 
 const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: LoginProps): JSX.Element => {
-  const [eMail, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [missed, setMissed] = useState<boolean>(false);
 
   const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => { setEmail(e.target.value) };
   const passwordChange = (e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) };
@@ -42,13 +43,18 @@ const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: Logi
     e.preventDefault;
 
     let params = new URLSearchParams();
-    params.append('email', eMail);
+    params.append('email', email);
     params.append('password', password);
     axios.post('./api/loginProcess.php', params)
       .then((results) => {
-        onSetLoggedIn(results.data.loggedIn);
-        onSetLoginUser(results.data.userID);
-        onSetAuthority(Number(results.data.authority));
+        if (results.data.loggedIn === false) {
+          setPassword('');
+          setMissed(true);
+        } else {
+          onSetLoggedIn(results.data.loggedIn);
+          onSetLoginUser(results.data.userID);
+          onSetAuthority(Number(results.data.authority));
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -63,11 +69,12 @@ const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: Logi
           <h1 css={title}>Login</h1>
           <form>
             <label htmlFor="Email">Email</label>
-            <input type="email" id="Email" placeholder="Enter Email" value={eMail} onChange={emailChange} />
+            <input type="email" id="Email" placeholder="Enter Email" value={email} onChange={emailChange} />
             <label htmlFor="Password">Password</label>
             <input type="password" id="Password" placeholder="Password" value={password} onChange={passwordChange} />
             <input type="submit" value="Login" onClick={submit} />
           </form>
+          {missed ? <p>EmailかPasswordが違います</p> : null }
         </main>
       </div>
     </Fragment>
