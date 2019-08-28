@@ -48,7 +48,7 @@ const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: Logi
       .then((results) => {
         onSetLoggedIn(results.data.loggedIn);
         onSetLoginUser(results.data.userID);
-        onSetAuthority(results.data.authority);
+        onSetAuthority(Number(results.data.authority));
       })
       .catch((error) => {
         console.log(error);
