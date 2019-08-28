@@ -38,7 +38,7 @@ const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: Logi
 
   const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => { setEmail(e.target.value) };
   const passwordChange = (e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) };
-  const submit = (e: React.MouseEvent) => {
+  const submit = (e: React.MouseEvent<HTMLInputElement>) => {
     e.preventDefault;
 
     let params = new URLSearchParams();
