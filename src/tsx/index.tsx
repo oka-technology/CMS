@@ -35,7 +35,7 @@ const wrapper = css`
   height: 100%;
 `;
 
-const convertAuthority = (authority: number): Authority => {
+const convertAuthorityToObject = (authority: number): Authority => {
   const authorityBinary: string = authority.toString(2);
   const admin: boolean = authorityBinary[2] === '1';
   const editor: boolean = authorityBinary[1] === '1';
@@ -46,7 +46,7 @@ const convertAuthority = (authority: number): Authority => {
 const data: data = {
   loggedin: false,
   loginUser: '',
-  authority: convertAuthority(0),
+  authority: convertAuthorityToObject(0),
 };
 
 const main = async () => {
@@ -54,7 +54,7 @@ const main = async () => {
     .then((results) => {
       data.loggedin = results.data.loggedIn;
       data.loginUser = results.data.userID;
-      data.authority = convertAuthority(Number(results.data.authority));
+      data.authority = convertAuthorityToObject(Number(results.data.authority));
     })
     .catch((error) => {
       console.log(error);
@@ -72,7 +72,7 @@ const main = async () => {
       setLoginUser(name);
     }
     const onSetAuthority = (authority: number): void => {
-      setAuthority(convertAuthority(authority));
+      setAuthority(convertAuthorityToObject(authority));
     }
 
     return(
