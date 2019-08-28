@@ -8,7 +8,7 @@ type LoginProps = {
   loggedIn: boolean,
   onSetLoggedIn: (bool: boolean) => void,
   onSetLoginUser: (name: string) => void,
-  onSetAuthority: (authority: string) => void,
+  onSetAuthority: (authority: number) => void,
 }
 
 const wrapper = css`

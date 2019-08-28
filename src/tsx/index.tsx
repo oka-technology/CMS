@@ -8,6 +8,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import '../index.html';
 import '../api/loginProcess.php';
 import '../api/checkWhetherLoggedIn.php';
+import '../api/logoutProcess.php';
 
 import LoggedIn from './components/LoggedIn/LoggedIn';
 import Login from './components/Login';
@@ -34,9 +35,8 @@ const wrapper = css`
   height: 100%;
 `;
 
-const convertAuthority = (authority: string): Authority => {
-  const authorityNum: number = parseInt(authority, 10);
-  const authorityBinary: string = authorityNum.toString(2);
+const convertAuthority = (authority: number): Authority => {
+  const authorityBinary: string = authority.toString(2);
   const admin: boolean = authorityBinary[2] === '1';
   const editor: boolean = authorityBinary[1] === '1';
   const viewer: boolean = authorityBinary[0] === '1';
@@ -46,7 +46,7 @@ const convertAuthority = (authority: string): Authority => {
 const data: data = {
   loggedin: false,
   loginUser: '',
-  authority: convertAuthority('0'),
+  authority: convertAuthority(0),
 };
 
 const main = async () => {
@@ -54,7 +54,7 @@ const main = async () => {
     .then((results) => {
       data.loggedin = results.data.loggedIn;
       data.loginUser = results.data.userID;
-      data.authority = convertAuthority(results.data.authority);
+      data.authority = convertAuthority(Number(results.data.authority));
     })
     .catch((error) => {
       console.log(error);
@@ -71,7 +71,7 @@ const main = async () => {
     const onSetLoginUser = (name: string): void => {
       setLoginUser(name);
     }
-    const onSetAuthority = (authority: string): void => {
+    const onSetAuthority = (authority: number): void => {
       setAuthority(convertAuthority(authority));
     }
 
@@ -79,8 +79,20 @@ const main = async () => {
       <div css={wrapper}>
         <HashRouter>
           <Switch>
-            <Route exact path='/LoggedIn' render={ props => <LoggedIn loggedIn={loggedIn} loginUser={loginUser} authority={authority} />} />
-            <Route exact path='/' render={ props => <Login loggedIn={loggedIn} onSetLoggedIn={onSetLoggedIn} onSetLoginUser={onSetLoginUser} onSetAuthority={onSetAuthority} />} />    
+            <Route exact path='/LoggedIn' render={ props => <LoggedIn 
+              loggedIn={loggedIn} 
+              loginUser={loginUser} 
+              authority={authority} 
+              onSetLoggedIn={onSetLoggedIn} 
+              onSetLoginUser={onSetLoginUser} 
+              onSetAuthority={onSetAuthority}
+            />} />
+            <Route exact path='/' render={ props => <Login
+              loggedIn={loggedIn} 
+              onSetLoggedIn={onSetLoggedIn} 
+              onSetLoginUser={onSetLoginUser} 
+              onSetAuthority={onSetAuthority}
+            />} />    
           </Switch>
         </HashRouter>
       </div>
