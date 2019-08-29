@@ -40,7 +40,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: false,
       viewer: false,
     },
-    link: '/test',
+    link: '/users',
   },
   {
     contents: 'ユーザー登録',
