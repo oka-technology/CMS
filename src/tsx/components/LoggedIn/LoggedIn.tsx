@@ -2,11 +2,13 @@
 import { jsx, css } from '@emotion/core';
 import { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect, match } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
 import Header from './Header';
 import Footer from './Footer';
 import SideBar from './SideBar/SideBar';
+import Users from './Main/Users/Users';
 
 type LoggedInProps = {
   loggedIn: boolean,
@@ -15,6 +17,7 @@ type LoggedInProps = {
   onSetLoggedIn: (bool: boolean) => void,
   onSetLoginUser: (name: string) => void,
   onSetAuthority: (authority: number) => void,
+  match: match;
 }
 
 const insideWrapper = css`
@@ -26,10 +29,16 @@ const main = css`
   padding: 0 2.0rem;
 `;
 
-const LoggedIn = ({ loggedIn, loginUser, authority, onSetAuthority, onSetLoggedIn, onSetLoginUser }: LoggedInProps): JSX.Element => {
+const LoggedIn = ({ loggedIn, loginUser, authority, onSetAuthority, onSetLoggedIn, onSetLoginUser, match }: LoggedInProps): JSX.Element => {
+  useEffect(() => {
+    if (loggedIn) {
+      document.title = 'ログイン成功';
+    }
+  }, []);
+
   return (
     <Fragment>
-      { loggedIn ? null : <Redirect to='/' /> }
+      { loggedIn ? null : <Redirect to='/login' /> }
       <Header 
         loginUser={loginUser} 
         authority={authority} 
@@ -38,13 +47,11 @@ const LoggedIn = ({ loggedIn, loginUser, authority, onSetAuthority, onSetLoggedI
         onSetAuthority={onSetAuthority}
       />
       <div css={insideWrapper}>
-        <SideBar authority={authority} />
+        <SideBar authority={authority} url={match.url}/>
         <main css={main}>
-          <HashRouter>
-            <Switch>
-              <Route></Route>
-            </Switch>
-          </HashRouter>
+          <Switch>
+            <Route path={`${match.url}/users`} render={ props => <Users />} />
+          </Switch>
         </main>
       </div>
       <Footer />

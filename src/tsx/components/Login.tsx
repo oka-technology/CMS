@@ -3,6 +3,7 @@ import { jsx, css ,keyframes} from '@emotion/core'
 import { useEffect, Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import { createBrowserHistory } from 'history';
 
 import { styleOfButton } from './template/styles';
 
@@ -75,11 +76,19 @@ const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: Logi
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [missed, setMissed] = useState<boolean>(false);
+  const [reDirect, setReDirect] = useState<boolean>(false);
+
+  useEffect(() => {
+    document.title = 'ログイン画面';
+    return () => {
+      setReDirect(false);
+    }
+  }, [])
 
   const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => { setEmail(e.target.value) };
   const passwordChange = (e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) };
   const submit = (e: React.MouseEvent<HTMLInputElement>) => {
-    e.preventDefault;
+    e.preventDefault();
     setMissed(false);
 
     let params = new URLSearchParams();
@@ -94,6 +103,7 @@ const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: Logi
           onSetLoggedIn(results.data.loggedIn);
           onSetLoginUser(results.data.userID);
           onSetAuthority(Number(results.data.authority));
+          setReDirect(true);
         }
       })
       .catch((error) => {
@@ -103,7 +113,7 @@ const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: Logi
 
   return (
     <Fragment>
-      { loggedIn ? <Redirect to='/LoggedIn' /> : null }
+      {reDirect ? <Redirect to='/home' /> : null}
       <div css={wrapper}>
         <main css={main}>
           <h1 css={title}>Login</h1>

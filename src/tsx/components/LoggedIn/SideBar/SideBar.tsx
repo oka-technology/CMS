@@ -5,6 +5,7 @@ import SideBarItem from './SideBarItem';
 
 type SideBarProps = {
   authority: Authority,
+  url: string,
 }
 
 const sideBar = css`
@@ -19,11 +20,11 @@ const sideBarList = css`
   padding: 0;
 `;
 
-const SideBar = ({authority}: SideBarProps): JSX.Element => {
+const SideBar = ({ authority, url }: SideBarProps): JSX.Element => {
   return (
     <aside css={sideBar}>
       <ul css={sideBarList}>
-        <SideBarItem authority={authority} />
+        <SideBarItem authority={authority} url={url}/>
       </ul>
     </aside>
   );

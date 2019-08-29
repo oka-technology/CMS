@@ -3,7 +3,7 @@ import { jsx, css } from '@emotion/core';
 import ReactDOM from 'react-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import '../index.html';
 import '../.htaccess';
@@ -79,16 +79,18 @@ const main = async () => {
     return(
       <div css={wrapper}>
         <BrowserRouter>
+          {location.pathname === '/' ? <Redirect to='/home' /> : null}
           <Switch>
-            <Route exact path='/' render={ props => <LoggedIn 
+            <Route path='/home' render={ props => <LoggedIn 
               loggedIn={loggedIn} 
               loginUser={loginUser} 
               authority={authority} 
               onSetLoggedIn={onSetLoggedIn} 
               onSetLoginUser={onSetLoginUser} 
               onSetAuthority={onSetAuthority}
+              match={props.match}
             />} />
-            <Route exact path='/Login' render={ props => <Login
+            <Route exact path='/login' render={ props => <Login
               loggedIn={loggedIn} 
               onSetLoggedIn={onSetLoggedIn} 
               onSetLoginUser={onSetLoginUser} 

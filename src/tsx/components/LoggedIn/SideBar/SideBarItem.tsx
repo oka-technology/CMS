@@ -11,6 +11,7 @@ type SideBarItemObject = {
 
 type SideBarItemProps = {
   authority: Authority,
+  url: string,
 }
 
 const listItem = css`
@@ -40,7 +41,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: false,
       viewer: false,
     },
-    link: '/users',
+    link: 'users',
   },
   {
     contents: 'ユーザー登録',
@@ -49,7 +50,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: false,
       viewer: false,
     },
-    link: '/registUser',
+    link: 'registUser',
   },
   {
     contents: 'コンテンツ一覧',
@@ -58,7 +59,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: true,
       viewer: true,
     },
-    link: '/contents',
+    link: 'contents',
   },
   {
     contents: 'コンテンツ登録',
@@ -67,7 +68,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: true,
       viewer: false,
     },
-    link: '/registContents',
+    link: 'registContents',
   },
   {
     contents: 'カテゴリ一覧',
@@ -76,7 +77,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: true,
       viewer: false,
     },
-    link: '/category',
+    link: 'category',
   },
   {
     contents: 'カテゴリ登録',
@@ -85,17 +86,17 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: true,
       viewer: false,
     },
-    link: '/registCategory',
+    link: 'registCategory',
   }
 ]
 
 const authorityList = ['admin', 'editor', 'viewer']
 
-const SideBarItem = ({authority}: SideBarItemProps): JSX.Element => {
+const SideBarItem = ({ authority, url }: SideBarItemProps): JSX.Element => {
   const item: (JSX.Element | undefined)[] = sideBarItemObject.map(object => {
     if (authorityList.some((elem: string) => object.requiredAuthority[elem] === authority[elem])) {
       return <li css={listItem} key={object.link}>
-        <Link to={object.link} css={listItemAnchor}>
+        <Link to={`${url}/${object.link}`} css={listItemAnchor}>
           {object.contents}
         </Link>
       </li>
