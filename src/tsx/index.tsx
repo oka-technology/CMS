@@ -3,9 +3,10 @@ import { jsx, css } from '@emotion/core';
 import ReactDOM from 'react-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import '../index.html';
+import '../.htaccess';
 import '../api/loginProcess.php';
 import '../api/checkWhetherLoggedIn.php';
 import '../api/logoutProcess.php';
@@ -77,9 +78,9 @@ const main = async () => {
 
     return(
       <div css={wrapper}>
-        <HashRouter>
+        <BrowserRouter>
           <Switch>
-            <Route exact path='/LoggedIn' render={ props => <LoggedIn 
+            <Route exact path='/' render={ props => <LoggedIn 
               loggedIn={loggedIn} 
               loginUser={loginUser} 
               authority={authority} 
@@ -87,14 +88,14 @@ const main = async () => {
               onSetLoginUser={onSetLoginUser} 
               onSetAuthority={onSetAuthority}
             />} />
-            <Route exact path='/' render={ props => <Login
+            <Route exact path='/Login' render={ props => <Login
               loggedIn={loggedIn} 
               onSetLoggedIn={onSetLoggedIn} 
               onSetLoginUser={onSetLoginUser} 
               onSetAuthority={onSetAuthority}
             />} />    
           </Switch>
-        </HashRouter>
+        </BrowserRouter>
       </div>
     );
   }

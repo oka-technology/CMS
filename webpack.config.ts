@@ -38,12 +38,7 @@ export default (): Configuration => ({
             },
           },
           'extract-loader',
-          {
-            loader: 'html-loader',
-            options: {
-              minimize: true
-            }
-          },
+          'html-loader',
         ],
       },
       {
@@ -71,6 +66,17 @@ export default (): Configuration => ({
             options: {
               name: '[name].[ext]',
               outputPath: 'api/',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.htaccess$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name]',
             },
           },
         ],
