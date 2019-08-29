@@ -1,6 +1,6 @@
-import * as path from 'path';
+import path from 'path';
 import { Configuration } from 'webpack';
-import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const __DEV__: boolean = process.env.NODE_ENV !== 'production';
 
