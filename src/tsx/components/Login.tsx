@@ -4,6 +4,8 @@ import { useEffect, Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
+import { styleOfButton } from './template/styles';
+
 type LoginProps = {
   loggedIn: boolean,
   onSetLoggedIn: (bool: boolean) => void,
@@ -110,7 +112,7 @@ const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: Logi
             <input css={formTextInput} type="text" id="Email" placeholder="Enter Email" value={email} onChange={emailChange} />
             <label css={formLabel} htmlFor="Password">Password</label>
             <input css={formTextInput} type="password" id="Password" placeholder="Password" value={password} onChange={passwordChange} />
-            <input type="submit" value="Login" onClick={submit} />
+            <input css={styleOfButton('#0528c2')} type="submit" value="Login" onClick={submit} />
           </form>
           {missed ? <p css={errorMessage} >EmailかPasswordが違います</p> : null }
         </main>
