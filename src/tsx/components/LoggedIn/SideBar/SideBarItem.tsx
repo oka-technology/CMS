@@ -94,7 +94,7 @@ const authorityList = ['admin', 'editor', 'viewer']
 const SideBarItem = ({authority}: SideBarItemProps): JSX.Element => {
   const item: (JSX.Element | undefined)[] = sideBarItemObject.map(object => {
     if (authorityList.some((elem: string) => object.requiredAuthority[elem] === authority[elem])) {
-      return <li css={listItem} key={object.contents}>
+      return <li css={listItem} key={object.link}>
         <Link to={object.link} css={listItemAnchor}>
           {object.contents}
         </Link>
