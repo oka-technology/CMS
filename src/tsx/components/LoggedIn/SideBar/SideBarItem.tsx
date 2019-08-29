@@ -40,7 +40,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: false,
       viewer: false,
     },
-    link: '/',
+    link: '/test',
   },
   {
     contents: 'ユーザー登録',
@@ -49,7 +49,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: false,
       viewer: false,
     },
-    link: '/',
+    link: '/registUser',
   },
   {
     contents: 'コンテンツ一覧',
@@ -58,7 +58,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: true,
       viewer: true,
     },
-    link: '/',
+    link: '/contents',
   },
   {
     contents: 'コンテンツ登録',
@@ -67,7 +67,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: true,
       viewer: false,
     },
-    link: '/',
+    link: '/registContents',
   },
   {
     contents: 'カテゴリ一覧',
@@ -76,7 +76,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: true,
       viewer: false,
     },
-    link: '/',
+    link: '/category',
   },
   {
     contents: 'カテゴリ登録',
@@ -85,7 +85,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: true,
       viewer: false,
     },
-    link: '/',
+    link: '/registCategory',
   }
 ]
 
