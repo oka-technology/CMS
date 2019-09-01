@@ -2,8 +2,7 @@
 import { jsx, css } from '@emotion/core';
 import { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
-import { BrowserRouter, Route, Switch, Redirect, match } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
+import { Route, Switch, Redirect, match } from 'react-router-dom';
 
 import Header from './Header';
 import Footer from './Footer';
