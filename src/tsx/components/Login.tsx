@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css ,keyframes} from '@emotion/core'
+import { jsx, css, keyframes } from '@emotion/core';
 import { useEffect, Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
@@ -7,11 +7,11 @@ import axios from 'axios';
 import Button from './template/Button';
 
 type LoginProps = {
-  loggedIn: boolean,
-  onSetLoggedIn: (bool: boolean) => void,
-  onSetLoginUser: (name: string) => void,
-  onSetAuthority: (authority: number) => void,
-}
+  loggedIn: boolean;
+  onSetLoggedIn: (bool: boolean) => void;
+  onSetLoginUser: (name: string) => void;
+  onSetAuthority: (authority: number) => void;
+};
 
 const wrapper = css`
   align-items: center;
@@ -23,19 +23,19 @@ const wrapper = css`
 
 const main = css`
   background-color: #fff;
-  border-radius: 2.0rem;
+  border-radius: 2rem;
   margin: auto;
-  padding: 2.0rem;
-  width: 80.0rem;
+  padding: 2rem;
+  width: 80rem;
 `;
 
 const title = css`
-  font-size: 3.0rem;
+  font-size: 3rem;
   margin: 0 0 1.5rem;
 `;
 
 const form = css`
-  & > *:first-child{
+  & > *:first-child {
     margin-top: 0;
   }
 `;
@@ -71,7 +71,7 @@ const errorMessage = css`
   animation: ${errorMessageAnimation} 0.7s ease-out;
 `;
 
-const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: LoginProps): JSX.Element => {
+const Login = ({ onSetLoggedIn, onSetLoginUser, onSetAuthority }: LoginProps): JSX.Element => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [missed, setMissed] = useState<boolean>(false);
@@ -81,11 +81,15 @@ const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: Logi
     document.title = 'ログイン画面';
     return () => {
       setReDirect(false);
-    }
-  }, [])
+    };
+  }, []);
 
-  const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => { setEmail(e.target.value) };
-  const passwordChange = (e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) };
+  const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+  const passwordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
   const submit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setMissed(false);
@@ -93,7 +97,8 @@ const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: Logi
     let params = new URLSearchParams();
     params.append('email', email);
     params.append('password', password);
-    axios.post('./api/loginProcess.php', params)
+    axios
+      .post('./api/loginProcess.php', params)
       .then((results) => {
         if (results.data.loggedIn === false) {
           setPassword('');
@@ -106,28 +111,47 @@ const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: Logi
         }
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.log(error);
       });
   };
 
   return (
     <Fragment>
-      {reDirect ? <Redirect to='/home' /> : null}
+      {reDirect ? <Redirect to="/home" /> : null}
       <div css={wrapper}>
         <main css={main}>
           <h1 css={title}>Login</h1>
           <form css={form}>
-            <label css={formLabel} htmlFor="Email">Email</label>
-            <input css={formTextInput} type="text" id="Email" placeholder="Enter Email" value={email} onChange={emailChange} />
-            <label css={formLabel} htmlFor="Password">Password</label>
-            <input css={formTextInput} type="password" id="Password" placeholder="Password" value={password} onChange={passwordChange} />
-            <Button as='submit' value='login' onClick={submit} bgColor='#0528c2'/>
+            <label css={formLabel} htmlFor="Email">
+              Email
+            </label>
+            <input
+              css={formTextInput}
+              type="text"
+              id="Email"
+              placeholder="Enter Email"
+              value={email}
+              onChange={emailChange}
+            />
+            <label css={formLabel} htmlFor="Password">
+              Password
+            </label>
+            <input
+              css={formTextInput}
+              type="password"
+              id="Password"
+              placeholder="Password"
+              value={password}
+              onChange={passwordChange}
+            />
+            <Button as="submit" value="login" onClick={submit} bgColor="#0528c2" />
           </form>
-          {missed ? <p css={errorMessage} >EmailかPasswordが違います</p> : null }
+          {missed ? <p css={errorMessage}>EmailかPasswordが違います</p> : null}
         </main>
       </div>
     </Fragment>
   );
-}
+};
 
 export default Login;

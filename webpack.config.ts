@@ -10,7 +10,7 @@ export default (): Configuration => ({
 
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
 
   plugins: [
@@ -24,9 +24,7 @@ export default (): Configuration => ({
       {
         test: /\.tsx?$/i,
         exclude: /node_modules/,
-        use: [
-          'ts-loader',
-        ],
+        use: ['ts-loader'],
       },
       {
         test: /\.html$/i,
@@ -83,9 +81,7 @@ export default (): Configuration => ({
       },
     ],
   },
-
   resolve: {
-    extensions: ['.js', '.ts', '.tsx']
+    extensions: ['.js', '.ts', '.tsx'],
   },
-
 });

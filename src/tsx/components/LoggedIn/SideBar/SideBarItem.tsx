@@ -1,25 +1,25 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core'
-import { useState, useEffect, Fragment } from 'react';
+import { jsx, css } from '@emotion/core';
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 type SideBarItemObject = {
-  link: string,
-  contents: string,
-  requiredAuthority: Authority,
-}
+  link: string;
+  contents: string;
+  requiredAuthority: Authority;
+};
 
 type SideBarItemProps = {
-  authority: Authority,
-  url: string,
-}
+  authority: Authority;
+  url: string;
+};
 
 const listItem = css`
   font-size: 1.5rem;
-  height: 4.0rem;
+  height: 4rem;
   margin: 0 auto;
-  width: 12.0rem;
-  & + &{
+  width: 12rem;
+  & + & {
     border-top: 1px solid #ddd;
   }
 `;
@@ -27,8 +27,8 @@ const listItem = css`
 const listItemAnchor = css`
   color: #eee;
   display: block;
-  height: 4.0rem;
-  line-height: 4.0rem;
+  height: 4rem;
+  line-height: 4rem;
   padding-left: 0.5rem;
   text-decoration: none;
 `;
@@ -68,7 +68,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: true,
       viewer: false,
     },
-    link: 'registContents',
+    link: 'registContent',
   },
   {
     contents: 'カテゴリ一覧',
@@ -87,26 +87,24 @@ const sideBarItemObject: SideBarItemObject[] = [
       viewer: false,
     },
     link: 'registCategory',
-  }
-]
+  },
+];
 
-const authorityList = ['admin', 'editor', 'viewer']
+const authorityList = ['admin', 'editor', 'viewer'];
 
 const SideBarItem = ({ authority, url }: SideBarItemProps): JSX.Element => {
-  const item: (JSX.Element | undefined)[] = sideBarItemObject.map(object => {
+  const item: (JSX.Element | undefined)[] = sideBarItemObject.map((object) => {
     if (authorityList.some((elem: string) => object.requiredAuthority[elem] === authority[elem])) {
-      return <li css={listItem} key={object.link}>
-        <Link to={`${url}/${object.link}`} css={listItemAnchor}>
-          {object.contents}
-        </Link>
-      </li>
+      return (
+        <li css={listItem} key={object.link}>
+          <Link to={`${url}/${object.link}`} css={listItemAnchor}>
+            {object.contents}
+          </Link>
+        </li>
+      );
     }
-  })
-  return (
-    <Fragment>
-      {item}
-    </Fragment>
-  )
-}
+  });
+  return <Fragment>{item}</Fragment>;
+};
 
 export default SideBarItem;
