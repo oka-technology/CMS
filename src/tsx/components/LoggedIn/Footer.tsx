@@ -19,7 +19,7 @@ const footerText = css`
 const Footer = (): JSX.Element => {
   return(
     <footer css={wrapper}>
-      <p css={footerText}><small>&copy; 2019 Kaoru Okazoe</small></p>
+      <p css={footerText}><small>&copy; 2019 OKA TECHNOLOGY</small></p>
     </footer>
   );
 }
