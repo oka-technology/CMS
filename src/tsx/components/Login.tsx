@@ -3,9 +3,8 @@ import { jsx, css ,keyframes} from '@emotion/core'
 import { useEffect, Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { createBrowserHistory } from 'history';
 
-import { styleOfButton } from './template/styles';
+import Button from './template/Button';
 
 type LoginProps = {
   loggedIn: boolean,
@@ -87,7 +86,7 @@ const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: Logi
 
   const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => { setEmail(e.target.value) };
   const passwordChange = (e: React.ChangeEvent<HTMLInputElement>) => { setPassword(e.target.value) };
-  const submit = (e: React.MouseEvent<HTMLInputElement>) => {
+  const submit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setMissed(false);
 
@@ -122,7 +121,7 @@ const Login = ({ loggedIn, onSetLoggedIn, onSetLoginUser, onSetAuthority }: Logi
             <input css={formTextInput} type="text" id="Email" placeholder="Enter Email" value={email} onChange={emailChange} />
             <label css={formLabel} htmlFor="Password">Password</label>
             <input css={formTextInput} type="password" id="Password" placeholder="Password" value={password} onChange={passwordChange} />
-            <input css={styleOfButton('#0528c2')} type="submit" value="Login" onClick={submit} />
+            <Button as='submit' value='login' onClick={submit} bgColor='#0528c2'/>
           </form>
           {missed ? <p css={errorMessage} >EmailかPasswordが違います</p> : null }
         </main>
