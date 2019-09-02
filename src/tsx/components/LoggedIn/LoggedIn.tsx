@@ -1,22 +1,12 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { useEffect, Fragment } from 'react';
-import { Route, Switch, Redirect, match } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './Header';
 import Footer from './Footer';
 import SideBar from './SideBar/SideBar';
 import Users from './Main/Users/Users';
-
-type LoggedInProps = {
-  loggedIn: boolean;
-  loginUser: string;
-  authority: Authority;
-  onSetLoggedIn: (bool: boolean) => void;
-  onSetLoginUser: (name: string) => void;
-  onSetAuthority: (authority: number) => void;
-  match: match;
-};
 
 const insideWrapper = css`
   display: flex;
@@ -27,6 +17,16 @@ const main = css`
   padding: 0 2rem;
 `;
 
+type LoggedInProps = {
+  loggedIn: boolean;
+  loginUser: string;
+  authority: Authority;
+  onSetLoggedIn: (bool: boolean) => void;
+  onSetLoginUser: (name: string) => void;
+  onSetAuthority: (authority: number) => void;
+  urlOfTopPage: string;
+};
+
 const LoggedIn = ({
   loggedIn,
   loginUser,
@@ -34,7 +34,7 @@ const LoggedIn = ({
   onSetAuthority,
   onSetLoggedIn,
   onSetLoginUser,
-  match,
+  urlOfTopPage,
 }: LoggedInProps): JSX.Element => {
   useEffect(() => {
     if (loggedIn) {
@@ -53,10 +53,10 @@ const LoggedIn = ({
         onSetAuthority={onSetAuthority}
       />
       <div css={insideWrapper}>
-        <SideBar authority={authority} url={match.url} />
+        <SideBar authority={authority} urlOfTopPage={urlOfTopPage} />
         <main css={main}>
           <Switch>
-            <Route path={`${match.url}/users`} render={() => <Users />} />
+            <Route path={`${urlOfTopPage}/users`} render={() => <Users urlOfTopPage={urlOfTopPage} />} />
           </Switch>
         </main>
       </div>

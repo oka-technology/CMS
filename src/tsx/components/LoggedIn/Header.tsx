@@ -2,14 +2,6 @@
 import { jsx, css } from '@emotion/core';
 import axios from 'axios';
 
-type HeaderProps = {
-  loginUser: string;
-  authority: Authority;
-  onSetLoggedIn: (bool: boolean) => void;
-  onSetLoginUser: (name: string) => void;
-  onSetAuthority: (authority: number) => void;
-};
-
 const wrapper = css`
   align-items: center;
   background-color: #555;
@@ -53,6 +45,14 @@ const logoutImage = css`
   transform: rotate(180deg);
   width: 1.8rem;
 `;
+
+type HeaderProps = {
+  loginUser: string;
+  authority: Authority;
+  onSetLoggedIn: (bool: boolean) => void;
+  onSetLoginUser: (name: string) => void;
+  onSetAuthority: (authority: number) => void;
+};
 
 const authorityToString = ({ admin, editor, viewer }: Authority): string => {
   const arr = [];

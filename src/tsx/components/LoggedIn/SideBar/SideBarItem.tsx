@@ -3,17 +3,6 @@ import { jsx, css } from '@emotion/core';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-type SideBarItemObject = {
-  link: string;
-  contents: string;
-  requiredAuthority: Authority;
-};
-
-type SideBarItemProps = {
-  authority: Authority;
-  url: string;
-};
-
 const listItem = css`
   font-size: 1.5rem;
   height: 4rem;
@@ -32,6 +21,17 @@ const listItemAnchor = css`
   padding-left: 0.5rem;
   text-decoration: none;
 `;
+
+type SideBarItemObject = {
+  link: string;
+  contents: string;
+  requiredAuthority: Authority;
+};
+
+type SideBarItemProps = {
+  authority: Authority;
+  urlOfTopPage: string;
+};
 
 const sideBarItemObject: SideBarItemObject[] = [
   {
@@ -92,12 +92,12 @@ const sideBarItemObject: SideBarItemObject[] = [
 
 const authorityList = ['admin', 'editor', 'viewer'];
 
-const SideBarItem = ({ authority, url }: SideBarItemProps): JSX.Element => {
+const SideBarItem = ({ authority, urlOfTopPage }: SideBarItemProps): JSX.Element => {
   const item: (JSX.Element | undefined)[] = sideBarItemObject.map((object) => {
     if (authorityList.some((elem: string) => object.requiredAuthority[elem] === authority[elem])) {
       return (
         <li css={listItem} key={object.link}>
-          <Link to={`${url}/${object.link}`} css={listItemAnchor}>
+          <Link to={`${urlOfTopPage}/${object.link}`} css={listItemAnchor}>
             {object.contents}
           </Link>
         </li>

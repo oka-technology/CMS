@@ -6,13 +6,6 @@ import axios from 'axios';
 
 import Button from './template/Button';
 
-type LoginProps = {
-  loggedIn: boolean;
-  onSetLoggedIn: (bool: boolean) => void;
-  onSetLoginUser: (name: string) => void;
-  onSetAuthority: (authority: number) => void;
-};
-
 const wrapper = css`
   align-items: center;
   display: flex;
@@ -70,6 +63,13 @@ const errorMessage = css`
   margin-bottom: 0;
   animation: ${errorMessageAnimation} 0.7s ease-out;
 `;
+
+type LoginProps = {
+  loggedIn: boolean;
+  onSetLoggedIn: (bool: boolean) => void;
+  onSetLoginUser: (name: string) => void;
+  onSetAuthority: (authority: number) => void;
+};
 
 const Login = ({ onSetLoggedIn, onSetLoginUser, onSetAuthority }: LoginProps): JSX.Element => {
   const [email, setEmail] = useState<string>('');

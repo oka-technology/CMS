@@ -3,11 +3,6 @@ import { jsx, css } from '@emotion/core';
 
 import SideBarItem from './SideBarItem';
 
-type SideBarProps = {
-  authority: Authority;
-  url: string;
-};
-
 const sideBar = css`
   background-color: #777;
   width: 15%;
@@ -20,11 +15,16 @@ const sideBarList = css`
   padding: 0;
 `;
 
-const SideBar = ({ authority, url }: SideBarProps): JSX.Element => {
+type SideBarProps = {
+  authority: Authority;
+  urlOfTopPage: string;
+};
+
+const SideBar = ({ authority, urlOfTopPage }: SideBarProps): JSX.Element => {
   return (
     <aside css={sideBar}>
       <ul css={sideBarList}>
-        <SideBarItem authority={authority} url={url} />
+        <SideBarItem authority={authority} urlOfTopPage={urlOfTopPage} />
       </ul>
     </aside>
   );
