@@ -1,13 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { Fragment } from 'react';
-
-type ButtonProps = {
-  as: 'submit' | 'button' | 'anchor';
-  value: string;
-  onClick: (e: React.MouseEvent<HTMLElement>) => void;
-  bgColor: string;
-};
+import { Link } from 'react-router-dom';
 
 const buttonStyle = (bgColor: string) => css`
   align-items: center;
@@ -19,7 +13,7 @@ const buttonStyle = (bgColor: string) => css`
   font-size: 1.6rem;
   height: 4rem;
   justify-content: center;
-  margin-top: 2.5rem;
+  margin-top: 2rem;
   text-decoration: none;
   transition: transform 0.1s;
   width: 10rem;
@@ -30,7 +24,15 @@ const buttonStyle = (bgColor: string) => css`
   }
 `;
 
-const Button = ({ as, value, onClick, bgColor }: ButtonProps): JSX.Element => {
+type ButtonProps = {
+  as: 'submit' | 'button' | 'anchor' | 'routerLink';
+  value: string;
+  onClick: (e: React.MouseEvent<HTMLElement>) => void;
+  bgColor: string;
+  to?: string;
+};
+
+const Button = ({ as, value, onClick, bgColor, to }: ButtonProps): JSX.Element => {
   if (as === 'submit') {
     return <input css={buttonStyle(bgColor)} type="submit" value={value} onClick={onClick} />;
   } else if (as === 'button') {
@@ -41,9 +43,15 @@ const Button = ({ as, value, onClick, bgColor }: ButtonProps): JSX.Element => {
     );
   } else if (as === 'anchor') {
     return (
-      <a css={buttonStyle(bgColor)} onClick={onClick}>
+      <a css={buttonStyle(bgColor)} onClick={onClick} href={to}>
         {value}
       </a>
+    );
+  } else if (as === 'routerLink' && to !== undefined) {
+    return (
+      <Link css={buttonStyle(bgColor)} onClick={onClick} to={to}>
+        {value}
+      </Link>
     );
   } else {
     return <Fragment />;
