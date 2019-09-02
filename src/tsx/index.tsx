@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import ReactDOM from 'react-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
@@ -19,12 +19,6 @@ import 'sanitize.css/typography.css';
 import 'sanitize.css/forms.css';
 import './global.css';
 
-type data = {
-  loggedin: boolean,
-  loginUser: string,
-  authority: Authority,
-}
-
 const wrapper = css`
   display: flex;
   flex-direction: column;
@@ -36,13 +30,19 @@ const wrapper = css`
   height: 100%;
 `;
 
+type data = {
+  loggedin: boolean;
+  loginUser: string;
+  authority: Authority;
+};
+
 const convertAuthorityToObject = (authority: number): Authority => {
   const authorityBinary: string = authority.toString(2);
   const admin: boolean = authorityBinary[2] === '1';
   const editor: boolean = authorityBinary[1] === '1';
   const viewer: boolean = authorityBinary[0] === '1';
-  return{ admin, editor, viewer, }
-}
+  return { admin, editor, viewer };
+};
 
 const data: data = {
   loggedin: false,
@@ -51,13 +51,15 @@ const data: data = {
 };
 
 const main = async () => {
-  await axios.post('./api/checkWhetherLoggedIn.php')
+  await axios
+    .post('./api/checkWhetherLoggedIn.php')
     .then((results) => {
       data.loggedin = results.data.loggedIn;
       data.loginUser = results.data.userID;
       data.authority = convertAuthorityToObject(Number(results.data.authority));
     })
     .catch((error) => {
+      // eslint-disable-next-line no-console
       console.log(error);
     });
 
@@ -68,41 +70,52 @@ const main = async () => {
 
     const onSetLoggedIn = (bool: boolean): void => {
       setLoggedIn(bool);
-    }
+    };
     const onSetLoginUser = (name: string): void => {
       setLoginUser(name);
-    }
+    };
     const onSetAuthority = (authority: number): void => {
       setAuthority(convertAuthorityToObject(authority));
-    }
+    };
 
-    return(
+    return (
       <div css={wrapper}>
         <BrowserRouter>
-          {location.pathname === '/' ? <Redirect to='/home' /> : null}
+          {location.pathname === '/' ? <Redirect to="/home" /> : null}
           <Switch>
-            <Route path='/home' render={ props => <LoggedIn 
-              loggedIn={loggedIn} 
-              loginUser={loginUser} 
-              authority={authority} 
-              onSetLoggedIn={onSetLoggedIn} 
-              onSetLoginUser={onSetLoginUser} 
-              onSetAuthority={onSetAuthority}
-              match={props.match}
-            />} />
-            <Route exact path='/login' render={ props => <Login
-              loggedIn={loggedIn} 
-              onSetLoggedIn={onSetLoggedIn} 
-              onSetLoginUser={onSetLoginUser} 
-              onSetAuthority={onSetAuthority}
-            />} />    
+            <Route
+              path="/home"
+              render={(props) => (
+                <LoggedIn
+                  loggedIn={loggedIn}
+                  loginUser={loginUser}
+                  authority={authority}
+                  onSetLoggedIn={onSetLoggedIn}
+                  onSetLoginUser={onSetLoginUser}
+                  onSetAuthority={onSetAuthority}
+                  urlOfTopPage={props.match.url}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/login"
+              render={() => (
+                <Login
+                  loggedIn={loggedIn}
+                  onSetLoggedIn={onSetLoggedIn}
+                  onSetLoginUser={onSetLoginUser}
+                  onSetAuthority={onSetAuthority}
+                />
+              )}
+            />
           </Switch>
         </BrowserRouter>
       </div>
     );
-  }
+  };
 
   ReactDOM.render(<App />, document.querySelector('#App'));
-}
+};
 
 main();
