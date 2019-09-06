@@ -17,7 +17,7 @@ import Login from './components/Login';
 import 'sanitize.css';
 import 'sanitize.css/typography.css';
 import 'sanitize.css/forms.css';
-import './global.css';
+import '../global.css';
 
 const wrapper = css`
   display: flex;
