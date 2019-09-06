@@ -29,14 +29,14 @@ const title = css`
 
 const form = css`
   & > *:first-child {
-    margin-top: 0;
+    margin-top: 2.5rem;
   }
 `;
 
 const formLabel = css`
   display: block;
   font-size: 1.6rem;
-  margin-top: 2.5rem;
+  margin-top: 2rem;
 `;
 
 const formTextInput = css`
@@ -121,31 +121,17 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetAuthority }: LoginProps): J
       {reDirect ? <Redirect to="/home" /> : null}
       <div css={wrapper}>
         <main css={main}>
-          <h1 css={title}>Login</h1>
-          <form css={form}>
+          <h1 css={title}>Log in</h1>
+          <form css={form} autoComplete="on">
             <label css={formLabel} htmlFor="Email">
               Email
             </label>
-            <input
-              css={formTextInput}
-              type="text"
-              id="Email"
-              placeholder="Enter Email"
-              value={email}
-              onChange={emailChange}
-            />
+            <input css={formTextInput} type="text" id="Email" value={email} onChange={emailChange} />
             <label css={formLabel} htmlFor="Password">
               Password
             </label>
-            <input
-              css={formTextInput}
-              type="password"
-              id="Password"
-              placeholder="Password"
-              value={password}
-              onChange={passwordChange}
-            />
-            <Button as="submit" value="login" onClick={submit} bgColor="#0528c2" />
+            <input css={formTextInput} type="password" id="Password" value={password} onChange={passwordChange} />
+            <Button as="submit" value="Log in" onClick={submit} bgColor="#0528c2" margin="3rem 0 0" />
           </form>
           {missed ? <p css={errorMessage}>EmailかPasswordが違います</p> : null}
         </main>
