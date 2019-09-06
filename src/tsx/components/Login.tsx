@@ -25,6 +25,7 @@ const main = css`
 const title = css`
   font-size: 3rem;
   margin: 0 0 1.5rem;
+  text-align: center;
 `;
 
 const form = css`
@@ -33,17 +34,17 @@ const form = css`
   }
 `;
 
-const formLabel = css`
-  display: block;
-  font-size: 1.6rem;
-  margin-top: 2rem;
-`;
-
 const formTextInput = css`
+  border-radius: 0.5rem;
   display: block;
   font-size: 1.6rem;
-  margin-top: 0.7rem;
+  height: 4rem;
+  margin-top: 2rem;
   width: 100%;
+
+  &::placeholder {
+    color: #777;
+  }
 `;
 
 const errorMessageAnimation = keyframes`
@@ -123,19 +124,27 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetAuthority }: LoginProps): J
         <main css={main}>
           <h1 css={title}>Log in</h1>
           <form css={form} autoComplete="on">
-            <label css={formLabel} htmlFor="Email">
-              Email
-            </label>
-            <input css={formTextInput} type="text" id="Email" value={email} onChange={emailChange} />
-            <label css={formLabel} htmlFor="Password">
-              Password
-            </label>
-            <input css={formTextInput} type="password" id="Password" value={password} onChange={passwordChange} />
+            <input
+              css={formTextInput}
+              type="text"
+              placeholder="Email"
+              id="Email"
+              value={email}
+              onChange={emailChange}
+            />
+            <input
+              css={formTextInput}
+              type="password"
+              placeholder="Password"
+              id="Password"
+              value={password}
+              onChange={passwordChange}
+            />
             <Button
               as="submit"
               value="Log in"
               onClick={submit}
-              style={{ width: '100%', backgroundColor: '#0528c2', margin: '4.5rem auto 0' }}
+              style={{ width: '100%', backgroundColor: '#0528c2', margin: '3.5rem auto 0' }}
               hoverStyle={{ transform: 'scale(1.05)' }}
             />
           </form>
