@@ -8,10 +8,10 @@
     "jsx": "react",
     "typeRoots": [
       "node_modules/@types",
-      "src/tsx/types",
+      "src/tsx/types"
     ]
   },
   "exclude": [
-    "node_modules",
+    "node_modules"
   ]
 }
