@@ -19,7 +19,7 @@ const main = css`
   border-radius: 2rem;
   margin: auto;
   padding: 2rem;
-  width: 80rem;
+  width: 50rem;
 `;
 
 const title = css`
@@ -131,7 +131,13 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetAuthority }: LoginProps): J
               Password
             </label>
             <input css={formTextInput} type="password" id="Password" value={password} onChange={passwordChange} />
-            <Button as="submit" value="Log in" onClick={submit} bgColor="#0528c2" margin="3rem 0 0" />
+            <Button
+              as="submit"
+              value="Log in"
+              onClick={submit}
+              style={{ width: '100%', backgroundColor: '#0528c2', margin: '4.5rem auto 0' }}
+              hoverStyle={{ transform: 'scale(1.05)' }}
+            />
           </form>
           {missed ? <p css={errorMessage}>EmailかPasswordが違います</p> : null}
         </main>

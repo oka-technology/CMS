@@ -1,26 +1,27 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { Fragment } from 'react';
+import { Fragment, CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 
-const buttonStyle = (bgColor: string, margin: string) => css`
+const buttonStyle = (style: CSSProperties, hoverStyle: CSSProperties) => css`
   align-items: center;
-  background-color: ${bgColor};
   border-radius: 0.5rem;
+  border: 0px;
   color: #fff;
   cursor: pointer;
   display: flex;
   font-size: 1.6rem;
   height: 4rem;
   justify-content: center;
-  margin: ${margin};
   text-decoration: none;
   transition: transform 0.1s;
   width: 10rem;
+  ${convertCSSPropertiesObjectToString(style)}
 
   &:hover {
     transform: scale(1.15);
     transition: transform 0.1s cubic-bezier(0.22, 0.61, 0.36, 1);
+    ${convertCSSPropertiesObjectToString(hoverStyle)}
   }
 `;
 
@@ -28,29 +29,48 @@ type ButtonProps = {
   as: 'submit' | 'button' | 'anchor' | 'routerLink';
   value: string;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
-  bgColor: string;
-  margin: string;
   to?: string;
+  style?: CSSProperties;
+  hoverStyle?: CSSProperties;
 };
 
-const Button = ({ as, value, onClick, bgColor, margin, to }: ButtonProps): JSX.Element => {
+interface CSSPropertiesWithIndex extends CSSProperties {
+  [key: string]: any;
+}
+
+const convertCSSPropertiesObjectToString = (obj: CSSPropertiesWithIndex) => {
+  if (obj === {}) return '';
+  const properties: string[] = Object.keys(obj);
+  const convertedText: string = properties
+    .map((propertie: string) => {
+      const stringSeparatedBeforeUpperCase = propertie.match(/[A-Z][a-z]+|^[a-z][a-z]+/g);
+      if (stringSeparatedBeforeUpperCase === null) return `${propertie}: ${obj[propertie]};`;
+      return `${stringSeparatedBeforeUpperCase.map((str) => str.toLowerCase()).join('-')}: ${obj[propertie]};`;
+    })
+    .join('');
+  return convertedText;
+};
+
+const Button = ({ as, value, onClick, to, style, hoverStyle }: ButtonProps): JSX.Element => {
+  const styleObj = style === undefined ? {} : style;
+  const hoverStyleObj = hoverStyle === undefined ? {} : hoverStyle;
   if (as === 'submit') {
-    return <input css={buttonStyle(bgColor, margin)} type="submit" value={value} onClick={onClick} />;
+    return <input css={buttonStyle(styleObj, hoverStyleObj)} type="submit" value={value} onClick={onClick} />;
   } else if (as === 'button') {
     return (
-      <button css={buttonStyle(bgColor, margin)} onClick={onClick}>
+      <button css={buttonStyle(styleObj, hoverStyleObj)} onClick={onClick}>
         {value}
       </button>
     );
   } else if (as === 'anchor' && to !== undefined) {
     return (
-      <a css={buttonStyle(bgColor, margin)} href={to}>
+      <a css={buttonStyle(styleObj, hoverStyleObj)} href={to}>
         {value}
       </a>
     );
   } else if (as === 'routerLink' && to !== undefined) {
     return (
-      <Link css={buttonStyle(bgColor, margin)} to={to}>
+      <Link css={buttonStyle(styleObj, hoverStyleObj)} to={to}>
         {value}
       </Link>
     );
