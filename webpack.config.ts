@@ -1,24 +1,25 @@
 import path from 'path';
 import { Configuration } from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 
 const __DEV__: boolean = process.env.NODE_ENV !== 'production';
 
 export default (): Configuration => ({
-  mode: 'development',
+  mode: __DEV__ ? 'development' : 'production',
+  optimization: {
+    minimizer: [new TerserPlugin({})],
+  },
   entry: path.resolve(__dirname, 'src/tsx/index.tsx'),
-
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
-
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'style.css',
     }),
   ],
-
   module: {
     rules: [
       {
