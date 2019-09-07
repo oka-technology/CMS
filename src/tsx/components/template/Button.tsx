@@ -34,22 +34,13 @@ type ButtonProps = {
   hoverStyle?: CSSProperties;
 };
 
-interface CSSPropertiesWithIndex extends CSSProperties {
-  [key: string]: any;
-}
-
-const convertCSSPropertiesObjectToString = (obj: CSSPropertiesWithIndex) => {
-  if (obj === {}) return '';
-  const properties: string[] = Object.keys(obj);
-  const convertedText: string = properties
-    .map((propertie: string) => {
-      const stringSeparatedBeforeUpperCase = propertie.match(/[A-Z][a-z]+|^[a-z][a-z]+/g);
-      if (stringSeparatedBeforeUpperCase === null) return `${propertie}: ${obj[propertie]};`;
-      return `${stringSeparatedBeforeUpperCase.map((str) => str.toLowerCase()).join('-')}: ${obj[propertie]};`;
+const convertCSSPropertiesObjectToString = (objCSS: CSSProperties) =>
+  Object.entries(objCSS)
+    .map(([name, value]: string[]) => {
+      const replacedName = name.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
+      return `${replacedName}: ${value};`;
     })
     .join('');
-  return convertedText;
-};
 
 const Button = ({ as, value, onClick, to, style, hoverStyle }: ButtonProps): JSX.Element => {
   const styleObj = style === undefined ? {} : style;
