@@ -123,7 +123,7 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetAuthority }: LoginProps): J
       {reDirect ? <Redirect to="/home" /> : null}
       <div css={wrapper}>
         <main css={main}>
-          <h1 css={title}>Log in</h1>
+          <h1 css={title}>CMS</h1>
           <form css={form} autoComplete="on">
             <input
               css={formTextInput}
