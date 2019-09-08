@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { convertAuthorityNumToObject } from './modules/convertAuthority';
 
 import '../index.html';
 import '../.htaccess';
@@ -11,6 +12,7 @@ import '../api/loginProcess.php';
 import '../api/checkWhetherLoggedIn.php';
 import '../api/logoutProcess.php';
 import '../api/userList.php';
+import '../api/convertAuthority.php';
 
 import LoggedIn from './components/LoggedIn/LoggedIn';
 import Login from './components/Login';
@@ -31,24 +33,16 @@ const wrapper = css`
   height: 100%;
 `;
 
-type data = {
+type Data = {
   loggedin: boolean;
   loginUser: string;
   authority: Authority;
 };
 
-const convertAuthorityToObject = (authority: number): Authority => {
-  const authorityBinary: string = authority.toString(2);
-  const admin: boolean = authorityBinary[2] === '1';
-  const editor: boolean = authorityBinary[1] === '1';
-  const viewer: boolean = authorityBinary[0] === '1';
-  return { admin, editor, viewer };
-};
-
-const data: data = {
+const data: Data = {
   loggedin: false,
   loginUser: '',
-  authority: convertAuthorityToObject(0),
+  authority: convertAuthorityNumToObject(0),
 };
 
 const main = async () => {
@@ -57,7 +51,7 @@ const main = async () => {
     .then((results) => {
       data.loggedin = results.data.loggedIn;
       data.loginUser = results.data.userID;
-      data.authority = convertAuthorityToObject(Number(results.data.authority));
+      data.authority = convertAuthorityNumToObject(Number(results.data.authority));
     })
     .catch((error) => {
       // eslint-disable-next-line no-console
@@ -76,7 +70,7 @@ const main = async () => {
       setLoginUser(name);
     };
     const onSetAuthority = (authority: number): void => {
-      setAuthority(convertAuthorityToObject(authority));
+      setAuthority(convertAuthorityNumToObject(authority));
     };
 
     return (
