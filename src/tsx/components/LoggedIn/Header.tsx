@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import axios from 'axios';
+import { convertAuthorityObjectToString } from '../../modules/convertAuthority';
 
 const wrapper = css`
   align-items: center;
@@ -54,14 +55,6 @@ type HeaderProps = {
   onSetAuthority: (authority: number) => void;
 };
 
-const authorityToString = ({ admin, editor, viewer }: Authority): string => {
-  const arr = [];
-  admin ? arr.push('管理者') : null;
-  editor ? arr.push('編集者') : null;
-  viewer ? arr.push('閲覧者') : null;
-  return arr.join(', ');
-};
-
 const Header = ({ loginUser, authority, onSetAuthority, onSetLoggedIn, onSetLoginUser }: HeaderProps): JSX.Element => {
   const onLogout = (e: React.MouseEvent<HTMLAnchorElement>): void => {
     e.preventDefault;
@@ -85,7 +78,7 @@ const Header = ({ loginUser, authority, onSetAuthority, onSetLoggedIn, onSetLogi
       <p css={siteName}>CMS</p>
       <div css={rightItem}>
         <p css={user}>
-          {loginUser}でログイン中（{authorityToString(authority)}）
+          {loginUser}でログイン中（{convertAuthorityObjectToString(authority)}）
         </p>
         <a css={logoutAnchor} onClick={onLogout}>
           <svg css={logoutImage} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 570 487.88">
