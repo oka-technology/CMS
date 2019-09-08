@@ -2,6 +2,7 @@
 import { jsx, css } from '@emotion/core';
 import axios from 'axios';
 import { convertAuthorityObjectToString } from '../../modules/convertAuthority';
+import bp from '../../modules/mediaQuery';
 
 const wrapper = css`
   align-items: center;
@@ -10,7 +11,11 @@ const wrapper = css`
   flex-shrink: 0;
   height: 6rem;
   justify-content: space-between;
-  padding: 0 3rem;
+  padding: 0 2rem;
+
+  ${bp} {
+    padding: 0 calc(2rem + (100% - 120rem) / 2);
+  }
 `;
 
 const siteName = css`

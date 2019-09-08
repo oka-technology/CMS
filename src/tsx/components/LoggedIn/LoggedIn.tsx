@@ -15,6 +15,8 @@ const insideWrapper = css`
 
 const main = css`
   flex-grow: 1;
+  margin: 0 auto 0 0;
+  max-width: 101rem;
   padding: 0 2rem;
 `;
 

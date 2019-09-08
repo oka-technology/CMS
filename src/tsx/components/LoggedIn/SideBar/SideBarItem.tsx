@@ -4,22 +4,42 @@ import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 const listItem = css`
-  font-size: 1.5rem;
-  height: 4rem;
+  display: flex;
+  font-size: 1.6rem;
+  height: 6rem;
+  justify-content: center;
   margin: 0 auto;
-  width: 12rem;
+  width: 15rem;
   & + & {
     border-top: 1px solid #ddd;
   }
 `;
 
-const listItemAnchor = css`
-  color: #eee;
-  display: block;
-  height: 4rem;
+const listItemAnchor = (now: boolean) => css`
+  align-items: center;
+  background-color: ${now ? '#444' : null};
+  border-radius: 0.5rem;
+  color: #fff;
+  display: flex;
+  height: 5.9rem;
   line-height: 4rem;
-  padding-left: 0.5rem;
+  padding-left: 1.2rem;
   text-decoration: none;
+  width: 16rem;
+
+  &:hover {
+    background-color: ${now ? '#444' : '#888'};
+  }
+`;
+
+const triangle = css`
+  border-top: 0.4rem solid transparent;
+  border-left: 0.6rem solid #fff;
+  border-bottom: 0.4rem solid transparent;
+  display: block;
+  height: 0.8rem;
+  margin-right: 1rem;
+  width: 0.8rem;
 `;
 
 type SideBarItemObject = {
@@ -95,9 +115,11 @@ const authorityList = ['admin', 'editor', 'viewer'];
 const SideBarItem = ({ authority, urlOfTopPage }: SideBarItemProps): JSX.Element => {
   const item: (JSX.Element | undefined)[] = sideBarItemObject.map((object) => {
     if (authorityList.some((elem: string) => object.requiredAuthority[elem] === authority[elem])) {
+      const link: string = `${urlOfTopPage}/${object.link}`;
       return (
         <li css={listItem} key={object.link}>
-          <Link to={`${urlOfTopPage}/${object.link}`} css={listItemAnchor}>
+          <Link to={link} css={listItemAnchor(location.pathname === link)}>
+            <span css={triangle}></span>
             {object.contents}
           </Link>
         </li>
