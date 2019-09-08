@@ -2,9 +2,9 @@
 import { jsx } from '@emotion/core';
 import { Fragment } from 'react';
 
-import Title from '../../../template/Title';
-import Button from '../../../template/Button';
-import { Table, THead, TRow, TH } from '../../../template/Table';
+import Title from '../../../../template/Title';
+import Button from '../../../../template/Button';
+import { Table, THead, TRow, TH } from '../../../../template/Table';
 import UserList from './UserList';
 
 type UsersProps = {

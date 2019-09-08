@@ -4,7 +4,7 @@ import { useEffect, Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-import Button from './template/Button';
+import Button from '../template/Button';
 
 const wrapper = css`
   align-items: center;
@@ -81,6 +81,7 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetAuthority }: LoginProps): J
   useEffect(() => {
     document.title = 'ログイン画面';
     return () => {
+      document.title = '';
       setReDirect(false);
     };
   }, []);
