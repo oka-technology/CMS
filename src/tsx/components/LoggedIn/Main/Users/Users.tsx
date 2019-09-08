@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import Title from '../../../../template/Title';
 import Button from '../../../../template/Button';
@@ -17,6 +17,9 @@ type UsersProps = {
 };
 
 const Users = ({ urlOfTopPage }: UsersProps): JSX.Element => {
+  useEffect(() => {
+    document.title = 'ユーザー一覧';
+  }, []);
   return (
     <Fragment>
       <div css={titleWrapperStyle}>
