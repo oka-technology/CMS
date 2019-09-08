@@ -10,6 +10,7 @@ import '../.htaccess';
 import '../api/loginProcess.php';
 import '../api/checkWhetherLoggedIn.php';
 import '../api/logoutProcess.php';
+import '../api/userList.php';
 
 import LoggedIn from './components/LoggedIn/LoggedIn';
 import Login from './components/Login';
