@@ -19,7 +19,7 @@ const buttonStyle = (style: CSSProperties, hoverStyle: CSSProperties) => css`
   ${convertCSSPropertiesObjectToString(style)}
 
   &:hover {
-    transform: scale(1.15);
+    transform: scale(1.25);
     transition: transform 0.1s cubic-bezier(0.22, 0.61, 0.36, 1);
     ${convertCSSPropertiesObjectToString(hoverStyle)}
   }

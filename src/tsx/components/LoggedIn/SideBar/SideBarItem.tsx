@@ -26,9 +26,11 @@ const listItemAnchor = (now: boolean) => css`
   padding-left: 1.2rem;
   text-decoration: none;
   width: 16rem;
+  transition: transform 0.1s;
 
   &:hover {
-    background-color: ${now ? '#444' : '#888'};
+    background-color: ${now ? '#444' : '#aaa'};
+    transform: ${now ? null : 'scale(1.2)'};
   }
 `;
 
