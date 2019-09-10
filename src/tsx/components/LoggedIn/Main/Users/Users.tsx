@@ -36,7 +36,7 @@ const Users = ({ urlOfTopPage }: UsersProps): JSX.Element => {
           <TRow>
             <TH width="15%">ID</TH>
             <TH width="30%">User</TH>
-            <TH width="55%">Authority</TH>
+            <TH width="55%">Permission</TH>
           </TRow>
         </THead>
         <UserList />

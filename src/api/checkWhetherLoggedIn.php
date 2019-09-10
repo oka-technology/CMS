@@ -6,11 +6,11 @@
   if(isset($_SESSION['user'])){
     $result['loggedIn'] = true;
     $result['userID'] = $_SESSION['user'];
-    $result['authority'] = $_SESSION['authority'];
+    $result['permission'] = $_SESSION['permission'];
   } else {
     $result['loggedIn'] = false;
     $result['userID'] = '';
-    $result['authority'] = '0';
+    $result['permission'] = '0';
   } 
   
   echo(json_encode($result, JSON_PRETTY_PRINT));

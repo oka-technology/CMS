@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import axios from 'axios';
-import { convertAuthorityObjectToString } from '../../modules/convertAuthority';
+import { convertPermissionObjectToString } from '../../modules/convertPermission';
 import bp from '../../modules/mediaQuery';
 
 const wrapper = css`
@@ -54,13 +54,19 @@ const logoutImage = css`
 
 type HeaderProps = {
   loginUser: string;
-  authority: Authority;
+  permission: Permission;
   onSetLoggedIn: (bool: boolean) => void;
   onSetLoginUser: (name: string) => void;
-  onSetAuthority: (authority: number) => void;
+  onSetPermission: (permission: number) => void;
 };
 
-const Header = ({ loginUser, authority, onSetAuthority, onSetLoggedIn, onSetLoginUser }: HeaderProps): JSX.Element => {
+const Header = ({
+  loginUser,
+  permission,
+  onSetPermission,
+  onSetLoggedIn,
+  onSetLoginUser,
+}: HeaderProps): JSX.Element => {
   const onLogout = (e: React.MouseEvent<HTMLAnchorElement>): void => {
     e.preventDefault;
     if (confirm('ログアウトします')) {
@@ -69,7 +75,7 @@ const Header = ({ loginUser, authority, onSetAuthority, onSetLoggedIn, onSetLogi
         .then((results) => {
           onSetLoggedIn(results.data.loggedIn);
           onSetLoginUser(results.data.userID);
-          onSetAuthority(Number(results.data.authority));
+          onSetPermission(Number(results.data.permission));
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
@@ -83,7 +89,7 @@ const Header = ({ loginUser, authority, onSetAuthority, onSetLoggedIn, onSetLogi
       <p css={siteName}>CMS</p>
       <div css={rightItem}>
         <p css={user}>
-          {loginUser}でログイン中（{convertAuthorityObjectToString(authority)}）
+          {loginUser}でログイン中（{convertPermissionObjectToString(permission)}）
         </p>
         <a css={logoutAnchor} onClick={onLogout}>
           <svg css={logoutImage} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 570 487.88">

@@ -16,7 +16,7 @@ docker-compose up
 - id(auto increment)
 - name
 - password
-- authority
+- permission
 
 ### categories table
 

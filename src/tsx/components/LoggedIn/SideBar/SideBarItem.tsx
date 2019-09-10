@@ -45,18 +45,18 @@ const triangle = css`
 type SideBarItemObject = {
   link: string;
   contents: string;
-  requiredAuthority: Authority;
+  requiredPermission: Permission;
 };
 
 type SideBarItemProps = {
-  authority: Authority;
+  permission: Permission;
   urlOfTopPage: string;
 };
 
 const sideBarItemObject: SideBarItemObject[] = [
   {
     contents: 'ユーザー一覧',
-    requiredAuthority: {
+    requiredPermission: {
       admin: true,
       editor: false,
       viewer: false,
@@ -65,7 +65,7 @@ const sideBarItemObject: SideBarItemObject[] = [
   },
   {
     contents: 'ユーザー登録',
-    requiredAuthority: {
+    requiredPermission: {
       admin: true,
       editor: false,
       viewer: false,
@@ -74,7 +74,7 @@ const sideBarItemObject: SideBarItemObject[] = [
   },
   {
     contents: 'コンテンツ一覧',
-    requiredAuthority: {
+    requiredPermission: {
       admin: false,
       editor: true,
       viewer: true,
@@ -83,7 +83,7 @@ const sideBarItemObject: SideBarItemObject[] = [
   },
   {
     contents: 'コンテンツ登録',
-    requiredAuthority: {
+    requiredPermission: {
       admin: false,
       editor: true,
       viewer: false,
@@ -92,7 +92,7 @@ const sideBarItemObject: SideBarItemObject[] = [
   },
   {
     contents: 'カテゴリ一覧',
-    requiredAuthority: {
+    requiredPermission: {
       admin: false,
       editor: true,
       viewer: false,
@@ -101,7 +101,7 @@ const sideBarItemObject: SideBarItemObject[] = [
   },
   {
     contents: 'カテゴリ登録',
-    requiredAuthority: {
+    requiredPermission: {
       admin: false,
       editor: true,
       viewer: false,
@@ -110,11 +110,11 @@ const sideBarItemObject: SideBarItemObject[] = [
   },
 ];
 
-const authorityList = ['admin', 'editor', 'viewer'];
+const permissionList = ['admin', 'editor', 'viewer'];
 
-const SideBarItem = ({ authority, urlOfTopPage }: SideBarItemProps): JSX.Element => {
+const SideBarItem = ({ permission, urlOfTopPage }: SideBarItemProps): JSX.Element => {
   const item: (JSX.Element | undefined)[] = sideBarItemObject.map((object) => {
-    if (authorityList.some((elem: string) => object.requiredAuthority[elem] === authority[elem])) {
+    if (permissionList.some((elem: string) => object.requiredPermission[elem] === permission[elem])) {
       const link: string = `${urlOfTopPage}/${object.link}`;
       return (
         <li css={listItem} key={object.link}>

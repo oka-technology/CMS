@@ -69,10 +69,10 @@ type LoginProps = {
   loggedIn: boolean;
   onSetLoggedIn: (bool: boolean) => void;
   onSetLoginUser: (name: string) => void;
-  onSetAuthority: (authority: number) => void;
+  onSetPermission: (permission: number) => void;
 };
 
-const Login = ({ onSetLoggedIn, onSetLoginUser, onSetAuthority }: LoginProps): JSX.Element => {
+const Login = ({ onSetLoggedIn, onSetLoginUser, onSetPermission }: LoginProps): JSX.Element => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [missed, setMissed] = useState<boolean>(false);
@@ -108,7 +108,7 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetAuthority }: LoginProps): J
         } else {
           onSetLoggedIn(results.data.loggedIn);
           onSetLoginUser(results.data.userID);
-          onSetAuthority(Number(results.data.authority));
+          onSetPermission(Number(results.data.permission));
           setReDirect(true);
         }
       })

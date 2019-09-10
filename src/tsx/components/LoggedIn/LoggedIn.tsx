@@ -16,25 +16,25 @@ const insideWrapper = css`
 const main = css`
   flex-grow: 1;
   margin: 0 auto 0 0;
-  max-width: 101rem;
+  max-width: 100rem;
   padding: 0 2rem;
 `;
 
 type LoggedInProps = {
   loggedIn: boolean;
   loginUser: string;
-  authority: Authority;
+  permission: Permission;
   onSetLoggedIn: (bool: boolean) => void;
   onSetLoginUser: (name: string) => void;
-  onSetAuthority: (authority: number) => void;
+  onSetPermission: (permission: number) => void;
   urlOfTopPage: string;
 };
 
 const LoggedIn = ({
   loggedIn,
   loginUser,
-  authority,
-  onSetAuthority,
+  permission,
+  onSetPermission,
   onSetLoggedIn,
   onSetLoginUser,
   urlOfTopPage,
@@ -50,13 +50,13 @@ const LoggedIn = ({
       {loggedIn ? null : <Redirect to="/login" />}
       <Header
         loginUser={loginUser}
-        authority={authority}
+        permission={permission}
         onSetLoggedIn={onSetLoggedIn}
         onSetLoginUser={onSetLoginUser}
-        onSetAuthority={onSetAuthority}
+        onSetPermission={onSetPermission}
       />
       <div css={insideWrapper}>
-        <SideBar authority={authority} urlOfTopPage={urlOfTopPage} />
+        <SideBar permission={permission} urlOfTopPage={urlOfTopPage} />
         <main css={main}>
           <Switch>
             <Route path={`${urlOfTopPage}/users`} render={() => <Users urlOfTopPage={urlOfTopPage} />} />

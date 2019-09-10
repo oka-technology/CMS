@@ -21,10 +21,10 @@
     if (password_verify($password, $row['password'])) {
       $_SESSION['loggedIn'] = true;
       $_SESSION['user'] = $loginId;
-      $_SESSION['authority'] = $row['authority'];
+      $_SESSION['permission'] = $row['permission'];
       $result['loggedIn'] = true;
       $result['userID'] = $loginId;
-      $result['authority'] = $row['authority'];
+      $result['permission'] = $row['permission'];
       // header('Location: index.php');
       // exit();
     } else {

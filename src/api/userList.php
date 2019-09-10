@@ -1,11 +1,11 @@
 <?php
   session_save_path('/var/www/html/session'); 
-  require_once('convertAuthority.php');
+  require_once('convertPermission.php');
   session_start();
 
-  $authority = $_SESSION['authority'];
-  if (convertAuthority($authority)[2] != 1) {
-    echo('no authority');
+  $permission = $_SESSION['permission'];
+  if (convertPermission($permission)[2] != 1) {
+    echo('no permission');
   } else {
     try{
       $dbh = new PDO(
@@ -29,7 +29,7 @@
         $index = $counter();
         $result[$index]['id'] = $rowOfUserInfo['id'];
         $result[$index]['name'] = $rowOfUserInfo['name'];
-        $result[$index]['authority'] = $rowOfUserInfo['authority'];
+        $result[$index]['permission'] = $rowOfUserInfo['permission'];
       }
       echo(json_encode($result, JSON_PRETTY_PRINT));
     } catch (PDOException $e) {

@@ -1,4 +1,4 @@
-type Authority = {
+type Permission = {
   viewer: boolean;
   editor: boolean;
   admin: boolean;

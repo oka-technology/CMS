@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { useState } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { convertAuthorityNumToObject } from './modules/convertAuthority';
+import { convertPermissionNumToObject } from './modules/convertPermission';
 
 import '../index.html';
 import '../.htaccess';
@@ -12,7 +12,7 @@ import '../api/loginProcess.php';
 import '../api/checkWhetherLoggedIn.php';
 import '../api/logoutProcess.php';
 import '../api/userList.php';
-import '../api/convertAuthority.php';
+import '../api/convertPermission.php';
 import '../api/sessionConfiguration.php';
 
 import LoggedIn from './components/LoggedIn/LoggedIn';
@@ -37,13 +37,13 @@ const wrapper = css`
 type Data = {
   loggedin: boolean;
   loginUser: string;
-  authority: Authority;
+  permission: Permission;
 };
 
 const data: Data = {
   loggedin: false,
   loginUser: '',
-  authority: convertAuthorityNumToObject(0),
+  permission: convertPermissionNumToObject(0),
 };
 
 (async () => {
@@ -53,7 +53,7 @@ const data: Data = {
     .then((results) => {
       data.loggedin = results.data.loggedIn;
       data.loginUser = results.data.userID;
-      data.authority = convertAuthorityNumToObject(Number(results.data.authority));
+      data.permission = convertPermissionNumToObject(Number(results.data.permission));
     })
     .catch((error) => {
       // eslint-disable-next-line no-console
@@ -63,7 +63,7 @@ const data: Data = {
   const App = (): JSX.Element => {
     const [loggedIn, setLoggedIn] = useState<boolean>(data.loggedin);
     const [loginUser, setLoginUser] = useState<string>(data.loginUser);
-    const [authority, setAuthority] = useState<Authority>(data.authority);
+    const [permission, setPermission] = useState<Permission>(data.permission);
 
     const onSetLoggedIn = (bool: boolean): void => {
       setLoggedIn(bool);
@@ -71,8 +71,8 @@ const data: Data = {
     const onSetLoginUser = (name: string): void => {
       setLoginUser(name);
     };
-    const onSetAuthority = (authority: number): void => {
-      setAuthority(convertAuthorityNumToObject(authority));
+    const onSetPermission = (permission: number): void => {
+      setPermission(convertPermissionNumToObject(permission));
     };
 
     return (
@@ -86,10 +86,10 @@ const data: Data = {
                 <LoggedIn
                   loggedIn={loggedIn}
                   loginUser={loginUser}
-                  authority={authority}
+                  permission={permission}
                   onSetLoggedIn={onSetLoggedIn}
                   onSetLoginUser={onSetLoginUser}
-                  onSetAuthority={onSetAuthority}
+                  onSetPermission={onSetPermission}
                   urlOfTopPage={props.match.url}
                 />
               )}
@@ -102,7 +102,7 @@ const data: Data = {
                   loggedIn={loggedIn}
                   onSetLoggedIn={onSetLoggedIn}
                   onSetLoginUser={onSetLoginUser}
-                  onSetAuthority={onSetAuthority}
+                  onSetPermission={onSetPermission}
                 />
               )}
             />

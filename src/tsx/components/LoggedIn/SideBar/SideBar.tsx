@@ -6,11 +6,11 @@ import SideBarItem from './SideBarItem';
 
 const sideBar = css`
   background-color: #777;
-  width: 19rem;
+  width: 20rem;
   min-width: 16rem;
 
   ${bp[0]} {
-    width: calc(19rem + (100% - 120rem) / 2);
+    width: calc(20rem + (100% - 120rem) / 2);
   }
 `;
 
@@ -22,15 +22,15 @@ const sideBarList = css`
 `;
 
 type SideBarProps = {
-  authority: Authority;
+  permission: Permission;
   urlOfTopPage: string;
 };
 
-const SideBar = ({ authority, urlOfTopPage }: SideBarProps): JSX.Element => {
+const SideBar = ({ permission, urlOfTopPage }: SideBarProps): JSX.Element => {
   return (
     <aside css={sideBar}>
       <ul css={sideBarList}>
-        <SideBarItem authority={authority} urlOfTopPage={urlOfTopPage} />
+        <SideBarItem permission={permission} urlOfTopPage={urlOfTopPage} />
       </ul>
     </aside>
   );

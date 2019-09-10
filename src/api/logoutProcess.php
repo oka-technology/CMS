@@ -7,7 +7,7 @@
 
   $result['loggedIn'] = false;
   $result['userID'] = '';
-  $result['authority'] = '0';
+  $result['permission'] = '0';
 
   echo(json_encode($result, JSON_PRETTY_PRINT));
 

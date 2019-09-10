@@ -3,12 +3,12 @@ import { jsx } from '@emotion/core';
 import { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import { TBody, TRow, TD } from '../../../../template/Table';
-import { convertAuthorityNumToString } from '../../../../modules/convertAuthority';
+import { convertPermissionNumToString } from '../../../../modules/convertPermission';
 
 type UserInfo = {
   id: string;
   name: string;
-  authority: string;
+  permission: string;
 };
 
 const UserList = (): JSX.Element => {
@@ -36,13 +36,13 @@ const UserList = (): JSX.Element => {
   }, [isLoading]);
 
   if (userInfoArray === undefined) return <Fragment />;
-  const item: JSX.Element[] = userInfoArray.map(({ id, name, authority }) => {
-    const stringAuthority = convertAuthorityNumToString(Number(authority));
+  const item: JSX.Element[] = userInfoArray.map(({ id, name, permission }) => {
+    const stringPermission = convertPermissionNumToString(Number(permission));
     return (
       <TRow key={id}>
         <TD>{id}</TD>
         <TD>{name}</TD>
-        <TD>{stringAuthority}</TD>
+        <TD>{stringPermission}</TD>
       </TRow>
     );
   });
