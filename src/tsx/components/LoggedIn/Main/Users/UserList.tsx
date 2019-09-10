@@ -13,17 +13,28 @@ type UserInfo = {
 
 const UserList = (): JSX.Element => {
   const [userInfoArray, setUserInfoArray] = useState<UserInfo[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
+    (() => {
+      setIsLoading(true);
+    })();
     axios
-      .post('./api/userList.php')
+      .get('./api/userList.php')
       .then(({ data }) => {
-        setUserInfoArray(data);
+        if (isLoading === true) {
+          setUserInfoArray(data);
+        }
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
         console.log(error);
       });
-  }, []);
+    return () => {
+      setIsLoading(false);
+      axios.CancelToken.source().cancel();
+    };
+  }, [isLoading]);
+
   if (userInfoArray === undefined) return <Fragment />;
   const item: JSX.Element[] = userInfoArray.map(({ id, name, authority }) => {
     const stringAuthority = convertAuthorityNumToString(Number(authority));
