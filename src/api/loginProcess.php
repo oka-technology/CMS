@@ -1,7 +1,6 @@
 <?php
-
+  session_save_path('/var/www/html/session'); 
   session_start();
-
   $loginId = $_POST['email'];
   $password = $_POST['password'];
 

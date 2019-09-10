@@ -1,4 +1,5 @@
 <?php
+  session_save_path('/var/www/html/session'); 
   require_once('convertAuthority.php');
   session_start();
 

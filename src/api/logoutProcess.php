@@ -1,6 +1,9 @@
 <?php
+  session_save_path('/var/www/html/session'); 
   session_start();
-  session_destroy();
+  if(isset($_SESSION)) {
+    session_destroy();
+  }
 
   $result['loggedIn'] = false;
   $result['userID'] = '';

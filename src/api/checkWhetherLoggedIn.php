@@ -1,8 +1,9 @@
 <?php
+  session_save_path('/var/www/html/session'); 
 
   session_start();
 
-  if($_SESSION['loggedIn']){
+  if(isset($_SESSION['user'])){
     $result['loggedIn'] = true;
     $result['userID'] = $_SESSION['user'];
     $result['authority'] = $_SESSION['authority'];

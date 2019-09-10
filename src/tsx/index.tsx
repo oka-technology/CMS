@@ -13,6 +13,7 @@ import '../api/checkWhetherLoggedIn.php';
 import '../api/logoutProcess.php';
 import '../api/userList.php';
 import '../api/convertAuthority.php';
+import '../api/sessionConfiguration.php';
 
 import LoggedIn from './components/LoggedIn/LoggedIn';
 import Login from './components/Login';
@@ -46,6 +47,7 @@ const data: Data = {
 };
 
 const main = async () => {
+  await axios.post('./api/sessionConfiguration.php');
   await axios
     .post('./api/checkWhetherLoggedIn.php')
     .then((results) => {
