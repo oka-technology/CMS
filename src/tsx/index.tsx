@@ -46,8 +46,8 @@ const data: Data = {
   authority: convertAuthorityNumToObject(0),
 };
 
-const main = async () => {
-  await axios.post('./api/sessionConfiguration.php');
+(async () => {
+  await axios.get('./api/sessionConfiguration.php');
   await axios
     .post('./api/checkWhetherLoggedIn.php')
     .then((results) => {
@@ -113,6 +113,4 @@ const main = async () => {
   };
 
   ReactDOM.render(<App />, document.querySelector('#App'));
-};
-
-main();
+})();
