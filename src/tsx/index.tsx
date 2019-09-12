@@ -14,6 +14,7 @@ import '../api/logoutProcess.php';
 import '../api/userList.php';
 import '../api/convertPermission.php';
 import '../api/sessionConfiguration.php';
+import '../api/addUser.php';
 
 import LoggedIn from './components/LoggedIn/LoggedIn';
 import Login from './components/Login';
