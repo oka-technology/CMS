@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { Fragment, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
 import Button from '../../../../template/Button';
@@ -14,14 +15,16 @@ const titleWrapperStyle = css`
 
 type UsersProps = {
   urlOfTopPage: string;
+  permission: Permission;
 };
 
-const Users = ({ urlOfTopPage }: UsersProps): JSX.Element => {
+const Users = ({ urlOfTopPage, permission }: UsersProps): JSX.Element => {
   useEffect(() => {
     document.title = 'ユーザー一覧';
   }, []);
   return (
     <Fragment>
+      {permission.admin ? null : <Redirect to={`${urlOfTopPage}`} />}
       <div css={titleWrapperStyle}>
         <Title value="ユーザー一覧" />
         <Button

@@ -107,6 +107,7 @@ const data: Data = {
                 />
               )}
             />
+            <Redirect to="/login" />
           </Switch>
         </BrowserRouter>
       </div>

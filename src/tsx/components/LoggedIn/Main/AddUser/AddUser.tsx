@@ -2,6 +2,7 @@
 import { jsx, css } from '@emotion/core';
 import { useState, Fragment, Dispatch, SetStateAction } from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
 import TextInput from '../../../../template/TextInput';
@@ -44,7 +45,12 @@ type ResultsOfAddUserApi = {
   successful: boolean;
 };
 
-const AddUser = (): JSX.Element => {
+type AddUserProps = {
+  urlOfTopPage: string;
+  permission: Permission;
+};
+
+const AddUser = ({ urlOfTopPage, permission }: AddUserProps): JSX.Element => {
   const [Email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [hidePassword, setHidePassword] = useState<boolean>(true);
@@ -124,6 +130,7 @@ const AddUser = (): JSX.Element => {
   );
   return (
     <Fragment>
+      {permission.admin ? null : <Redirect to={`${urlOfTopPage}`} />}
       <Title value="ユーザー登録" />
       <form css={formStyle}>
         <label css={labelStyle}>

@@ -60,8 +60,14 @@ const LoggedIn = ({
         <SideBar permission={permission} urlOfTopPage={urlOfTopPage} />
         <main css={main}>
           <Switch>
-            <Route path={`${urlOfTopPage}/users`} render={() => <Users urlOfTopPage={urlOfTopPage} />} />
-            <Route path={`${urlOfTopPage}/addUser`} render={() => <AddUser />} />
+            <Route
+              path={`${urlOfTopPage}/users`}
+              render={() => <Users urlOfTopPage={urlOfTopPage} permission={permission} />}
+            />
+            <Route
+              path={`${urlOfTopPage}/addUser`}
+              render={() => <AddUser urlOfTopPage={urlOfTopPage} permission={permission} />}
+            />
           </Switch>
         </main>
       </div>
