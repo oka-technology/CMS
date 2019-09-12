@@ -1,6 +1,7 @@
 <?php
   session_save_path('/var/www/html/session'); 
   session_start();
+  $_POST = json_decode(file_get_contents('php://input'), true);
   $loginId = $_POST['email'];
   $password = $_POST['password'];
 
@@ -25,8 +26,6 @@
       $result['loggedIn'] = true;
       $result['userID'] = $loginId;
       $result['permission'] = $row['permission'];
-      // header('Location: index.php');
-      // exit();
     } else {
       $result['loggedIn'] = false;
     }

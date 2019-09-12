@@ -1,10 +1,12 @@
 /** @jsx jsx */
-import { jsx, css, keyframes } from '@emotion/core';
+import { jsx, css } from '@emotion/core';
 import { useEffect, Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import Button from '../template/Button';
+import TextInput from '../template/TextInput';
+import ErrorMessage from '../template/ErrorMessage';
 
 const wrapper = css`
   align-items: center;
@@ -34,37 +36,6 @@ const form = css`
   }
 `;
 
-const formTextInput = css`
-  border-radius: 0.5rem;
-  display: block;
-  font-size: 1.6rem;
-  height: 4rem;
-  margin-top: 2rem;
-  width: 100%;
-
-  &::placeholder {
-    color: #777;
-  }
-`;
-
-const errorMessageAnimation = keyframes`
-  from {
-    opacity: 0; 
-    transform: translateY(1rem);
-  }
-  to {
-    opacity: 1; 
-    transform: translateY(0);
-  }
-`;
-
-const errorMessage = css`
-  color: red;
-  font-size: 1.6rem;
-  margin-bottom: 0;
-  animation: ${errorMessageAnimation} 0.7s ease-out;
-`;
-
 type LoginProps = {
   loggedIn: boolean;
   onSetLoggedIn: (bool: boolean) => void;
@@ -86,19 +57,20 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetPermission }: LoginProps): 
     };
   }, []);
 
-  const emailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSetEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const passwordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSetPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
   const submit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setMissed(false);
 
-    let params = new URLSearchParams();
-    params.append('email', email);
-    params.append('password', password);
+    const params = {
+      email: email,
+      password: password,
+    };
     axios
       .post('./api/loginProcess.php', params)
       .then((results) => {
@@ -125,31 +97,23 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetPermission }: LoginProps): 
         <main css={main}>
           <h1 css={title}>CMS</h1>
           <form css={form} autoComplete="on">
-            <input
-              css={formTextInput}
-              type="text"
-              placeholder="Email"
-              id="Email"
-              value={email}
-              onChange={emailChange}
-            />
-            <input
-              css={formTextInput}
+            <TextInput type="text" placeholder="Email" value={email} onChange={onSetEmail} marginTop="0" />
+            <TextInput
               type="password"
               placeholder="Password"
-              id="Password"
               value={password}
-              onChange={passwordChange}
+              onChange={onSetPassword}
+              marginTop="2rem"
             />
             <Button
               as="submit"
               value="Log in"
               onClick={submit}
-              style={{ width: '100%', backgroundColor: '#0528c2', margin: '3.5rem auto 0' }}
-              hoverStyle={{ transform: 'scale(1.05)' }}
+              additionalStyle={{ width: '100%', backgroundColor: '#0528c2', margin: '3.5rem auto 0' }}
+              additionalHoverStyle={{ transform: 'scale(1.05)' }}
             />
           </form>
-          {missed ? <p css={errorMessage}>EmailかPasswordが違います</p> : null}
+          {missed ? <ErrorMessage value="EmailかPasswordが違います" /> : null}
         </main>
       </div>
     </Fragment>
