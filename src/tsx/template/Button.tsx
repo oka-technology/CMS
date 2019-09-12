@@ -3,7 +3,9 @@ import { jsx, css } from '@emotion/core';
 import { Fragment, CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 
-const buttonStyle = (style: CSSProperties, hoverStyle: CSSProperties) => css`
+import convertCSSPropertiesObjectToString from '../modules/convertCSSPropertiesObjectToString';
+
+const buttonStyle = (style: CSSProperties, additionalHoverStyle: CSSProperties) => css`
   align-items: center;
   border-radius: 0.5rem;
   border: 0px;
@@ -21,7 +23,7 @@ const buttonStyle = (style: CSSProperties, hoverStyle: CSSProperties) => css`
   &:hover {
     transform: scale(1.25);
     transition: transform 0.1s cubic-bezier(0.22, 0.61, 0.36, 1);
-    ${convertCSSPropertiesObjectToString(hoverStyle)}
+    ${convertCSSPropertiesObjectToString(additionalHoverStyle)}
   }
 `;
 
@@ -30,38 +32,32 @@ type ButtonProps = {
   value: string;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   to?: string;
-  style?: CSSProperties;
-  hoverStyle?: CSSProperties;
+  additionalStyle?: CSSProperties;
+  additionalHoverStyle?: CSSProperties;
 };
 
-const convertCSSPropertiesObjectToString = (objCSS: CSSProperties) =>
-  Object.entries(objCSS)
-    .map(([name, value]: string[]) => {
-      const replacedName = name.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
-      return `${replacedName}: ${value};`;
-    })
-    .join('');
-
-const Button = ({ as, value, onClick, to, style, hoverStyle }: ButtonProps): JSX.Element => {
-  const styleObj = style === undefined ? {} : style;
-  const hoverStyleObj = hoverStyle === undefined ? {} : hoverStyle;
+const Button = ({ as, value, onClick, to, additionalStyle, additionalHoverStyle }: ButtonProps): JSX.Element => {
+  additionalStyle = additionalStyle ? additionalStyle : {};
+  additionalHoverStyle = additionalHoverStyle ? additionalHoverStyle : {};
   if (as === 'submit') {
-    return <input css={buttonStyle(styleObj, hoverStyleObj)} type="submit" value={value} onClick={onClick} />;
+    return (
+      <input css={buttonStyle(additionalStyle, additionalHoverStyle)} type="submit" value={value} onClick={onClick} />
+    );
   } else if (as === 'button') {
     return (
-      <button css={buttonStyle(styleObj, hoverStyleObj)} onClick={onClick}>
+      <button css={buttonStyle(additionalStyle, additionalHoverStyle)} onClick={onClick}>
         {value}
       </button>
     );
   } else if (as === 'anchor' && to !== undefined) {
     return (
-      <a css={buttonStyle(styleObj, hoverStyleObj)} href={to}>
+      <a css={buttonStyle(additionalStyle, additionalHoverStyle)} href={to}>
         {value}
       </a>
     );
   } else if (as === 'routerLink' && to !== undefined) {
     return (
-      <Link css={buttonStyle(styleObj, hoverStyleObj)} to={to}>
+      <Link css={buttonStyle(additionalStyle, additionalHoverStyle)} to={to}>
         {value}
       </Link>
     );
