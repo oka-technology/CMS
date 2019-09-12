@@ -7,6 +7,7 @@ import Header from './Header';
 import Footer from './Footer';
 import SideBar from './SideBar/SideBar';
 import Users from './Main/Users/Users';
+import AddUser from './Main/AddUser/AddUser';
 
 const insideWrapper = css`
   display: flex;
@@ -60,6 +61,7 @@ const LoggedIn = ({
         <main css={main}>
           <Switch>
             <Route path={`${urlOfTopPage}/users`} render={() => <Users urlOfTopPage={urlOfTopPage} />} />
+            <Route path={`${urlOfTopPage}/addUser`} render={() => <AddUser />} />
           </Switch>
         </main>
       </div>
