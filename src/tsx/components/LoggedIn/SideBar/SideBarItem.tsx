@@ -72,7 +72,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: false,
       viewer: false,
     },
-    link: 'registUser',
+    link: 'addUser',
   },
   {
     contents: 'コンテンツ一覧',
@@ -81,7 +81,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: true,
       viewer: true,
     },
-    link: 'contents',
+    link: 'contentList',
   },
   {
     contents: 'コンテンツ登録',
@@ -90,7 +90,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: true,
       viewer: false,
     },
-    link: 'registContent',
+    link: 'registerContent',
   },
   {
     contents: 'カテゴリ一覧',
@@ -99,7 +99,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: true,
       viewer: false,
     },
-    link: 'category',
+    link: 'categories',
   },
   {
     contents: 'カテゴリ登録',
@@ -108,15 +108,20 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: true,
       viewer: false,
     },
-    link: 'registCategory',
+    link: 'registerCategory',
   },
 ];
 
-const permissionList = ['admin', 'editor', 'viewer'];
+const permissions = ['admin', 'editor', 'viewer'];
 
 const SideBarItem = ({ permission, urlOfTopPage }: SideBarItemProps): JSX.Element => {
   const item: (JSX.Element | undefined)[] = sideBarItemObject.map((object) => {
-    if (permissionList.some((elem: string) => object.requiredPermission[elem] === permission[elem])) {
+    if (
+      permissions.some(
+        (elem: string) =>
+          object.requiredPermission[elem] === true && object.requiredPermission[elem] === permission[elem],
+      )
+    ) {
       const link: string = `${urlOfTopPage}/${object.link}`;
       return (
         <li css={listItem} key={object.link}>
