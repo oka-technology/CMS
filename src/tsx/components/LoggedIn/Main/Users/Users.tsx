@@ -27,8 +27,8 @@ const Users = ({ urlOfTopPage }: UsersProps): JSX.Element => {
         <Button
           as="routerLink"
           value="新規登録"
-          style={{ backgroundColor: '#4c4cf7', margin: '0 0 0 auto' }}
-          to={`${urlOfTopPage}/registUser`}
+          additionalStyle={{ backgroundColor: '#e87c00', margin: '0 0 0 auto' }}
+          to={`${urlOfTopPage}/addUser`}
         />
       </div>
       <Table>
