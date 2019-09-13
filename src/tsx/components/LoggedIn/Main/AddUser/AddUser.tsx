@@ -130,7 +130,6 @@ const AddUser = ({ urlOfTopPage, permission }: AddUserProps): JSX.Element => {
   );
   return (
     <Fragment>
-      {permission.admin ? null : <Redirect to={`${urlOfTopPage}`} />}
       <Title value="ユーザー登録" />
       <form css={formStyle}>
         <label css={labelStyle}>
@@ -164,6 +163,7 @@ const AddUser = ({ urlOfTopPage, permission }: AddUserProps): JSX.Element => {
         />
       </form>
       {unsuccessful ? <ErrorMessage value="You must fill in all of the fields." /> : null}
+      {permission.admin ? null : <Redirect to={`${urlOfTopPage}`} />}
     </Fragment>
   );
 };

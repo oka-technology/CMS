@@ -48,7 +48,6 @@ const LoggedIn = ({
 
   return (
     <Fragment>
-      {loggedIn ? null : <Redirect to="/login" />}
       <Header
         loginUser={loginUser}
         permission={permission}
@@ -72,6 +71,7 @@ const LoggedIn = ({
         </main>
       </div>
       <Footer />
+      {loggedIn ? null : <Redirect to="/login" />}
     </Fragment>
   );
 };

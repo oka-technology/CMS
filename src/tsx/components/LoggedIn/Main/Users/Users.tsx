@@ -24,7 +24,6 @@ const Users = ({ urlOfTopPage, permission }: UsersProps): JSX.Element => {
   }, []);
   return (
     <Fragment>
-      {permission.admin ? null : <Redirect to={`${urlOfTopPage}`} />}
       <div css={titleWrapperStyle}>
         <Title value="ユーザー一覧" />
         <Button
@@ -44,6 +43,7 @@ const Users = ({ urlOfTopPage, permission }: UsersProps): JSX.Element => {
         </THead>
         <UserList />
       </Table>
+      {permission.admin ? null : <Redirect to={`${urlOfTopPage}`} />}
     </Fragment>
   );
 };
