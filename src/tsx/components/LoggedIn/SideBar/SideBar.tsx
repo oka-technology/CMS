@@ -3,6 +3,7 @@ import { jsx, css } from '@emotion/core';
 import bp from '../../../modules/mediaQuery';
 
 import SideBarItem from './SideBarItem';
+import { useEffect, useState } from 'react';
 
 const sideBarStyle = (windowHeight: number) => css`
   background-color: #777;
@@ -30,8 +31,14 @@ type SideBarProps = {
 };
 
 const SideBar = ({ permission, urlOfTopPage }: SideBarProps): JSX.Element => {
+  const [windowHeight, setWindowHeight] = useState<number>(window.innerHeight);
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setWindowHeight(window.innerHeight);
+    });
+  }, []);
   return (
-    <aside css={sideBarStyle(window.innerHeight)}>
+    <aside css={sideBarStyle(windowHeight)}>
       <ul css={sideBarListWrapperStyle}>
         <SideBarItem permission={permission} urlOfTopPage={urlOfTopPage} />
       </ul>
