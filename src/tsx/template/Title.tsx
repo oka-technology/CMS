@@ -1,16 +1,21 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
+import convertCSSPropertiesObjectToString from '../modules/convertCSSPropertiesObjectToString';
+import { CSSProperties } from 'react';
 
-const style = css`
+const style = (additionalStyle: CSSProperties) => css`
   font-size: 3rem;
+  ${convertCSSPropertiesObjectToString(additionalStyle)}
 `;
 
 type TitleProps = {
   value: string;
+  additionalStyle?: CSSProperties;
 };
 
-const Title = ({ value }: TitleProps): JSX.Element => {
-  return <h1 css={style}>{value}</h1>;
+const Title = ({ value, additionalStyle }: TitleProps): JSX.Element => {
+  additionalStyle = additionalStyle ? additionalStyle : {};
+  return <h1 css={style(additionalStyle)}>{value}</h1>;
 };
 
 export default Title;
