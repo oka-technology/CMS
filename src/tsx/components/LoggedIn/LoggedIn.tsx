@@ -14,11 +14,11 @@ const insideWrapper = css`
   flex: 1;
 `;
 
-const main = css`
+const mainStyle = css`
   flex-grow: 1;
   margin: 0 auto 0 0;
   max-width: 100rem;
-  padding: 0 2rem;
+  padding: 0 2rem 2rem;
 `;
 
 type LoggedInProps = {
@@ -57,7 +57,7 @@ const LoggedIn = ({
       />
       <div css={insideWrapper}>
         <SideBar permission={permission} urlOfTopPage={urlOfTopPage} />
-        <main css={main}>
+        <main css={mainStyle}>
           <Switch>
             <Route
               path={`${urlOfTopPage}/users`}

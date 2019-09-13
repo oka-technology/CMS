@@ -12,6 +12,9 @@ const wrapper = css`
   height: 6rem;
   justify-content: space-between;
   padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  width: 100%;
 
   ${bp} {
     padding: 0 calc(2rem + (100% - 120rem) / 2);
