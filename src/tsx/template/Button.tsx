@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import convertCSSPropertiesObjectToString from '../modules/convertCSSPropertiesObjectToString';
 
-const buttonStyle = (style: CSSProperties, additionalHoverStyle: CSSProperties) => css`
+const buttonStyle = (additionalStyle: CSSProperties, additionalHoverStyle: CSSProperties) => css`
   align-items: center;
   border-radius: 0.5rem;
   border: 0px;
@@ -18,7 +18,7 @@ const buttonStyle = (style: CSSProperties, additionalHoverStyle: CSSProperties) 
   text-decoration: none;
   transition: transform 0.1s;
   width: 10rem;
-  ${convertCSSPropertiesObjectToString(style)}
+  ${convertCSSPropertiesObjectToString(additionalStyle)}
 
   &:hover {
     transform: scale(1.25);
