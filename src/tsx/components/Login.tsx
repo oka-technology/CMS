@@ -8,7 +8,7 @@ import Button from '../template/Button';
 import TextInput from '../template/TextInput';
 import ErrorMessage from '../template/ErrorMessage';
 
-const wrapper = css`
+const wrapperStyle = css`
   align-items: center;
   display: flex;
   background-color: #555;
@@ -16,7 +16,7 @@ const wrapper = css`
   justify-content: center;
 `;
 
-const main = css`
+const mainStyle = css`
   background-color: #fff;
   border-radius: 2rem;
   margin: auto;
@@ -24,13 +24,13 @@ const main = css`
   width: 50rem;
 `;
 
-const title = css`
+const titleStyle = css`
   font-size: 3rem;
   margin: 0 0 1.5rem;
   text-align: center;
 `;
 
-const form = css`
+const formStyle = css`
   & > *:first-child /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */ {
     margin-top: 2.5rem;
   }
@@ -93,10 +93,10 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetPermission }: LoginProps): 
   return (
     <Fragment>
       {reDirect ? <Redirect to="/home" /> : null}
-      <div css={wrapper}>
-        <main css={main}>
-          <h1 css={title}>CMS</h1>
-          <form css={form} autoComplete="on">
+      <div css={wrapperStyle}>
+        <main css={mainStyle}>
+          <h1 css={titleStyle}>CMS</h1>
+          <form css={formStyle} autoComplete="on">
             <TextInput type="text" placeholder="Email" value={email} onChange={onSetEmail} marginTop="0" />
             <TextInput
               type="password"
