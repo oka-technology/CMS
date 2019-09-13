@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import { jsx } from '@emotion/core';
 import { Fragment, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
@@ -7,11 +7,6 @@ import Title from '../../../../template/Title';
 import Button from '../../../../template/Button';
 import { Table, THead, TRow, TH } from '../../../../template/Table';
 import UserList from './UserList';
-
-const titleWrapperStyle = css`
-  align-items: center;
-  display: flex;
-`;
 
 type UsersProps = {
   urlOfTopPage: string;
@@ -24,15 +19,18 @@ const Users = ({ urlOfTopPage, permission }: UsersProps): JSX.Element => {
   }, []);
   return (
     <Fragment>
-      <div css={titleWrapperStyle}>
-        <Title value="ユーザー一覧" />
-        <Button
-          as="routerLink"
-          value="新規登録"
-          additionalStyle={{ backgroundColor: '#e87c00', margin: '0 0 0 auto' }}
-          to={`${urlOfTopPage}/addUser`}
-        />
-      </div>
+      <Title value="ユーザー一覧" additionalStyle={{ float: 'left' }} />
+      <Button
+        as="routerLink"
+        value="新規登録"
+        additionalStyle={{
+          backgroundColor: '#e87c00',
+          margin: '0 0 0 auto',
+          position: 'sticky',
+          top: '8rem',
+        }}
+        to={`${urlOfTopPage}/addUser`}
+      />
       <Table>
         <THead>
           <TRow>
