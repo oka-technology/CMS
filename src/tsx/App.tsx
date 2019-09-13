@@ -93,30 +93,6 @@ const App = (): JSX.Element => {
     setPermission(convertPermissionNumToObject(permission));
   };
 
-  if (isLoading || !data) {
-    return (
-      <div css={wrapperStyle}>
-        <div
-          css={css`
-            align-items: center;
-            display: flex;
-            background-color: #555;
-            height: 100%;
-            justify-content: center;
-          `}
-        >
-          <p
-            css={css`
-              color: white;
-            `}
-          >
-            Loading...
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   if (error) {
     return (
       <div css={wrapperStyle}>
@@ -135,6 +111,30 @@ const App = (): JSX.Element => {
             `}
           >
             eroor
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLoading || !data) {
+    return (
+      <div css={wrapperStyle}>
+        <div
+          css={css`
+            align-items: center;
+            display: flex;
+            background-color: #555;
+            height: 100%;
+            justify-content: center;
+          `}
+        >
+          <p
+            css={css`
+              color: white;
+            `}
+          >
+            Loading...
           </p>
         </div>
       </div>
