@@ -7,7 +7,7 @@ type PageData = {
 const createPageData = (pageName: string, requiredPermission: Permission): PageData => {
   return {
     pageName: pageName,
-    path: `${TOP_PAGE_PATH}/${pageName.replace(' ', '')}`,
+    path: `${TOP_PAGE_PATH}/${pageName.replace(/ /g, '')}`,
     requiredPermission: requiredPermission,
   };
 };
