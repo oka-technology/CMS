@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { useState, Fragment, Dispatch, SetStateAction } from 'react';
+import { useState, Fragment, Dispatch, SetStateAction, useEffect } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ import TextInput from '../../../../template/TextInput';
 import CheckBox from '../../../../template/CheckBox';
 import Button from '../../../../template/Button';
 import ErrorMessage from '../../../../template/ErrorMessage';
-import { TOP_PAGE_PATH } from '../../../../data/pages';
+import { TOP_PAGE_PATH, newUserRegistrationPage } from '../../../../data/pages';
 
 const formStyle = css`
   & > *:first-child /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */ {
@@ -58,6 +58,10 @@ const NewUserRegistration = ({ permission }: AddUserProps): JSX.Element => {
   const [editorPermission, setEditorPermission] = useState<boolean>(false);
   const [viewerPermission, setViewerPermission] = useState<boolean>(false);
   const [unsuccessful, setUnsuccessful] = useState<boolean>(false);
+
+  useEffect(() => {
+    document.title = newUserRegistrationPage.pageName;
+  }, []);
 
   const onSetEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setEmail(e.target.value);
@@ -130,7 +134,7 @@ const NewUserRegistration = ({ permission }: AddUserProps): JSX.Element => {
   );
   return (
     <Fragment>
-      <Title value="ユーザー登録" />
+      <Title value={newUserRegistrationPage.pageName} />
       <form css={formStyle}>
         <label css={labelStyle}>
           E-mail

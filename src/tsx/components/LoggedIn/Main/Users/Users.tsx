@@ -8,7 +8,7 @@ import Button from '../../../../template/Button';
 import { Table, THead, TRow, TH } from '../../../../template/Table';
 import UserList from './UserList';
 
-import { TOP_PAGE_PATH, newUserRegistrationPage } from '../../../../data/pages';
+import { TOP_PAGE_PATH, newUserRegistrationPage, usersPage } from '../../../../data/pages';
 
 type UsersProps = {
   permission: Permission;
@@ -16,16 +16,17 @@ type UsersProps = {
 
 const Users = ({ permission }: UsersProps): JSX.Element => {
   useEffect(() => {
-    document.title = 'ユーザー一覧';
+    document.title = usersPage.pageName;
   }, []);
   return (
     <Fragment>
-      <Title value="ユーザー一覧" additionalStyle={{ float: 'left' }} />
+      <Title value={usersPage.pageName} additionalStyle={{ float: 'left' }} />
       <Button
         as="routerLink"
-        value="新規登録"
+        value="New registration"
         additionalStyle={{
           backgroundColor: '#e87c00',
+          width: '15rem',
           margin: '0 0 0 auto',
           position: 'sticky',
           top: '8rem',
