@@ -7,7 +7,8 @@ import Header from './Header';
 import Footer from './Footer';
 import SideBar from './SideBar/SideBar';
 import Users from './Main/Users/Users';
-import AddUser from './Main/AddUser/AddUser';
+import NewUserRegistration from './Main/NewUserRegistration/NewUserRegistration';
+import ContentList from './Main/ContentList/ContentList';
 
 const insideWrapper = css`
   display: flex;
@@ -64,9 +65,14 @@ const LoggedIn = ({
               render={() => <Users urlOfTopPage={urlOfTopPage} permission={permission} />}
             />
             <Route
-              path={`${urlOfTopPage}/addUser`}
-              render={() => <AddUser urlOfTopPage={urlOfTopPage} permission={permission} />}
+              path={`${urlOfTopPage}/newUserRegistration`}
+              render={() => <NewUserRegistration urlOfTopPage={urlOfTopPage} permission={permission} />}
             />
+            <Route
+              path={`${urlOfTopPage}/contentList`}
+              render={() => <ContentList urlOfTopPage={urlOfTopPage} permission={permission} />}
+            />
+            <Redirect to="/home" />
           </Switch>
         </main>
       </div>

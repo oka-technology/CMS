@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core';
 import axios from 'axios';
 import { convertPermissionObjectToString } from '../../modules/convertPermission';
-import bp from '../../modules/mediaQuery';
+import bp from '../../data/mediaQuery';
 
 const wrapper = css`
   align-items: center;

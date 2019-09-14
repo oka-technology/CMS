@@ -72,7 +72,7 @@ const sideBarItemObject: SideBarItemObject[] = [
       editor: false,
       viewer: false,
     },
-    link: 'addUser',
+    link: 'newUserRegistration',
   },
   {
     contents: 'コンテンツ一覧',

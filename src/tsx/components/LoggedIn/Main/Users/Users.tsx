@@ -29,7 +29,7 @@ const Users = ({ urlOfTopPage, permission }: UsersProps): JSX.Element => {
           position: 'sticky',
           top: '8rem',
         }}
-        to={`${urlOfTopPage}/addUser`}
+        to={`${urlOfTopPage}/newUserRegistration`}
       />
       <Table>
         <THead>

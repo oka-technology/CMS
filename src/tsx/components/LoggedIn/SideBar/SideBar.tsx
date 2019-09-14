@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import bp from '../../../modules/mediaQuery';
+import bp from '../../../data/mediaQuery';
 
 import SideBarItem from './SideBarItem';
 import { useEffect, useState } from 'react';
