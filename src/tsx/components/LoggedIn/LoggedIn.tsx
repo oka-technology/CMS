@@ -49,10 +49,8 @@ const LoggedIn = ({
   onSetLoginUser,
 }: LoggedInProps): JSX.Element => {
   useEffect(() => {
-    if (loggedIn) {
-      document.title = 'ログイン成功';
-    }
-  }, [loggedIn]);
+    document.title = 'Login Success';
+  }, []);
 
   return (
     <Fragment>

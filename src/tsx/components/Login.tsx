@@ -50,7 +50,7 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetPermission }: LoginProps): 
   const [reDirect, setReDirect] = useState<boolean>(false);
 
   useEffect(() => {
-    document.title = 'ログイン画面';
+    document.title = 'Log in';
     return () => {
       document.title = '';
       setReDirect(false);
