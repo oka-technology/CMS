@@ -50,7 +50,7 @@ type AddUserProps = {
   permission: Permission;
 };
 
-const AddUser = ({ urlOfTopPage, permission }: AddUserProps): JSX.Element => {
+const NewUserRegistration = ({ urlOfTopPage, permission }: AddUserProps): JSX.Element => {
   const [Email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [hidePassword, setHidePassword] = useState<boolean>(true);
@@ -79,7 +79,7 @@ const AddUser = ({ urlOfTopPage, permission }: AddUserProps): JSX.Element => {
       viewerPermission: viewerPermission,
     };
     axios
-      .post('./api/addUser.php', params)
+      .post('./api/registerUser.php', params)
       .then((result) => {
         const data: ResultsOfAddUserApi = result.data;
         if (!data.successful) {
@@ -168,4 +168,4 @@ const AddUser = ({ urlOfTopPage, permission }: AddUserProps): JSX.Element => {
   );
 };
 
-export default AddUser;
+export default NewUserRegistration;
