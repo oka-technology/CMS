@@ -2,6 +2,8 @@
 import { jsx, css } from '@emotion/core';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { pagesAfterLoggedIn } from '../../../data/pages';
+import permissions from '../../../data/permissions';
 
 const listItem = css`
   display: flex;
@@ -44,90 +46,26 @@ const triangle = css`
   width: 0.8rem;
 `;
 
-type SideBarItemObject = {
-  link: string;
-  contents: string;
-  requiredPermission: Permission;
-};
-
 type SideBarItemProps = {
   permission: Permission;
   urlOfTopPage: string;
 };
 
-const sideBarItemObject: SideBarItemObject[] = [
-  {
-    contents: 'ユーザー一覧',
-    requiredPermission: {
-      admin: true,
-      editor: false,
-      viewer: false,
-    },
-    link: 'users',
-  },
-  {
-    contents: 'ユーザー登録',
-    requiredPermission: {
-      admin: true,
-      editor: false,
-      viewer: false,
-    },
-    link: 'newUserRegistration',
-  },
-  {
-    contents: 'コンテンツ一覧',
-    requiredPermission: {
-      admin: false,
-      editor: true,
-      viewer: true,
-    },
-    link: 'contentList',
-  },
-  {
-    contents: 'コンテンツ登録',
-    requiredPermission: {
-      admin: false,
-      editor: true,
-      viewer: false,
-    },
-    link: 'registerContent',
-  },
-  {
-    contents: 'カテゴリ一覧',
-    requiredPermission: {
-      admin: false,
-      editor: true,
-      viewer: false,
-    },
-    link: 'categories',
-  },
-  {
-    contents: 'カテゴリ登録',
-    requiredPermission: {
-      admin: false,
-      editor: true,
-      viewer: false,
-    },
-    link: 'registerCategory',
-  },
-];
-
-const permissions = ['admin', 'editor', 'viewer'];
-
-const SideBarItem = ({ permission, urlOfTopPage }: SideBarItemProps): JSX.Element => {
-  const item: (JSX.Element | undefined)[] = sideBarItemObject.map((object) => {
+const SideBarItem = ({ permission }: SideBarItemProps): JSX.Element => {
+  const item: (JSX.Element | undefined)[] = pagesAfterLoggedIn.map((pageData) => {
     if (
       permissions.some(
         (elem: string) =>
-          object.requiredPermission[elem] === true && object.requiredPermission[elem] === permission[elem],
+          pageData.pageInfo.requiredPermission[elem] === true &&
+          pageData.pageInfo.requiredPermission[elem] === permission[elem],
       )
     ) {
-      const link: string = `${urlOfTopPage}/${object.link}`;
+      const link: string = pageData.pageInfo.path;
       return (
-        <li css={listItem} key={object.link}>
+        <li css={listItem} key={pageData.pageInfo.path}>
           <Link to={link} css={listItemAnchor(location.pathname === link)}>
             <span css={triangle}></span>
-            {object.contents}
+            {pageData.pageName}
           </Link>
         </li>
       );
