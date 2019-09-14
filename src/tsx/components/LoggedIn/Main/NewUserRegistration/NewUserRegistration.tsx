@@ -9,6 +9,7 @@ import TextInput from '../../../../template/TextInput';
 import CheckBox from '../../../../template/CheckBox';
 import Button from '../../../../template/Button';
 import ErrorMessage from '../../../../template/ErrorMessage';
+import { TOP_PAGE_PATH } from '../../../../data/pages';
 
 const formStyle = css`
   & > *:first-child /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */ {
@@ -46,11 +47,10 @@ type ResultsOfAddUserApi = {
 };
 
 type AddUserProps = {
-  urlOfTopPage: string;
   permission: Permission;
 };
 
-const NewUserRegistration = ({ urlOfTopPage, permission }: AddUserProps): JSX.Element => {
+const NewUserRegistration = ({ permission }: AddUserProps): JSX.Element => {
   const [Email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [hidePassword, setHidePassword] = useState<boolean>(true);
@@ -163,7 +163,7 @@ const NewUserRegistration = ({ urlOfTopPage, permission }: AddUserProps): JSX.El
         />
       </form>
       {unsuccessful ? <ErrorMessage value="You must fill in all of the fields." /> : null}
-      {permission.admin ? null : <Redirect to={`${urlOfTopPage}`} />}
+      {permission.admin ? null : <Redirect to={TOP_PAGE_PATH} />}
     </Fragment>
   );
 };

@@ -8,12 +8,13 @@ import Button from '../../../../template/Button';
 import { Table, THead, TRow, TH } from '../../../../template/Table';
 import UserList from './UserList';
 
+import { TOP_PAGE_PATH, newUserRegistrationPage } from '../../../../data/pages';
+
 type UsersProps = {
-  urlOfTopPage: string;
   permission: Permission;
 };
 
-const Users = ({ urlOfTopPage, permission }: UsersProps): JSX.Element => {
+const Users = ({ permission }: UsersProps): JSX.Element => {
   useEffect(() => {
     document.title = 'ユーザー一覧';
   }, []);
@@ -29,7 +30,7 @@ const Users = ({ urlOfTopPage, permission }: UsersProps): JSX.Element => {
           position: 'sticky',
           top: '8rem',
         }}
-        to={`${urlOfTopPage}/newUserRegistration`}
+        to={newUserRegistrationPage.path}
       />
       <Table>
         <THead>
@@ -41,7 +42,7 @@ const Users = ({ urlOfTopPage, permission }: UsersProps): JSX.Element => {
         </THead>
         <UserList />
       </Table>
-      {permission.admin ? null : <Redirect to={`${urlOfTopPage}`} />}
+      {permission.admin ? null : <Redirect to={TOP_PAGE_PATH} />}
     </Fragment>
   );
 };

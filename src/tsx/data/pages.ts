@@ -1,81 +1,55 @@
 type PageData = {
   pageName: string;
-  pageInfo: PageInfo;
-};
-
-type PageInfo = {
   path: string;
   requiredPermission: Permission;
 };
 
+const createPageData = (pageName: string, requiredPermission: Permission): PageData => {
+  return {
+    pageName: pageName,
+    path: `${TOP_PAGE_PATH}/${pageName.replace(' ', '')}`,
+    requiredPermission: requiredPermission,
+  };
+};
+
 export const TOP_PAGE_PATH: string = '/home';
 export const LOGIN_PAGE_PATH: string = '/login';
-export const usersPage: PageData = {
-  pageName: 'Users',
-  pageInfo: {
-    path: `${TOP_PAGE_PATH}/users`,
-    requiredPermission: {
-      admin: true,
-      editor: false,
-      viewer: false,
-    },
-  }
-};
-export const newUserRegistrationPage: PageData = {
-  pageName: 'New User Registration',
-  pageInfo: {
-    path: `${TOP_PAGE_PATH}/newUserRegistration`,
-    requiredPermission: {
-      admin: true,
-      editor: false,
-      viewer: false,
-    },
-  }
-};
-export const contentList: PageData = {
-  pageName: 'Content List',
-  pageInfo: {
-    path: `${TOP_PAGE_PATH}/contentList`,
-    requiredPermission: {
-      admin: false,
-      editor: true,
-      viewer: true,
-    },
-  }
-};
-export const newContentRegistrationPage: PageData = {
-  pageName: 'New Content Registration',
-  pageInfo: {
-    path: `${TOP_PAGE_PATH}/newContentRegistration`,
-    requiredPermission: {
-      admin: false,
-      editor: true,
-      viewer: false,
-    },
-  }
-};
-export const categoriesPage: PageData = {
-  pageName: 'Categories',
-  pageInfo: {
-    path: `${TOP_PAGE_PATH}/categories`,
-    requiredPermission: {
-      admin: false,
-      editor: true,
-      viewer: false,
-    },
-  }
-};
-export const newCategoryRegistrationPage: PageData = {
-  pageName: 'New Category Registration',
-  pageInfo: {
-    path: `${TOP_PAGE_PATH}/newCategoryRegistration`,
-    requiredPermission: {
-      admin: false,
-      editor: true,
-      viewer: false,
-    },
-  }
-};
-export const pagesAfterLoggedIn: PageData[] = [
-  usersPage, newUserRegistrationPage, contentList, newContentRegistrationPage, categoriesPage, newCategoryRegistrationPage
-]
+export const usersPage: PageData = createPageData('Users', {
+  admin: true,
+  editor: false,
+  viewer: false,
+});
+export const newUserRegistrationPage: PageData = createPageData('New User Registration', {
+  admin: true,
+  editor: false,
+  viewer: false,
+});
+export const contentListPage: PageData = createPageData('Content List', {
+  admin: false,
+  editor: true,
+  viewer: true,
+});
+export const newContentRegistrationPage: PageData = createPageData('New Content Registration', {
+  admin: false,
+  editor: true,
+  viewer: false,
+});
+export const categoriesPage: PageData = createPageData('Categories', {
+  admin: false,
+  editor: true,
+  viewer: false,
+});
+export const newCategoryRegistrationPage: PageData = createPageData('New Category Registration', {
+  admin: false,
+  editor: true,
+  viewer: false,
+});
+
+export const arrayOfPagesAfterLoggedIn: PageData[] = [
+  usersPage,
+  newUserRegistrationPage,
+  contentListPage,
+  newContentRegistrationPage,
+  categoriesPage,
+  newCategoryRegistrationPage,
+];

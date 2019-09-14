@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
+import { useEffect, useState } from 'react';
+
 import bp from '../../../data/mediaQuery';
 
 import SideBarItem from './SideBarItem';
-import { useEffect, useState } from 'react';
-
 const sideBarStyle = (windowHeight: number) => css`
   background-color: #777;
   height: calc(${windowHeight}px - 11rem);
@@ -27,10 +27,9 @@ const sideBarListWrapperStyle = css`
 
 type SideBarProps = {
   permission: Permission;
-  urlOfTopPage: string;
 };
 
-const SideBar = ({ permission, urlOfTopPage }: SideBarProps): JSX.Element => {
+const SideBar = ({ permission }: SideBarProps): JSX.Element => {
   const [windowHeight, setWindowHeight] = useState<number>(window.innerHeight);
   useEffect(() => {
     window.addEventListener('resize', () => {
@@ -39,9 +38,11 @@ const SideBar = ({ permission, urlOfTopPage }: SideBarProps): JSX.Element => {
   }, []);
   return (
     <aside css={sideBarStyle(windowHeight)}>
-      <ul css={sideBarListWrapperStyle}>
-        <SideBarItem permission={permission} urlOfTopPage={urlOfTopPage} />
-      </ul>
+      <nav>
+        <ul css={sideBarListWrapperStyle}>
+          <SideBarItem permission={permission} />
+        </ul>
+      </nav>
     </aside>
   );
 };

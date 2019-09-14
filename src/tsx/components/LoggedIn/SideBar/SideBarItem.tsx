@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
-import { pagesAfterLoggedIn } from '../../../data/pages';
+import { NavLink } from 'react-router-dom';
+import { arrayOfPagesAfterLoggedIn } from '../../../data/pages';
 import permissions from '../../../data/permissions';
 
 const listItem = css`
@@ -24,7 +24,7 @@ const listItemAnchor = (now: boolean) => css`
   color: #fff;
   display: flex;
   height: 5.9rem;
-  line-height: 4rem;
+  line-height: 2rem;
   padding-left: 1.2rem;
   text-decoration: none;
   width: 16rem;
@@ -48,25 +48,23 @@ const triangle = css`
 
 type SideBarItemProps = {
   permission: Permission;
-  urlOfTopPage: string;
 };
 
 const SideBarItem = ({ permission }: SideBarItemProps): JSX.Element => {
-  const item: (JSX.Element | undefined)[] = pagesAfterLoggedIn.map((pageData) => {
+  const item: (JSX.Element | undefined)[] = arrayOfPagesAfterLoggedIn.map((pageData) => {
     if (
       permissions.some(
         (elem: string) =>
-          pageData.pageInfo.requiredPermission[elem] === true &&
-          pageData.pageInfo.requiredPermission[elem] === permission[elem],
+          pageData.requiredPermission[elem] === true && pageData.requiredPermission[elem] === permission[elem],
       )
     ) {
-      const link: string = pageData.pageInfo.path;
+      const link: string = pageData.path;
       return (
-        <li css={listItem} key={pageData.pageInfo.path}>
-          <Link to={link} css={listItemAnchor(location.pathname === link)}>
+        <li css={listItem} key={pageData.path}>
+          <NavLink to={link} css={listItemAnchor(location.pathname === link)}>
             <span css={triangle}></span>
             {pageData.pageName}
-          </Link>
+          </NavLink>
         </li>
       );
     }

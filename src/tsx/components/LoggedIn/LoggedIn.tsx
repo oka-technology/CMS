@@ -10,6 +10,15 @@ import Users from './Main/Users/Users';
 import NewUserRegistration from './Main/NewUserRegistration/NewUserRegistration';
 import ContentList from './Main/ContentList/ContentList';
 
+import {
+  usersPage,
+  newUserRegistrationPage,
+  contentListPage,
+  newContentRegistrationPage,
+  categoriesPage,
+  newCategoryRegistrationPage,
+} from '../../data/pages';
+
 const insideWrapper = css`
   display: flex;
   flex: 1;
@@ -29,7 +38,6 @@ type LoggedInProps = {
   onSetLoggedIn: (bool: boolean) => void;
   onSetLoginUser: (name: string) => void;
   onSetPermission: (permission: number) => void;
-  urlOfTopPage: string;
 };
 
 const LoggedIn = ({
@@ -39,7 +47,6 @@ const LoggedIn = ({
   onSetPermission,
   onSetLoggedIn,
   onSetLoginUser,
-  urlOfTopPage,
 }: LoggedInProps): JSX.Element => {
   useEffect(() => {
     if (loggedIn) {
@@ -57,21 +64,12 @@ const LoggedIn = ({
         onSetPermission={onSetPermission}
       />
       <div css={insideWrapper}>
-        <SideBar permission={permission} urlOfTopPage={urlOfTopPage} />
+        <SideBar permission={permission} />
         <main css={mainStyle}>
           <Switch>
-            <Route
-              path={`${urlOfTopPage}/users`}
-              render={() => <Users urlOfTopPage={urlOfTopPage} permission={permission} />}
-            />
-            <Route
-              path={`${urlOfTopPage}/newUserRegistration`}
-              render={() => <NewUserRegistration urlOfTopPage={urlOfTopPage} permission={permission} />}
-            />
-            <Route
-              path={`${urlOfTopPage}/contentList`}
-              render={() => <ContentList urlOfTopPage={urlOfTopPage} permission={permission} />}
-            />
+            <Route path={usersPage.path} render={() => <Users permission={permission} />} />
+            <Route path={newUserRegistrationPage.path} render={() => <NewUserRegistration permission={permission} />} />
+            <Route path={contentListPage.path} render={() => <ContentList permission={permission} />} />
             <Redirect to="/home" />
           </Switch>
         </main>

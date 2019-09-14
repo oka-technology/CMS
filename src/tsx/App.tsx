@@ -8,6 +8,7 @@ import { useAsync } from 'react-async';
 import LoggedIn from './components/LoggedIn/LoggedIn';
 import Login from './components/Login';
 import { convertPermissionNumToObject } from './modules/convertPermission';
+import { TOP_PAGE_PATH, LOGIN_PAGE_PATH } from './data/pages';
 
 const globalStyle = css`
   a {
@@ -156,8 +157,8 @@ const App = (): JSX.Element => {
           {location.pathname === '/' ? <Redirect to="/home" /> : null}
           <Switch>
             <Route
-              path="/home"
-              render={(props) => (
+              path={TOP_PAGE_PATH}
+              render={() => (
                 <LoggedIn
                   loggedIn={loggedIn}
                   loginUser={loginUser}
@@ -165,13 +166,12 @@ const App = (): JSX.Element => {
                   onSetLoggedIn={onSetLoggedIn}
                   onSetLoginUser={onSetLoginUser}
                   onSetPermission={onSetPermission}
-                  urlOfTopPage={props.match.url}
                 />
               )}
             />
             <Route
               exact
-              path="/login"
+              path={LOGIN_PAGE_PATH}
               render={() => (
                 <Login
                   loggedIn={loggedIn}
