@@ -10,6 +10,7 @@ import Users from './Main/Users/Users';
 import NewUserRegistration from './Main/NewUserRegistration/NewUserRegistration';
 import ContentList from './Main/ContentList/ContentList';
 import NewCategoryRegistration from './Main/NewCategoryRegistration/NewCategoryRegistration';
+import Categories from './Main/Categories/Categories';
 
 import {
   usersPage,
@@ -21,7 +22,6 @@ import {
   TOP_PAGE_PATH,
   LOGIN_PAGE_PATH,
 } from '../../data/pages';
-import Categories from './Main/Categories/Categories';
 
 const insideWrapper = css`
   display: flex;
