@@ -52,7 +52,7 @@ const UserList = ({ windowHeight, columnWidthPropotions }: UserListProps): JSX.E
     );
   });
   return (
-    <TBody additionalStyle={{ height: `calc(${windowHeight}px - (6rem + 8.5rem + 6.2rem + 1.5rem + 5rem))` }}>
+    <TBody additionalStyle={{ height: `calc(${windowHeight}px - (6rem + 8.5rem + 6.2rem + 2.5rem + 5rem))` }}>
       {item}
     </TBody>
   );
