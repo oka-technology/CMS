@@ -72,7 +72,7 @@ const NewUserRegistration = ({ permission }: AddUserProps): JSX.Element => {
   const onSetHidePassword = (): void => {
     setHidePassword(!hidePassword);
   };
-  const addUserToDB = (e: React.MouseEvent<HTMLElement>): void => {
+  const registerUserToDB = (e: React.MouseEvent<HTMLElement>): void => {
     e.preventDefault();
     setUnsuccessful(false);
     const params = {
@@ -162,8 +162,8 @@ const NewUserRegistration = ({ permission }: AddUserProps): JSX.Element => {
         <Button
           as="submit"
           value="Register"
-          onClick={addUserToDB}
-          additionalStyle={{ backgroundColor: '#0528c2', marginTop: '5rem' }}
+          onClick={registerUserToDB}
+          additionalStyle={{ backgroundColor: '#0528c2', marginTop: '4rem' }}
         />
       </form>
       {unsuccessful ? <ErrorMessage value="You must fill in all of the fields." /> : null}
