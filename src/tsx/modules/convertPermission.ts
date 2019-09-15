@@ -8,17 +8,17 @@ export const convertPermissionNumToObject = (permission: number): Permission => 
 
 export const convertPermissionObjectToString = ({ admin, editor, viewer }: Permission): string => {
   const arr: string[] = [];
-  admin ? arr.push('管理者') : null;
-  editor ? arr.push('編集者') : null;
-  viewer ? arr.push('閲覧者') : null;
+  admin ? arr.push('Admin') : null;
+  editor ? arr.push('Editor') : null;
+  viewer ? arr.push('Viewer') : null;
   return arr.join(', ');
 };
 
 export const convertPermissionNumToString = (permission: number): string => {
   const permissionBinary: string = permission.toString(2).padStart(3, '0');
   const arr: string[] = [];
-  permissionBinary[2] === '1' ? arr.push('管理者') : null;
-  permissionBinary[1] === '1' ? arr.push('編集者') : null;
-  permissionBinary[0] === '1' ? arr.push('閲覧者') : null;
+  permissionBinary[2] === '1' ? arr.push('Admin') : null;
+  permissionBinary[1] === '1' ? arr.push('Editor') : null;
+  permissionBinary[0] === '1' ? arr.push('Viewer') : null;
   return arr.join(', ');
 };
