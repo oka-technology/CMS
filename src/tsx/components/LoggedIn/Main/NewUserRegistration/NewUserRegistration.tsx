@@ -161,7 +161,7 @@ const NewUserRegistration = ({ permission }: AddUserProps): JSX.Element => {
         <div css={permissionCheckBoxesWrapperStyle}>{permissionCheckBoxes}</div>
         <Button
           as="submit"
-          value="Add"
+          value="Register"
           onClick={addUserToDB}
           additionalStyle={{ backgroundColor: '#0528c2', marginTop: '5rem' }}
         />
