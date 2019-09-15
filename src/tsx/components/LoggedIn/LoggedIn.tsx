@@ -9,6 +9,7 @@ import SideBar from './SideBar/SideBar';
 import Users from './Main/Users/Users';
 import NewUserRegistration from './Main/NewUserRegistration/NewUserRegistration';
 import ContentList from './Main/ContentList/ContentList';
+import NewCategoryRegistration from './Main/NewCategoryRegistration/NewCategoryRegistration';
 
 import {
   usersPage,
@@ -17,7 +18,10 @@ import {
   newContentRegistrationPage,
   categoriesPage,
   newCategoryRegistrationPage,
+  TOP_PAGE_PATH,
+  LOGIN_PAGE_PATH,
 } from '../../data/pages';
+import Categories from './Main/Categories/Categories';
 
 const insideWrapper = css`
   display: flex;
@@ -72,13 +76,24 @@ const LoggedIn = ({
           <Switch>
             <Route path={usersPage.path} render={() => <Users windowHeight={windowHeight} permission={permission} />} />
             <Route path={newUserRegistrationPage.path} render={() => <NewUserRegistration permission={permission} />} />
-            <Route path={contentListPage.path} render={() => <ContentList permission={permission} />} />
-            <Redirect to="/home" />
+            <Route
+              path={contentListPage.path}
+              render={() => <ContentList windowHeight={windowHeight} permission={permission} />}
+            />
+            <Route
+              path={categoriesPage.path}
+              render={() => <Categories windowHeight={windowHeight} permission={permission} />}
+            />
+            <Route
+              path={newCategoryRegistrationPage.path}
+              render={() => <NewCategoryRegistration permission={permission} />}
+            />
+            <Redirect to={TOP_PAGE_PATH} />
           </Switch>
         </main>
       </div>
       <Footer />
-      {loggedIn ? null : <Redirect to="/login" />}
+      {loggedIn ? null : <Redirect to={LOGIN_PAGE_PATH} />}
     </Fragment>
   );
 };
