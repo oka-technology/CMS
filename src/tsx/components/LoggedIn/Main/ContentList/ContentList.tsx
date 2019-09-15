@@ -1,18 +1,23 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { Fragment, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import ContentListTable from './ContentListTable';
 
 import Title from '../../../../template/Title';
 import Button from '../../../../template/Button';
-import { newContentRegistrationPage, contentListPage } from '../../../../data/pages';
+import { newContentRegistrationPage, contentListPage, TOP_PAGE_PATH } from '../../../../data/pages';
+import { Table, THead, TRow, TH } from '../../../../template/Table';
 
 type ContentListProps = {
   permission: Permission;
+  windowHeight: number;
 };
 
-const ContentList = ({ permission }: ContentListProps): JSX.Element => {
+const columnWidthPropotions = ['10%', '20%', '30%', '20%', '10%', '10%'];
+
+const ContentList = ({ permission, windowHeight }: ContentListProps): JSX.Element => {
   useEffect(() => {
     document.title = contentListPage.pageName;
   }, []);
@@ -38,21 +43,19 @@ const ContentList = ({ permission }: ContentListProps): JSX.Element => {
           />
         ) : null}
       </div>
-      <ContentListTable />
+      <Table>
+        <THead>
+          <TRow>
+            <TH width={columnWidthPropotions[0]}>ID</TH>
+            <TH width={columnWidthPropotions[1]}>Category</TH>
+            <TH width={columnWidthPropotions[2]}>Title</TH>
+            <TH width={columnWidthPropotions[3]}>Registration Date</TH>
+          </TRow>
+        </THead>
+        <ContentListTable windowHeight={windowHeight} columnWidthPropotions={columnWidthPropotions} />
+      </Table>
+      {permission.editor || permission.viewer ? null : <Redirect to={TOP_PAGE_PATH} />}
     </Fragment>
-    // <h1 class="main__pageTitle">コンテンツ</h1>
-    // <?php if($convertedAuthority[1] == 1){ echo '<a class="main__addButton" href="addContents.php">新規登録</a>'; } ?>
-    // <ul class="list">
-    //   <li class="list__row">
-    //     <ul class="row">
-    //       <li class="row__item--title--thin">ID</li>
-    //       <li class="row__item--title">カテゴリ</li>
-    //       <li class="row__item--title">タイトル</li>
-    //       <li class="row__item--title">登録日</li>
-    //     </ul>
-    //   </li>
-    //   // <?= $contentsHTML ?>
-    // </ul>
   );
 };
 
