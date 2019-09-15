@@ -13,6 +13,9 @@ import '../api/userList.php';
 import '../api/convertPermission.php';
 import '../api/sessionConfiguration.php';
 import '../api/registerUser.php';
+import '../api/contentList.php';
+import '../api/categories.php';
+import '../api/registerCategory.php';
 
 import 'sanitize.css';
 import 'sanitize.css/typography.css';
