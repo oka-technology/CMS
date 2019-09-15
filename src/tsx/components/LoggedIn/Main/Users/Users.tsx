@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx, css } from '@emotion/core';
 import { Fragment, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
@@ -12,36 +12,44 @@ import { TOP_PAGE_PATH, newUserRegistrationPage, usersPage } from '../../../../d
 
 type UsersProps = {
   permission: Permission;
+  windowHeight: number;
 };
 
-const Users = ({ permission }: UsersProps): JSX.Element => {
+const columnWidthPropotions: string[] = ['15%', '30%', '55%'];
+
+const Users = ({ permission, windowHeight }: UsersProps): JSX.Element => {
   useEffect(() => {
     document.title = usersPage.pageName;
   }, []);
   return (
     <Fragment>
-      <Title value={usersPage.pageName} additionalStyle={{ float: 'left' }} />
-      <Button
-        as="routerLink"
-        value="New registration"
-        additionalStyle={{
-          backgroundColor: '#e87c00',
-          width: '15rem',
-          margin: '0 0 0 auto',
-          position: 'sticky',
-          top: '8rem',
-        }}
-        to={newUserRegistrationPage.path}
-      />
+      <div
+        css={css`
+          display: flex;
+          align-items: center;
+        `}
+      >
+        <Title value={usersPage.pageName} />
+        <Button
+          as="routerLink"
+          value="New Registration"
+          additionalStyle={{
+            backgroundColor: '#e87c00',
+            width: '15rem',
+            margin: '0 0 0 auto',
+          }}
+          to={newUserRegistrationPage.path}
+        />
+      </div>
       <Table>
         <THead>
           <TRow>
-            <TH width="15%">ID</TH>
-            <TH width="30%">User</TH>
-            <TH width="55%">Permission</TH>
+            <TH width={columnWidthPropotions[0]}>ID</TH>
+            <TH width={columnWidthPropotions[1]}>E-mail</TH>
+            <TH width={columnWidthPropotions[2]}>Permission</TH>
           </TRow>
         </THead>
-        <UserList />
+        <UserList windowHeight={windowHeight} columnWidthPropotions={columnWidthPropotions} />
       </Table>
       {permission.admin ? null : <Redirect to={TOP_PAGE_PATH} />}
     </Fragment>

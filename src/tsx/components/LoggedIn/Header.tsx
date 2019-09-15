@@ -12,8 +12,6 @@ const wrapper = css`
   height: 6rem;
   justify-content: space-between;
   padding: 0 2rem;
-  position: sticky;
-  top: 0;
   width: 100%;
 
   ${bp} {
@@ -72,7 +70,7 @@ const Header = ({
 }: HeaderProps): JSX.Element => {
   const onLogout = (e: React.MouseEvent<HTMLAnchorElement>): void => {
     e.preventDefault;
-    if (confirm('ログアウトします')) {
+    if (confirm('Log out of this CMS?')) {
       axios
         .post('./api/logoutProcess.php')
         .then((results) => {
@@ -92,7 +90,15 @@ const Header = ({
       <p css={siteName}>CMS</p>
       <div css={rightItem}>
         <p css={user}>
-          {loginUser}でログイン中（{convertPermissionObjectToString(permission)}）
+          You're logging in with
+          <span
+            css={css`
+              font-weight: bold;
+            `}
+          >
+            {` "${loginUser}" `}
+          </span>
+          ({convertPermissionObjectToString(permission)})
         </p>
         <a css={logoutAnchor} onClick={onLogout}>
           <svg css={logoutImage} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 570 487.88">

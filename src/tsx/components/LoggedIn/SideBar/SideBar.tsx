@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { useEffect, useState } from 'react';
 
 import bp from '../../../data/mediaQuery';
 
@@ -9,8 +8,6 @@ const sideBarStyle = (windowHeight: number) => css`
   background-color: #777;
   height: calc(${windowHeight}px - 11rem);
   min-width: 16rem;
-  position: sticky;
-  top: 6rem;
   width: 20rem;
 
   ${bp[0]} {
@@ -27,15 +24,10 @@ const sideBarListWrapperStyle = css`
 
 type SideBarProps = {
   permission: Permission;
+  windowHeight: number;
 };
 
-const SideBar = ({ permission }: SideBarProps): JSX.Element => {
-  const [windowHeight, setWindowHeight] = useState<number>(window.innerHeight);
-  useEffect(() => {
-    window.addEventListener('resize', () => {
-      setWindowHeight(window.innerHeight);
-    });
-  }, []);
+const SideBar = ({ permission, windowHeight }: SideBarProps): JSX.Element => {
   return (
     <aside css={sideBarStyle(windowHeight)}>
       <nav>

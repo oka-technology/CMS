@@ -4,13 +4,11 @@ import { jsx, css } from '@emotion/core';
 const wrapper = css`
   align-items: center;
   background-color: #333;
-  bottom: 0;
   color: #fff;
   display: flex;
   flex-shrink: 0;
   height: 5rem;
   justify-content: center;
-  position: sticky;
 `;
 
 const footerText = css`

@@ -5,6 +5,8 @@ import { CSSProperties } from 'react';
 
 const style = (additionalStyle: CSSProperties) => css`
   font-size: 3rem;
+  height: 4.5rem;
+  margin: 2rem 0;
   ${convertCSSPropertiesObjectToString(additionalStyle)}
 `;
 

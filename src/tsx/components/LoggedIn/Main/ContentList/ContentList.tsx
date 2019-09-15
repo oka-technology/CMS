@@ -1,33 +1,44 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
+
+import ContentListTable from './ContentListTable';
 
 import Title from '../../../../template/Title';
 import Button from '../../../../template/Button';
-import { newContentRegistrationPage } from '../../../../data/pages';
+import { newContentRegistrationPage, contentListPage } from '../../../../data/pages';
 
 type ContentListProps = {
   permission: Permission;
 };
 
 const ContentList = ({ permission }: ContentListProps): JSX.Element => {
+  useEffect(() => {
+    document.title = contentListPage.pageName;
+  }, []);
   return (
     <Fragment>
-      <Title value="Content list" additionalStyle={permission.editor ? { float: 'left' } : undefined} />
-      {permission.editor ? (
-        <Button
-          as="routerLink"
-          to={newContentRegistrationPage.path}
-          value="New registration"
-          additionalStyle={{
-            backgroundColor: '#e87c00',
-            width: '15rem',
-            margin: '0 0 0 auto',
-            position: 'sticky',
-            top: '8rem',
-          }}
-        />
-      ) : null}
+      <div
+        css={css`
+          display: flex;
+          align-items: center;
+        `}
+      >
+        <Title value={contentListPage.pageName} additionalStyle={permission.editor ? { float: 'left' } : undefined} />
+        {permission.editor ? (
+          <Button
+            as="routerLink"
+            to={newContentRegistrationPage.path}
+            value="New Registration"
+            additionalStyle={{
+              backgroundColor: '#e87c00',
+              width: '15rem',
+              margin: '0 0 0 auto',
+            }}
+          />
+        ) : null}
+      </div>
+      <ContentListTable />
     </Fragment>
     // <h1 class="main__pageTitle">コンテンツ</h1>
     // <?php if($convertedAuthority[1] == 1){ echo '<a class="main__addButton" href="addContents.php">新規登録</a>'; } ?>

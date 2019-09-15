@@ -5,13 +5,18 @@ import axios from 'axios';
 import { TBody, TRow, TD } from '../../../../template/Table';
 import { convertPermissionNumToString } from '../../../../modules/convertPermission';
 
+type UserListProps = {
+  windowHeight: number;
+  columnWidthPropotions: string[];
+};
+
 type UserInfo = {
   id: string;
   name: string;
   permission: string;
 };
 
-const UserList = (): JSX.Element => {
+const UserList = ({ windowHeight, columnWidthPropotions }: UserListProps): JSX.Element => {
   const [userInfoArray, setUserInfoArray] = useState<UserInfo[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
@@ -40,13 +45,17 @@ const UserList = (): JSX.Element => {
     const stringPermission = convertPermissionNumToString(Number(permission));
     return (
       <TRow key={id}>
-        <TD>{id}</TD>
-        <TD>{name}</TD>
-        <TD>{stringPermission}</TD>
+        <TD width={columnWidthPropotions[0]}>{id}</TD>
+        <TD width={columnWidthPropotions[1]}>{name}</TD>
+        <TD width={columnWidthPropotions[2]}>{stringPermission}</TD>
       </TRow>
     );
   });
-  return <TBody>{item}</TBody>;
+  return (
+    <TBody additionalStyle={{ height: `calc(${windowHeight}px - (6rem + 8.5rem + 6.2rem + 1.5rem + 5rem))` }}>
+      {item}
+    </TBody>
+  );
 };
 
 export default UserList;

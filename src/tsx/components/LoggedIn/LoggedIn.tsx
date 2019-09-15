@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { useEffect, Fragment } from 'react';
+import { useEffect, Fragment, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './Header';
@@ -24,8 +24,9 @@ const insideWrapper = css`
   flex: 1;
 `;
 
-const mainStyle = css`
+const mainStyle = (windowHeight: number) => css`
   flex-grow: 1;
+  height: calc(${windowHeight}px - 11rem);
   margin: 0 auto 0 0;
   max-width: 100rem;
   padding: 0 2rem 2rem;
@@ -48,8 +49,12 @@ const LoggedIn = ({
   onSetLoggedIn,
   onSetLoginUser,
 }: LoggedInProps): JSX.Element => {
+  const [windowHeight, setWindowHeight] = useState<number>(window.innerHeight);
   useEffect(() => {
     document.title = 'Login Success';
+    window.addEventListener('resize', () => {
+      setWindowHeight(window.innerHeight);
+    });
   }, []);
 
   return (
@@ -62,10 +67,10 @@ const LoggedIn = ({
         onSetPermission={onSetPermission}
       />
       <div css={insideWrapper}>
-        <SideBar permission={permission} />
-        <main css={mainStyle}>
+        <SideBar permission={permission} windowHeight={windowHeight} />
+        <main css={mainStyle(windowHeight)}>
           <Switch>
-            <Route path={usersPage.path} render={() => <Users permission={permission} />} />
+            <Route path={usersPage.path} render={() => <Users windowHeight={windowHeight} permission={permission} />} />
             <Route path={newUserRegistrationPage.path} render={() => <NewUserRegistration permission={permission} />} />
             <Route path={contentListPage.path} render={() => <ContentList permission={permission} />} />
             <Redirect to="/home" />
