@@ -15,13 +15,13 @@ create table userInfo (
   /* 
   administrator:1, 
   editor:2, 
-  reader:4 
+  viewer:4 
   */
 );
 
 create table categories (
   id int auto_increment not null primary key,
-  name varchar(255) not null
+  name varchar(255) not null unique
 );
 
 create table contents (
