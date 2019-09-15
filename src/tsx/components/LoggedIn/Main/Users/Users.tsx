@@ -15,7 +15,7 @@ type UsersProps = {
   windowHeight: number;
 };
 
-const columnWidthPropotions: string[] = ['15%', '30%', '55%'];
+const columnWidthPropotions: string[] = ['15%', '35%', '50%'];
 
 const Users = ({ permission, windowHeight }: UsersProps): JSX.Element => {
   useEffect(() => {
