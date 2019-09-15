@@ -154,7 +154,6 @@ const App = (): JSX.Element => {
       <Global styles={globalStyle} />
       <div css={wrapperStyle}>
         <BrowserRouter>
-          {location.pathname === '/' ? <Redirect to="/home" /> : null}
           <Switch>
             <Route
               path={TOP_PAGE_PATH}
@@ -181,7 +180,7 @@ const App = (): JSX.Element => {
                 />
               )}
             />
-            <Redirect to="/login" />
+            {loggedIn ? <Redirect to={TOP_PAGE_PATH} /> : <Redirect to={LOGIN_PAGE_PATH} />}
           </Switch>
         </BrowserRouter>
       </div>
