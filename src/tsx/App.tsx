@@ -64,8 +64,8 @@ const getSessionInfo = async () => {
   };
   await axios
     .post('./api/checkWhetherLoggedIn.php')
-    .then((results) => {
-      const resultData: ResultData = results.data;
+    .then(({ data }) => {
+      const resultData: ResultData = data;
       returnData.loggedIn = resultData.loggedIn;
       returnData.userID = resultData.userID;
       returnData.permission = convertPermissionNumToObject(Number(resultData.permission));
