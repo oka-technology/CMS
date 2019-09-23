@@ -12,14 +12,6 @@ const tableStyle = css`
   width: 100%;
 `;
 
-type TableProps = {
-  children: ReactNode;
-};
-
-export const Table = ({ children }: TableProps): JSX.Element => {
-  return <table css={tableStyle}>{children}</table>;
-};
-
 const theadStyle = css`
   border-top: 3px solid #aaa;
   border-bottom: 3px solid #aaa;
@@ -29,14 +21,6 @@ const theadStyle = css`
   width: 100%;
 `;
 
-type THeadProps = {
-  children: ReactNode;
-};
-
-export const THead = ({ children }: THeadProps): JSX.Element => {
-  return <thead css={theadStyle}>{children}</thead>;
-};
-
 const tbodyStyle = (additionalStyle: CSSProperties) => css`
   display: block;
   font-size: 1.6rem;
@@ -44,16 +28,6 @@ const tbodyStyle = (additionalStyle: CSSProperties) => css`
   width: 100%;
   ${convertCSSPropertiesObjectToString(additionalStyle)}
 `;
-
-type TBodyProps = {
-  children: ReactNode;
-  additionalStyle?: CSSProperties;
-};
-
-export const TBody = ({ children, additionalStyle }: TBodyProps): JSX.Element => {
-  additionalStyle = additionalStyle ? additionalStyle : {};
-  return <tbody css={tbodyStyle(additionalStyle)}>{children}</tbody>;
-};
 
 const trStyle = css`
   display: block;
@@ -65,14 +39,6 @@ const trStyle = css`
   }
 `;
 
-type TRowProps = {
-  children: ReactNode;
-};
-
-export const TRow = ({ children }: TRowProps): JSX.Element => {
-  return <tr css={trStyle}>{children}</tr>;
-};
-
 const thStyle = (width: string) => css`
   align-items: center;
   display: inline-flex;
@@ -82,15 +48,6 @@ const thStyle = (width: string) => css`
   width: ${width};
 `;
 
-type THProps = {
-  width: string;
-  children: ReactNode;
-};
-
-export const TH = ({ children, width }: THProps): JSX.Element => {
-  return <th css={thStyle(width)}>{children}</th>;
-};
-
 const tdStyle = (width: string) => css`
   align-items: center;
   display: inline-flex;
@@ -99,9 +56,52 @@ const tdStyle = (width: string) => css`
   width: ${width};
 `;
 
+type TableProps = {
+  children: ReactNode;
+};
+
+type THeadProps = {
+  children: ReactNode;
+};
+
+type TBodyProps = {
+  children: ReactNode;
+  additionalStyle?: CSSProperties;
+};
+
+type TRowProps = {
+  children: ReactNode;
+};
+
+type THProps = {
+  width: string;
+  children: ReactNode;
+};
+
 type TDProps = {
   children: ReactNode;
   width: string;
+};
+
+export const Table = ({ children }: TableProps): JSX.Element => {
+  return <table css={tableStyle}>{children}</table>;
+};
+
+export const THead = ({ children }: THeadProps): JSX.Element => {
+  return <thead css={theadStyle}>{children}</thead>;
+};
+
+export const TBody = ({ children, additionalStyle }: TBodyProps): JSX.Element => {
+  additionalStyle = additionalStyle ? additionalStyle : {};
+  return <tbody css={tbodyStyle(additionalStyle)}>{children}</tbody>;
+};
+
+export const TRow = ({ children }: TRowProps): JSX.Element => {
+  return <tr css={trStyle}>{children}</tr>;
+};
+
+export const TH = ({ children, width }: THProps): JSX.Element => {
+  return <th css={thStyle(width)}>{children}</th>;
 };
 
 export const TD = ({ children, width }: TDProps): JSX.Element => {
