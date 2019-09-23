@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import Button from '../template/Button';
-import TextInput from '../template/TextInput';
+import { TextInput } from '../template/Form';
 import ErrorMessage from '../template/ErrorMessage';
 
 const wrapperStyle = css`

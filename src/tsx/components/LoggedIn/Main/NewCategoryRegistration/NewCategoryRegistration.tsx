@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
-import TextInput from '../../../../template/TextInput';
+import { TextInput } from '../../../../template/Form';
 import Button from '../../../../template/Button';
 import ErrorMessage from '../../../../template/ErrorMessage';
 import { TOP_PAGE_PATH, newCategoryRegistrationPage } from '../../../../data/pages';

@@ -5,8 +5,7 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
-import TextInput from '../../../../template/TextInput';
-import CheckBox from '../../../../template/CheckBox';
+import { TextInput, CheckBox } from '../../../../template/Form';
 import Button from '../../../../template/Button';
 import ErrorMessage from '../../../../template/ErrorMessage';
 import { TOP_PAGE_PATH, newUserRegistrationPage } from '../../../../data/pages';
@@ -135,7 +134,7 @@ const NewUserRegistration = ({ permission }: AddUserProps): JSX.Element => {
   return (
     <Fragment>
       <Title value={newUserRegistrationPage.pageName} />
-      <form css={formStyle}>
+      <form css={formStyle} autoComplete="new-password">
         <label css={labelStyle}>
           E-mail
           <TextInput type="text" placeholder="" value={Email} onChange={onSetEmail} marginTop="0.5rem" />
