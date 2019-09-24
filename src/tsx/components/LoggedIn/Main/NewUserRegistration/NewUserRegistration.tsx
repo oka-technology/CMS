@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
-import { TextInput, CheckBox } from '../../../../template/Form';
+import { Label, TextInput, CheckBox } from '../../../../template/Form';
 import Button from '../../../../template/Button';
 import ErrorMessage from '../../../../template/ErrorMessage';
 import { TOP_PAGE_PATH, newUserRegistrationPage } from '../../../../data/pages';
@@ -14,12 +14,6 @@ const formStyle = css`
   & > *:first-child /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */ {
     margin-top: 0;
   }
-`;
-
-const labelStyle = css`
-  display: block;
-  font-size: 1.8rem;
-  margin-top: 3rem;
 `;
 
 const permissionItemHeadingStyle = css`
@@ -57,10 +51,6 @@ const NewUserRegistration = ({ permission }: AddUserProps): JSX.Element => {
   const [editorPermission, setEditorPermission] = useState<boolean>(false);
   const [viewerPermission, setViewerPermission] = useState<boolean>(false);
   const [unsuccessful, setUnsuccessful] = useState<boolean>(false);
-
-  useEffect(() => {
-    document.title = newUserRegistrationPage.pageName;
-  }, []);
 
   const onSetEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setEmail(e.target.value);
@@ -131,17 +121,18 @@ const NewUserRegistration = ({ permission }: AddUserProps): JSX.Element => {
       />
     ),
   );
+
+  useEffect(() => {
+    document.title = newUserRegistrationPage.pageName;
+  }, []);
+
   return (
     <Fragment>
       <Title value={newUserRegistrationPage.pageName} />
       <form css={formStyle} autoComplete="new-password">
-        <label css={labelStyle}>
-          E-mail
-          <TextInput type="text" placeholder="" value={Email} onChange={onSetEmail} marginTop="0.5rem" />
-        </label>
-        <label css={labelStyle} htmlFor="password">
-          Password
-        </label>
+        <Label value="E-mail" htmlFor="email" />
+        <TextInput type="text" placeholder="" value={Email} onChange={onSetEmail} marginTop="0.5rem" id="email" />
+        <Label value="Password" htmlFor="password" />
         <TextInput
           type={hidePassword ? 'password' : 'text'}
           placeholder=""

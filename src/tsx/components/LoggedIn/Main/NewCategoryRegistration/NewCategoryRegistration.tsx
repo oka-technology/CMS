@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
-import { TextInput } from '../../../../template/Form';
+import { Label, TextInput } from '../../../../template/Form';
 import Button from '../../../../template/Button';
 import ErrorMessage from '../../../../template/ErrorMessage';
 import { TOP_PAGE_PATH, newCategoryRegistrationPage } from '../../../../data/pages';
@@ -14,12 +14,6 @@ const formStyle = css`
   & > *:first-child /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */ {
     margin-top: 0;
   }
-`;
-
-const labelStyle = css`
-  display: block;
-  font-size: 1.8rem;
-  margin-top: 3rem;
 `;
 
 type ResultsOfAddUserApi = {
@@ -68,10 +62,15 @@ const NewCategoryRegistration = ({ permission }: AddUserProps): JSX.Element => {
     <Fragment>
       <Title value={newCategoryRegistrationPage.pageName} />
       <form css={formStyle}>
-        <label css={labelStyle}>
-          Title
-          <TextInput type="text" placeholder="" value={categoryName} onChange={onSetCategoryName} marginTop="0.5rem" />
-        </label>
+        <Label value="Title" htmlFor="categoryName" />
+        <TextInput
+          type="text"
+          placeholder=""
+          value={categoryName}
+          onChange={onSetCategoryName}
+          marginTop="0.5rem"
+          id="categoryName"
+        />
         <Button
           as="submit"
           value="Register"

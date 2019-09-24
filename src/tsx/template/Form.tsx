@@ -3,6 +3,12 @@ import { jsx, css } from '@emotion/core';
 import convertCSSPropertiesObjectToString from '../modules/convertCSSPropertiesObjectToString';
 import { CSSProperties } from 'react';
 
+const labelStyle = css`
+  display: block;
+  font-size: 1.8rem;
+  margin-top: 3rem;
+`;
+
 const textInputStyle = (marginTop: string) => css`
   border-radius: 0.5rem;
   display: block;
@@ -29,12 +35,30 @@ const checkBoxEntireStyle = (additionalStyle: CSSProperties) => css`
   ${convertCSSPropertiesObjectToString(additionalStyle)}
 `;
 
-const textareaStyle = css`
+const selectStyle = (marginTop: string) => css`
+  border-radius: 0.5rem;
+  font-size: 1.6rem;
+  margin-top: ${marginTop};
+  width: 100%;
+`;
+
+const optionStyle = css`
+  color: red;
+`;
+
+const textareaStyle = (marginTop: string) => css`
+  border-radius: 0.5rem;
   font-size: 1.6rem;
   resize: none;
   height: 20rem;
+  margin-top: ${marginTop};
   width: 100%;
 `;
+
+type LabelProps = {
+  htmlFor: string;
+  value: string;
+};
 
 type TextInputProps = {
   type: string;
@@ -56,6 +80,8 @@ type FormSelectProps = {
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   optionItems: OptionItem[];
   id?: string;
+  marginTop: string;
+  value: string;
 };
 
 type OptionItem = {
@@ -66,6 +92,16 @@ type OptionItem = {
 type TextAreaProps = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  marginTop: string;
+  id?: string;
+};
+
+export const Label = ({ htmlFor, value }: LabelProps): JSX.Element => {
+  return (
+    <label css={labelStyle} htmlFor={htmlFor}>
+      {value}
+    </label>
+  );
 };
 
 export const TextInput = ({ type, placeholder, value, onChange, marginTop, id }: TextInputProps): JSX.Element => {
@@ -91,20 +127,28 @@ export const CheckBox = ({ value, onChange, checked, additionalStyle }: CheckBox
   );
 };
 
-export const FormSelect = ({ onChange, optionItems, id }: FormSelectProps): JSX.Element => {
+export const FormSelect = ({ onChange, optionItems, id, marginTop, value }: FormSelectProps): JSX.Element => {
   const innerItem: JSX.Element[] = optionItems.map(({ value, text }) => (
-    <option value={value} id={id} key={value}>
+    <option value={value} key={value}>
       {text}
     </option>
   ));
   return (
-    <select onChange={onChange}>
-      <option value="0">Not selected</option>
+    <select
+      value={value}
+      css={selectStyle(marginTop)}
+      onChange={onChange}
+      id={id}
+      style={value === '0' ? { color: 'red' } : undefined}
+    >
+      <option css={optionStyle} value="0">
+        not selected
+      </option>
       {innerItem}
     </select>
   );
 };
 
-export const TextArea = ({ value, onChange }: TextAreaProps): JSX.Element => {
-  return <textarea css={textareaStyle} value={value} onChange={onChange} />;
+export const TextArea = ({ value, onChange, marginTop, id }: TextAreaProps): JSX.Element => {
+  return <textarea css={textareaStyle(marginTop)} value={value} onChange={onChange} id={id} />;
 };
