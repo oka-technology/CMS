@@ -11,6 +11,7 @@ import NewUserRegistration from './Main/NewUserRegistration/NewUserRegistration'
 import ContentList from './Main/ContentList/ContentList';
 import NewCategoryRegistration from './Main/NewCategoryRegistration/NewCategoryRegistration';
 import Categories from './Main/Categories/Categories';
+import NewContentRegistration from './Main/NewContentRegistration/NewContentRegistration';
 
 import {
   usersPage,
@@ -79,6 +80,10 @@ const LoggedIn = ({
             <Route
               path={contentListPage.path}
               render={() => <ContentList windowHeight={windowHeight} permission={permission} />}
+            />
+            <Route
+              path={newContentRegistrationPage.path}
+              render={() => <NewContentRegistration permission={permission} />}
             />
             <Route
               path={categoriesPage.path}
