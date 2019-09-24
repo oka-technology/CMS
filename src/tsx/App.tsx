@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import { jsx, css, Global } from '@emotion/core';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 import axios from 'axios';
-import { useAsync } from 'react-async';
 
 import LoggedIn from './components/LoggedIn/LoggedIn';
 import Login from './components/Login';
@@ -43,46 +42,18 @@ const wrapperStyle = css`
   height: 100%;
 `;
 
-type ResultData = {
+type UserDataInServer = {
   loggedIn: boolean;
   userID: string;
   permission: string;
 };
 
-type AppDefaultData = {
-  loggedIn: boolean;
-  userID: string;
-  permission: Permission;
-};
-
-const getSessionInfo = async () => {
-  axios.get('./api/sessionConfiguration.php');
-  const returnData: AppDefaultData = {
-    loggedIn: false,
-    userID: '',
-    permission: { admin: false, editor: false, viewer: false },
-  };
-  await axios
-    .post('./api/checkWhetherLoggedIn.php')
-    .then(({ data }) => {
-      const resultData: ResultData = data;
-      returnData.loggedIn = resultData.loggedIn;
-      returnData.userID = resultData.userID;
-      returnData.permission = convertPermissionNumToObject(Number(resultData.permission));
-    })
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    });
-  return returnData;
-};
-
 const App = (): JSX.Element => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [loginUser, setLoginUser] = useState<string>('');
   const [permission, setPermission] = useState<Permission>({ admin: false, editor: false, viewer: false });
-  const [dataSetted, setDataSetted] = useState<boolean>(false);
-  const { data, error, isLoading } = useAsync(getSessionInfo);
 
   const onSetLoggedIn = (bool: boolean): void => {
     setLoggedIn(bool);
@@ -94,31 +65,25 @@ const App = (): JSX.Element => {
     setPermission(convertPermissionNumToObject(permission));
   };
 
-  if (error) {
-    return (
-      <div css={wrapperStyle}>
-        <div
-          css={css`
-            align-items: center;
-            display: flex;
-            background-color: #555;
-            height: 100%;
-            justify-content: center;
-          `}
-        >
-          <p
-            css={css`
-              color: tomato;
-            `}
-          >
-            eroor
-          </p>
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    axios.get('./api/sessionConfiguration.php');
+    (async () => {
+      try {
+        const { data } = await axios.get('./api/checkWhetherLoggedIn.php');
+        const userDataInServer: UserDataInServer = data;
+        setLoggedIn(userDataInServer.loggedIn);
+        setLoginUser(userDataInServer.userID);
+        setPermission(convertPermissionNumToObject(Number(userDataInServer.permission)));
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
+        setHasError(true);
+      }
+      setIsLoading(false);
+    })();
+  }, []);
 
-  if (isLoading || !data) {
+  if (isLoading) {
     return (
       <div css={wrapperStyle}>
         <div
@@ -142,11 +107,28 @@ const App = (): JSX.Element => {
     );
   }
 
-  if (!dataSetted) {
-    setLoggedIn(data.loggedIn);
-    setLoginUser(data.userID);
-    setPermission(data.permission);
-    setDataSetted(true);
+  if (hasError) {
+    return (
+      <div css={wrapperStyle}>
+        <div
+          css={css`
+            align-items: center;
+            display: flex;
+            background-color: #555;
+            height: 100%;
+            justify-content: center;
+          `}
+        >
+          <p
+            css={css`
+              color: tomato;
+            `}
+          >
+            eroor
+          </p>
+        </div>
+      </div>
+    );
   }
 
   return (
