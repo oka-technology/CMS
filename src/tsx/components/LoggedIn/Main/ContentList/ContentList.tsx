@@ -29,7 +29,7 @@ const ContentList = ({ permission, windowHeight }: ContentListProps): JSX.Elemen
           align-items: center;
         `}
       >
-        <Title value={contentListPage.pageName} additionalStyle={permission.editor ? { float: 'left' } : undefined} />
+        <Title value={contentListPage.pageName} />
         {permission.editor ? (
           <Button
             as="routerLink"
