@@ -34,6 +34,10 @@ const trStyle = css`
   height: 6rem;
   width: 100%;
 
+  thead > & {
+    height: 4rem;
+  }
+
   tbody > & {
     border-bottom: 1px solid #aaa;
   }
