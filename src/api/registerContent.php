@@ -24,7 +24,7 @@
       $nowDate = date('y.m.d H:i:s');
 
       $stmt = $dbh->prepare(
-        "INSERT into contents (category_id, title, registrationDate, mainContents) values (?, ?, ?, ?);"
+        "INSERT into content (category_id, title, registrationDate, mainContent) values (?, ?, ?, ?);"
       );
       $stmt->execute([$_POST['category'], $_POST['title'], $nowDate, $_POST['content']]);
       $result['successful'] = true;

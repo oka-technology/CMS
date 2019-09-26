@@ -16,7 +16,7 @@
       );
 
       $stmt = $dbh->prepare(
-        'SELECT contents.id, contents.title, contents.registrationDate, categories.name as categoryName from contents join categories on contents.category_id = categories.id;'
+        'SELECT content.id, content.title, content.registrationDate, categories.name as categoryName from content join categories on content.category_id = categories.id;'
       );
       $stmt->execute();
 
@@ -30,10 +30,10 @@
 
       while($rowOfContent = $stmt->fetch(PDO::FETCH_ASSOC)){
         $index = $counter();
-        $result[$index]['id'] = $rowOfUserInfo['id'];
-        $result[$index]['category'] = $rowOfUserInfo['categoryName'];
-        $result[$index]['title'] = $rowOfUserInfo['title'];
-        $result[$index]['registrationDate'] = $rowOfUserInfo['registrationDate'];
+        $result[$index]['id'] = $rowOfContent['id'];
+        $result[$index]['category'] = $rowOfContent['categoryName'];
+        $result[$index]['title'] = $rowOfContent['title'];
+        $result[$index]['registrationDate'] = $rowOfContent['registrationDate'];
       }
       echo(json_encode($result, JSON_PRETTY_PRINT));
     } catch (PDOException $e) {

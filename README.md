@@ -23,10 +23,10 @@ docker-compose up
 - id(auto increment)
 - name
 
-### contents table
+### content table
 
 - id(auto increment)
 - category_id(referenced to categories.id)
 - title
 - registrationDate
-- mainContents
+- mainContent

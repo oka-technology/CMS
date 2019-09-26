@@ -24,12 +24,12 @@ create table categories (
   name varchar(255) not null unique
 );
 
-create table contents (
+create table content (
   id int auto_increment not null primary key,
   category_id int not null,
   title varchar(255) not null,
   registrationDate varchar(255) not null,
-  mainContents varchar(420) not null,
+  mainContent varchar(420) not null,
   foreign key (category_id)
     references categories(id)
 );
