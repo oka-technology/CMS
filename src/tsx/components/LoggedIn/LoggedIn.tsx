@@ -55,15 +55,19 @@ const LoggedIn = ({
   onSetLoginUser,
 }: LoggedInProps): JSX.Element => {
   const [windowHeight, setWindowHeight] = useState<number>(window.innerHeight);
+
   useEffect(() => {
+    let unmounted = false;
     document.title = 'Login Success';
     window.addEventListener('resize', () => {
+      if (unmounted) return;
       setWindowHeight(window.innerHeight);
     });
     return () => {
       window.removeEventListener('resize', () => {
         setWindowHeight(window.innerHeight);
       });
+      unmounted = true;
     };
   }, []);
 
