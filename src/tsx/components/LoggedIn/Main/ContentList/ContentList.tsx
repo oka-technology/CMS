@@ -15,7 +15,7 @@ type ContentListProps = {
   windowHeight: number;
 };
 
-const columnWidthPropotions = ['10%', '20%', '30%', '20%', '10%', '10%'];
+const columnWidthPropotions = ['7%', '20%', '35%', '18%', '10%', '10%'];
 
 const ContentList = ({ permission, windowHeight }: ContentListProps): JSX.Element => {
   useEffect(() => {
