@@ -21,6 +21,7 @@ const ContentList = ({ permission, windowHeight }: ContentListProps): JSX.Elemen
   useEffect(() => {
     document.title = contentListPage.pageName;
   }, []);
+
   return (
     <Fragment>
       <div
@@ -54,7 +55,7 @@ const ContentList = ({ permission, windowHeight }: ContentListProps): JSX.Elemen
         </THead>
         <ContentListTable windowHeight={windowHeight} columnWidthPropotions={columnWidthPropotions} />
       </Table>
-      {permission.editor || permission.viewer ? null : <Redirect to={TOP_PAGE_PATH} />}
+      {!permission.editor && !permission.viewer && <Redirect to={TOP_PAGE_PATH} />}
     </Fragment>
   );
 };

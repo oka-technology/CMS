@@ -50,7 +50,7 @@ const Categories = ({ windowHeight, permission }: CategoriesProps): JSX.Element 
         </THead>
         <CategoriesTable windowHeight={windowHeight} columnWidthPropotions={columnWidthPropotions} />
       </Table>
-      {permission.editor ? null : <Redirect to={TOP_PAGE_PATH} />}
+      {!permission.editor && <Redirect to={TOP_PAGE_PATH} />}
     </Fragment>
   );
 };
