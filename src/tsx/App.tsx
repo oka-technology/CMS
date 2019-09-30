@@ -8,6 +8,7 @@ import LoggedIn from './components/LoggedIn/LoggedIn';
 import Login from './components/Login';
 import { convertPermissionNumToObject } from './modules/convertPermission';
 import { TOP_PAGE_PATH, LOGIN_PAGE_PATH } from './data/pages';
+import { checkWhetherLoggedIn } from './data/apiClient';
 
 const globalStyle = css`
   a {
@@ -42,12 +43,6 @@ const wrapperStyle = css`
   height: 100%;
 `;
 
-type UserDataInServer = {
-  loggedIn: boolean;
-  userID: string;
-  permission: string;
-};
-
 const App = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
@@ -67,20 +62,27 @@ const App = (): JSX.Element => {
 
   useEffect(() => {
     axios.get('./api/sessionConfiguration.php');
+  }, []);
+
+  useEffect(() => {
+    let unmounted: boolean = false;
+    const cancelTokenSource = axios.CancelToken.source();
     (async () => {
-      try {
-        const { data } = await axios.get('./api/checkWhetherLoggedIn.php');
-        const userDataInServer: UserDataInServer = data;
-        setLoggedIn(userDataInServer.loggedIn);
-        setLoginUser(userDataInServer.userID);
-        setPermission(convertPermissionNumToObject(Number(userDataInServer.permission)));
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error);
+      const data = await checkWhetherLoggedIn(null, cancelTokenSource);
+      if (unmounted) return;
+      if (!data) {
         setHasError(true);
+        return;
       }
+      setLoggedIn(data.loggedIn);
+      setLoginUser(data.userID);
+      setPermission(convertPermissionNumToObject(Number(data.permission)));
       setIsLoading(false);
     })();
+    return () => {
+      cancelTokenSource.cancel();
+      unmounted = true;
+    };
   }, []);
 
   if (isLoading) {
@@ -124,7 +126,7 @@ const App = (): JSX.Element => {
               color: tomato;
             `}
           >
-            eroor
+            Eroor
           </p>
         </div>
       </div>

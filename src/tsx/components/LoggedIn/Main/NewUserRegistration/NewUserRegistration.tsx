@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { useState, Fragment, Dispatch, SetStateAction, useEffect } from 'react';
-import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
@@ -9,6 +8,7 @@ import { Label, TextInput, CheckBox } from '../../../../template/Form';
 import Button from '../../../../template/Button';
 import ErrorMessage from '../../../../template/ErrorMessage';
 import { TOP_PAGE_PATH, newUserRegistrationPage } from '../../../../data/pages';
+import { registerUser } from '../../../../data/apiClient';
 
 const formStyle = css`
   & > *:first-child /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */ {
@@ -50,7 +50,7 @@ const NewUserRegistration = ({ permission }: AddUserProps): JSX.Element => {
   const [adminPermission, setAdminPermission] = useState<boolean>(false);
   const [editorPermission, setEditorPermission] = useState<boolean>(false);
   const [viewerPermission, setViewerPermission] = useState<boolean>(false);
-  const [unsuccessful, setUnsuccessful] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(true);
 
   const onSetEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setEmail(e.target.value);
@@ -61,34 +61,25 @@ const NewUserRegistration = ({ permission }: AddUserProps): JSX.Element => {
   const onSetHidePassword = (): void => {
     setHidePassword(!hidePassword);
   };
-  const registerUserToDB = (e: React.MouseEvent<HTMLElement>): void => {
+  const registerUserToDB = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    setUnsuccessful(false);
-    const params = {
+    setSuccess(true);
+    const data = await registerUser({
       email: Email,
       password: password,
       adminPermission: adminPermission,
       editorPermission: editorPermission,
       viewerPermission: viewerPermission,
-    };
-    axios
-      .post('./api/registerUser.php', params)
-      .then((result) => {
-        const data: ResultsOfAddUserApi = result.data;
-        if (!data.successful) {
-          setUnsuccessful(true);
-        } else {
-          setEmail('');
-          setPassword('');
-          setAdminPermission(false);
-          setEditorPermission(false);
-          setViewerPermission(false);
-        }
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error);
-      });
+    });
+    if (!data || !data.successful) {
+      setSuccess(false);
+      return;
+    }
+    setEmail('');
+    setPassword('');
+    setAdminPermission(false);
+    setEditorPermission(false);
+    setViewerPermission(false);
   };
 
   const permissionCheckBoxProps: PermissionCheckBoxProps[] = [
@@ -156,8 +147,8 @@ const NewUserRegistration = ({ permission }: AddUserProps): JSX.Element => {
           additionalStyle={{ backgroundColor: '#0528c2', marginTop: '4rem' }}
         />
       </form>
-      {unsuccessful ? <ErrorMessage value="You must fill in all of the fields." /> : null}
-      {permission.admin ? null : <Redirect to={TOP_PAGE_PATH} />}
+      {!success && <ErrorMessage value="You must fill in all of the fields." />}
+      {!permission.admin && <Redirect to={TOP_PAGE_PATH} />}
     </Fragment>
   );
 };

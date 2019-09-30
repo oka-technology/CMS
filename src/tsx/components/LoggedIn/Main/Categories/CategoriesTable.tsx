@@ -2,43 +2,32 @@
 import { jsx } from '@emotion/core';
 import { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
+
 import { TBody, TRow, TD } from '../../../../template/Table';
 import Button from '../../../../template/Button';
+import { loadCategories, PayloadLoadCategories } from '../../../../data/apiClient';
 
 type CategoriesTableProps = {
   windowHeight: number;
   columnWidthPropotions: string[];
 };
 
-type CategoriesInfo = {
-  id: string;
-  title: string;
-};
-
 const CategoriesTable = ({ windowHeight, columnWidthPropotions }: CategoriesTableProps): JSX.Element => {
-  const [contentInfoArray, setContentInfoArray] = useState<CategoriesInfo[] | null>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [contentInfoArray, setContentInfoArray] = useState<PayloadLoadCategories[] | null>();
+
   useEffect(() => {
-    (() => {
-      setIsLoading(true);
+    let unmounted = false;
+    const cancelTokenSource = axios.CancelToken.source();
+    (async () => {
+      const categoriesData = await loadCategories(null, cancelTokenSource);
+      if (unmounted) return;
+      setContentInfoArray(categoriesData);
     })();
-    axios
-      .get('./api/categories.php')
-      .then(({ data }) => {
-        const resultData: CategoriesInfo[] = data;
-        if (isLoading === true) {
-          setContentInfoArray(resultData);
-        }
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error);
-      });
     return () => {
-      setIsLoading(false);
-      axios.CancelToken.source().cancel();
+      cancelTokenSource.cancel();
+      unmounted = true;
     };
-  }, [isLoading]);
+  }, []);
 
   if (contentInfoArray === undefined) return <Fragment />;
   if (contentInfoArray === null)

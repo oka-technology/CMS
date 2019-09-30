@@ -4,43 +4,29 @@ import { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import { TBody, TRow, TD } from '../../../../template/Table';
 import Button from '../../../../template/Button';
+import { loadContentList, PayloadLoadContentList } from '../../../../data/apiClient';
 
 type ContentListTableProps = {
   windowHeight: number;
   columnWidthPropotions: string[];
 };
 
-type ContentInfo = {
-  id: string;
-  category: string;
-  title: string;
-  registrationDate: string;
-};
-
 const ContentListTable = ({ windowHeight, columnWidthPropotions }: ContentListTableProps): JSX.Element => {
-  const [contentInfoArray, setContentInfoArray] = useState<ContentInfo[] | null>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [contentInfoArray, setContentInfoArray] = useState<PayloadLoadContentList[] | null>();
+
   useEffect(() => {
-    (() => {
-      setIsLoading(true);
+    let unmounted = false;
+    const cancelTokenSource = axios.CancelToken.source();
+    (async () => {
+      const contentListData = await loadContentList(null, cancelTokenSource);
+      if (unmounted) return;
+      setContentInfoArray(contentListData);
     })();
-    axios
-      .get('./api/contentList.php')
-      .then(({ data }) => {
-        const resultData: ContentInfo[] = data;
-        if (isLoading === true) {
-          setContentInfoArray(resultData);
-        }
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error);
-      });
     return () => {
-      setIsLoading(false);
-      axios.CancelToken.source().cancel();
+      cancelTokenSource.cancel();
+      unmounted = true;
     };
-  }, [isLoading]);
+  }, []);
 
   if (contentInfoArray === undefined) return <Fragment />;
   if (contentInfoArray === null)
@@ -59,10 +45,10 @@ const ContentListTable = ({ windowHeight, columnWidthPropotions }: ContentListTa
         <TD width={columnWidthPropotions[2]}>{title}</TD>
         <TD width={columnWidthPropotions[3]}>{registrationDate}</TD>
         <TD width={columnWidthPropotions[4]}>
-          <Button as="routerLink" value="View" additionalStyle={{ backgroundColor: '#00c8ff' }} />
+          <Button as="routerLink" to="#" value="View" additionalStyle={{ backgroundColor: '#00c8ff', width: '6rem' }} />
         </TD>
         <TD width={columnWidthPropotions[5]}>
-          <Button as="routerLink" value="Edit" additionalStyle={{ backgroundColor: '#00ed33' }} />
+          <Button as="routerLink" to="#" value="Edit" additionalStyle={{ backgroundColor: '#00ed33', width: '6rem' }} />
         </TD>
       </TRow>
     );
