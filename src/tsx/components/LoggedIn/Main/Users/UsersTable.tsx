@@ -4,44 +4,44 @@ import { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import { TBody, TRow, TD } from '../../../../template/Table';
 import { convertPermissionNumToString } from '../../../../modules/convertPermission';
+import { loadUser, PayloadLoadUser } from '../../../../data/apiClient';
 
 type UserListProps = {
   windowHeight: number;
   columnWidthPropotions: string[];
 };
 
-type UserInfo = {
-  id: string;
-  name: string;
-  permission: string;
-};
-
 const UserList = ({ windowHeight, columnWidthPropotions }: UserListProps): JSX.Element => {
-  const [userInfoArray, setUserInfoArray] = useState<UserInfo[]>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [userInfoArray, setUserInfoArray] = useState<PayloadLoadUser[] | null>();
+
   useEffect(() => {
-    (() => {
-      setIsLoading(true);
+    let unmounted = false;
+    const cancelTokenSource = axios.CancelToken.source();
+    (async () => {
+      const usersData = await loadUser(null, cancelTokenSource);
+      if (unmounted) return;
+      if (!usersData) {
+        setUserInfoArray(null);
+        return;
+      }
+      setUserInfoArray(usersData);
     })();
-    axios
-      .get('./api/userList.php')
-      .then(({ data }) => {
-        if (isLoading === true) {
-          setUserInfoArray(data);
-        }
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error);
-      });
     return () => {
-      setIsLoading(false);
-      axios.CancelToken.source().cancel();
+      unmounted = true;
+      cancelTokenSource.cancel();
     };
-  }, [isLoading]);
+  }, []);
 
   if (userInfoArray === undefined) return <Fragment />;
-  const item: JSX.Element[] = userInfoArray.map(({ id, name, permission }) => {
+  if (userInfoArray === null)
+    return (
+      <tbody>
+        <tr>
+          <td>No Content</td>
+        </tr>
+      </tbody>
+    );
+  const rows: JSX.Element[] = userInfoArray.map(({ id, name, permission }) => {
     const stringPermission = convertPermissionNumToString(Number(permission));
     return (
       <TRow key={id}>
@@ -53,7 +53,7 @@ const UserList = ({ windowHeight, columnWidthPropotions }: UserListProps): JSX.E
   });
   return (
     <TBody additionalStyle={{ height: `calc(${windowHeight}px - (6rem + 8.5rem + 6.2rem + 2.5rem + 5rem))` }}>
-      {item}
+      {rows}
     </TBody>
   );
 };
