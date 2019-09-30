@@ -54,8 +54,7 @@ const SideBarItem = ({ permission }: SideBarItemProps): JSX.Element => {
   const item: (JSX.Element | undefined)[] = arrayOfPagesAfterLoggedIn.map((pageData) => {
     if (
       permissions.some(
-        (elem: string) =>
-          pageData.requiredPermission[elem] === true && pageData.requiredPermission[elem] === permission[elem],
+        (elem: string) => pageData.requiredPermission[elem] && pageData.requiredPermission[elem] === permission[elem],
       )
     ) {
       const link: string = pageData.path;
