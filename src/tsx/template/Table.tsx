@@ -32,10 +32,11 @@ const tbodyStyle = (additionalStyle: CSSProperties) => css`
 const trStyle = css`
   display: block;
   height: 6rem;
+  line-height: 2rem;
   width: 100%;
 
   thead > & {
-    height: 4rem;
+    height: 4.5rem;
   }
 
   tbody > & {
