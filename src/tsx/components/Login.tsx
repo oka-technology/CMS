@@ -21,7 +21,7 @@ const mainStyle = css`
   border-radius: 2rem;
   margin: auto;
   padding: 2rem;
-  width: 50rem;
+  width: 55rem;
 `;
 
 const titleStyle = css`
@@ -113,7 +113,7 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetPermission }: LoginProps): 
               additionalHoverStyle={{ transform: 'scale(1.05)' }}
             />
           </form>
-          {missed ? <ErrorMessage value="EmailかPasswordが違います" /> : null}
+          {missed && <ErrorMessage value="The Email and password you entered did not match our records." />}
         </main>
       </div>
     </Fragment>
