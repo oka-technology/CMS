@@ -21,7 +21,9 @@
       );
 
       date_default_timezone_set('Asia/Tokyo');
-      $nowDate = date('y.m.d H:i:s');
+      $months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      $currentMonth = date("n");
+      $nowDate = $months[$currentMonth - 1] . " " . date("d") . ", " . date("Y") . " " . date("H:i:s");
 
       $stmt = $dbh->prepare(
         "INSERT into content (category_id, title, registrationDate, mainContent) values (?, ?, ?, ?);"
