@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import Title from '../../../../template/Title';
 import Button from '../../../../template/Button';
 import { Table, THead, TRow, TH } from '../../../../template/Table';
-import UserList from './UserList';
+import UserTable from './UsersTable';
 
 import { TOP_PAGE_PATH, newUserRegistrationPage, usersPage } from '../../../../data/pages';
 
@@ -49,9 +49,9 @@ const Users = ({ permission, windowHeight }: UsersProps): JSX.Element => {
             <TH width={columnWidthPropotions[2]}>Permission</TH>
           </TRow>
         </THead>
-        <UserList windowHeight={windowHeight} columnWidthPropotions={columnWidthPropotions} />
+        <UserTable windowHeight={windowHeight} columnWidthPropotions={columnWidthPropotions} />
       </Table>
-      {permission.admin ? null : <Redirect to={TOP_PAGE_PATH} />}
+      {!permission.admin && <Redirect to={TOP_PAGE_PATH} />}
     </Fragment>
   );
 };
