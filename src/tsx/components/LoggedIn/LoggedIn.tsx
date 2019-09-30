@@ -60,6 +60,11 @@ const LoggedIn = ({
     window.addEventListener('resize', () => {
       setWindowHeight(window.innerHeight);
     });
+    return () => {
+      window.removeEventListener('resize', () => {
+        setWindowHeight(window.innerHeight);
+      });
+    };
   }, []);
 
   return (
@@ -98,7 +103,7 @@ const LoggedIn = ({
         </main>
       </div>
       <Footer />
-      {loggedIn ? null : <Redirect to={LOGIN_PAGE_PATH} />}
+      {!loggedIn && <Redirect to={LOGIN_PAGE_PATH} />}
     </Fragment>
   );
 };
