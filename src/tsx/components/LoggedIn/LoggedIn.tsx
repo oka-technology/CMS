@@ -5,7 +5,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './Header';
 import Footer from './Footer';
-import SideBar from './SideBar/SideBar';
+import Sidebar from './Sidebar/Sidebar';
 import Users from './Main/Users/Users';
 import NewUserRegistration from './Main/NewUserRegistration/NewUserRegistration';
 import ContentList from './Main/ContentList/ContentList';
@@ -81,7 +81,7 @@ const LoggedIn = ({
         onSetPermission={onSetPermission}
       />
       <div css={insideWrapper}>
-        <SideBar permission={permission} windowHeight={windowHeight} />
+        <Sidebar permission={permission} windowHeight={windowHeight} />
         <main css={mainStyle(windowHeight)}>
           <Switch>
             <Route path={usersPage.path} render={() => <Users windowHeight={windowHeight} permission={permission} />} />
@@ -90,6 +90,7 @@ const LoggedIn = ({
               path={contentListPage.path}
               render={() => <ContentList windowHeight={windowHeight} permission={permission} />}
             />
+            <Route path={contentListPage.path} />
             <Route
               path={newContentRegistrationPage.path}
               render={() => <NewContentRegistration permission={permission} />}

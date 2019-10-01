@@ -3,7 +3,8 @@ import { jsx, css } from '@emotion/core';
 
 import bp from '../../../data/mediaQuery';
 
-import SideBarItem from './SideBarItem';
+import SidebarItem from './SidebarItem';
+
 const sideBarStyle = (windowHeight: number) => css`
   background-color: #777;
   height: calc(${windowHeight}px - 11rem);
@@ -15,28 +16,28 @@ const sideBarStyle = (windowHeight: number) => css`
   }
 `;
 
-const sideBarListWrapperStyle = css`
+const sidebarListWrapperStyle = css`
   list-style: none;
   margin: 2rem 2rem 0 auto;
   padding: 0;
   width: 16rem;
 `;
 
-type SideBarProps = {
+type SidebarProps = {
   permission: Permission;
   windowHeight: number;
 };
 
-const SideBar = ({ permission, windowHeight }: SideBarProps): JSX.Element => {
+const Sidebar = ({ permission, windowHeight }: SidebarProps): JSX.Element => {
   return (
     <aside css={sideBarStyle(windowHeight)}>
       <nav>
-        <ul css={sideBarListWrapperStyle}>
-          <SideBarItem permission={permission} />
+        <ul css={sidebarListWrapperStyle}>
+          <SidebarItem permission={permission} />
         </ul>
       </nav>
     </aside>
   );
 };
 
-export default SideBar;
+export default Sidebar;

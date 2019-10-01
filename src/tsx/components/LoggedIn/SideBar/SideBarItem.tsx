@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core';
 import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
-import { arrayOfPagesAfterLoggedIn } from '../../../data/pages';
+import { arrayOfPagesInSidebar } from '../../../data/pages';
 import permissions from '../../../data/permissions';
 
 const listItem = css`
@@ -50,8 +50,8 @@ type SideBarItemProps = {
   permission: Permission;
 };
 
-const SideBarItem = ({ permission }: SideBarItemProps): JSX.Element => {
-  const item: (JSX.Element | undefined)[] = arrayOfPagesAfterLoggedIn.map((pageData) => {
+const SidebarItem = ({ permission }: SideBarItemProps): JSX.Element => {
+  const item: (JSX.Element | undefined)[] = arrayOfPagesInSidebar.map((pageData) => {
     if (
       permissions.some(
         (elem: string) => pageData.requiredPermission[elem] && pageData.requiredPermission[elem] === permission[elem],
@@ -72,4 +72,4 @@ const SideBarItem = ({ permission }: SideBarItemProps): JSX.Element => {
   return <Fragment>{item}</Fragment>;
 };
 
-export default SideBarItem;
+export default SidebarItem;
