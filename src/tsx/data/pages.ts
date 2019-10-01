@@ -45,7 +45,7 @@ export const newCategoryRegistrationPage: PageData = createPageData('New Categor
   viewer: false,
 });
 
-export const arrayOfPagesAfterLoggedIn: PageData[] = [
+export const arrayOfPagesInSidebar: PageData[] = [
   usersPage,
   newUserRegistrationPage,
   contentListPage,
