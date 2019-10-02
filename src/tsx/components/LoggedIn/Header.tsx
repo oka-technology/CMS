@@ -4,7 +4,7 @@ import axios from 'axios';
 import { convertPermissionObjectToString } from '../../modules/convertPermission';
 import bp from '../../data/mediaQuery';
 
-const wrapper = css`
+const wrapperStyle = css`
   align-items: center;
   background-color: #555;
   display: flex;
@@ -19,23 +19,23 @@ const wrapper = css`
   }
 `;
 
-const siteName = css`
+const siteNameStyle = css`
   color: #fff;
   font-size: 2.5rem;
   margin: 0px;
 `;
 
-const rightItem = css`
+const rightItemStyle = css`
   align-items: center;
   display: flex;
 `;
 
-const user = css`
+const userStyle = css`
   color: #fff;
   font-size: 1.5rem;
 `;
 
-const logoutAnchor = css`
+const logoutAnchorStyle = css`
   align-items: center;
   color: #eee;
   cursor: pointer;
@@ -44,13 +44,17 @@ const logoutAnchor = css`
   margin: 0 0 0 2rem;
 `;
 
-const logoutImage = css`
+const logoutImageStyle = css`
   display: block;
   fill: white !important;
   height: 1.8rem;
   margin-right: 0.7rem;
   transform: rotate(180deg);
   width: 1.8rem;
+`;
+
+const loggingInUserNameStyle = css`
+  font-weight: bold;
 `;
 
 type HeaderProps = {
@@ -86,22 +90,15 @@ const Header = ({
   };
 
   return (
-    <header css={wrapper}>
-      <p css={siteName}>CMS</p>
-      <div css={rightItem}>
-        <p css={user}>
+    <header css={wrapperStyle}>
+      <p css={siteNameStyle}>CMS</p>
+      <div css={rightItemStyle}>
+        <p css={userStyle}>
           You're logging in with
-          <span
-            css={css`
-              font-weight: bold;
-            `}
-          >
-            {` "${loginUser}" `}
-          </span>
-          ({convertPermissionObjectToString(permission)})
+          <span css={loggingInUserNameStyle}>{` ${loginUser} `}</span>({convertPermissionObjectToString(permission)})
         </p>
-        <a css={logoutAnchor} onClick={onLogout}>
-          <svg css={logoutImage} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 570 487.88">
+        <a css={logoutAnchorStyle} onClick={onLogout}>
+          <svg css={logoutImageStyle} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 570 487.88">
             <title>log out</title>
             <polygon points="154.48 349.66 99.43 276.61 362.26 276.61 362.26 212.83 99.43 212.83 154.48 139.78 79.09 139.78 0 244.72 79.09 349.66 154.48 349.66" />
             <path
