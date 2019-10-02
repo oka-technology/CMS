@@ -44,6 +44,16 @@ export const newCategoryRegistrationPage: PageData = createPageData('New Categor
   editor: true,
   viewer: false,
 });
+export const viewContentPage: PageData = createPageData('View', {
+  admin: false,
+  editor: true,
+  viewer: true,
+});
+export const editContentPage: PageData = createPageData('View', {
+  admin: false,
+  editor: true,
+  viewer: true,
+});
 
 export const arrayOfPagesInSidebar: PageData[] = [
   usersPage,
