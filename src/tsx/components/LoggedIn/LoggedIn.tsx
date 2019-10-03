@@ -100,18 +100,10 @@ const LoggedIn = ({
               />
             )}
             {canPageBeDisplayed(viewContentPage, permission) && (
-              <Route
-                exact
-                path={viewContentPage.path}
-                render={({ match }) => <ViewContent match={match} permission={permission} />}
-              />
+              <Route exact path={viewContentPage.path} render={({ match }) => <ViewContent match={match} />} />
             )}
             {canPageBeDisplayed(editContentPage, permission) && (
-              <Route
-                exact
-                path={editContentPage.path}
-                render={({ match }) => <EditContent match={match} permission={permission} />}
-              />
+              <Route exact path={editContentPage.path} render={({ match }) => <EditContent match={match} />} />
             )}
             {canPageBeDisplayed(newContentRegistrationPage, permission) && (
               <Route exact path={newContentRegistrationPage.path} render={() => <NewContentRegistration />} />
