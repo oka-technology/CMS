@@ -57,9 +57,9 @@ const SidebarItem = ({ permission }: SideBarItemProps): JSX.Element => {
         (elem: string) => pageData.requiredPermission[elem] && pageData.requiredPermission[elem] === permission[elem],
       )
     ) {
-      const link: string = pageData.pathName;
+      const link: string = pageData.path;
       return (
-        <li css={listItem} key={pageData.pathName}>
+        <li css={listItem} key={pageData.path}>
           <NavLink to={link} css={listItemAnchor(location.pathname.match(link) !== null)}>
             <span css={triangle}></span>
             {pageData.pageName}
