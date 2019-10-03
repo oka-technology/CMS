@@ -62,13 +62,13 @@ export const newCategoryRegistrationPage: PageData = createPageData(
 );
 export const viewContentPage: PageData = createPageData('View', `${contentListPage.path}/`, true, {
   admin: false,
-  editor: true,
+  editor: false,
   viewer: true,
 });
 export const editContentPage: PageData = createPageData('Edit', `${contentListPage.path}/`, true, {
   admin: false,
   editor: true,
-  viewer: true,
+  viewer: false,
 });
 
 export const arrayOfPagesInSidebar: PageData[] = [

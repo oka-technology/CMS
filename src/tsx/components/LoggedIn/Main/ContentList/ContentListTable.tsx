@@ -6,6 +6,7 @@ import { TBody, TRow, TD } from '../../../../template/Table';
 import Button from '../../../../template/Button';
 import { loadContentList, PayloadLoadContentList } from '../../../../data/apiClient';
 import { editContentPage, viewContentPage } from '../../../../data/pages';
+import canPageBeDisplayed from '../../../../modules/canPageBeDisplayed';
 
 type ContentListTableProps = {
   windowHeight: number;
@@ -47,23 +48,25 @@ const ContentListTable = ({ windowHeight, columnWidthPropotions, permission }: C
         <TD width={columnWidthPropotions[2]}>{title}</TD>
         <TD width={columnWidthPropotions[3]}>{registrationDate}</TD>
         <TD width={columnWidthPropotions[4]}>
-          <Button
-            as="routerLink"
-            to={viewContentPage.path.replace(':id', id)}
-            value="View"
-            additionalStyle={{ backgroundColor: '#00c8ff', width: '6rem' }}
-          />
+          {canPageBeDisplayed(viewContentPage, permission) && (
+            <Button
+              as="routerLink"
+              to={viewContentPage.path.replace(':id', id)}
+              value="View"
+              additionalStyle={{ backgroundColor: '#00c8ff', width: '6rem' }}
+            />
+          )}
         </TD>
-        {permission.editor && (
-          <TD width={columnWidthPropotions[5]}>
+        <TD width={columnWidthPropotions[5]}>
+          {canPageBeDisplayed(editContentPage, permission) && (
             <Button
               as="routerLink"
               to={editContentPage.path.replace(':id', id)}
               value="Edit"
               additionalStyle={{ backgroundColor: '#00ed33', width: '6rem' }}
             />
-          </TD>
-        )}
+          )}
+        </TD>
       </TRow>
     );
   });
