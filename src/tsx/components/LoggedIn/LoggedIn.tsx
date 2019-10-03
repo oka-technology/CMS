@@ -12,6 +12,8 @@ import ContentList from './Main/ContentList/ContentList';
 import NewCategoryRegistration from './Main/NewCategoryRegistration/NewCategoryRegistration';
 import Categories from './Main/Categories/Categories';
 import NewContentRegistration from './Main/NewContentRegistration/NewContentRegistration';
+import ViewContent from './Main/ViewContent/ViewContent';
+import EditContent from './Main/EditContent/EditContent';
 
 import {
   usersPage,
@@ -20,6 +22,8 @@ import {
   newContentRegistrationPage,
   categoriesPage,
   newCategoryRegistrationPage,
+  viewContentPage,
+  editContentPage,
   TOP_PAGE_PATH,
   LOGIN_PAGE_PATH,
 } from '../../data/pages';
@@ -84,13 +88,20 @@ const LoggedIn = ({
         <Sidebar permission={permission} windowHeight={windowHeight} />
         <main css={mainStyle(windowHeight)}>
           <Switch>
-            <Route path={usersPage.path} render={() => <Users windowHeight={windowHeight} permission={permission} />} />
-            <Route path={newUserRegistrationPage.path} render={() => <NewUserRegistration permission={permission} />} />
+            <Route
+              path={usersPage.path}
+              render={() => <Users windowHeight={windowHeight} permission={permission} />}
+            />
+            <Route
+              path={newUserRegistrationPage.path}
+              render={() => <NewUserRegistration permission={permission} />}
+            />
             <Route
               path={contentListPage.path}
               render={() => <ContentList windowHeight={windowHeight} permission={permission} />}
             />
-            <Route path={contentListPage.path} />
+            <Route path={viewContentPage.path} render={() => <ViewContent permission={permission} />} />
+            <Route path={editContentPage.path} render={() => <EditContent permission={permission} />} />
             <Route
               path={newContentRegistrationPage.path}
               render={() => <NewContentRegistration permission={permission} />}

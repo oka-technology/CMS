@@ -4,10 +4,10 @@ type PageData = {
   requiredPermission: Permission;
 };
 
-const createPageData = (pageName: string, requiredPermission: Permission): PageData => {
+const createPageData = (pageName: string, location: string, requiredPermission: Permission): PageData => {
   return {
     pageName: pageName,
-    path: `${TOP_PAGE_PATH}/${pageName.replace(/ /g, '')}`,
+    path: location + pageName.replace(/ /g, ''),
     requiredPermission: requiredPermission,
   };
 };
@@ -49,7 +49,7 @@ export const viewContentPage: PageData = createPageData('View', {
   editor: true,
   viewer: true,
 });
-export const editContentPage: PageData = createPageData('View', {
+export const editContentPage: PageData = createPageData('Edit', {
   admin: false,
   editor: true,
   viewer: true,
