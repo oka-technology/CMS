@@ -25,8 +25,8 @@ import {
   viewContentPage,
   editContentPage,
   TOP_PAGE_PATH,
-  LOGIN_PAGE_PATH,
 } from '../../data/pages';
+import canPageBeDisplayed from '../../modules/canPageBeDisplayed';
 
 const insideWrapper = css`
   display: flex;
@@ -42,7 +42,6 @@ const mainStyle = (windowHeight: number) => css`
 `;
 
 type LoggedInProps = {
-  loggedIn: boolean;
   loginUser: string;
   permission: Permission;
   onSetLoggedIn: (bool: boolean) => void;
@@ -51,7 +50,6 @@ type LoggedInProps = {
 };
 
 const LoggedIn = ({
-  loggedIn,
   loginUser,
   permission,
   onSetPermission,
@@ -88,52 +86,51 @@ const LoggedIn = ({
         <Sidebar permission={permission} windowHeight={windowHeight} />
         <main css={mainStyle(windowHeight)}>
           <Switch>
-            <Route
-              exact
-              path={usersPage.path}
-              render={() => <Users windowHeight={windowHeight} permission={permission} />}
-            />
-            <Route
-              exact
-              path={newUserRegistrationPage.path}
-              render={() => <NewUserRegistration permission={permission} />}
-            />
-            <Route
-              exact
-              path={contentListPage.path}
-              render={() => <ContentList windowHeight={windowHeight} permission={permission} />}
-            />
-            <Route
-              exact
-              path={viewContentPage.path}
-              render={({ match }) => <ViewContent match={match} permission={permission} />}
-            />
-            <Route
-              exact
-              path={editContentPage.path}
-              render={({ match }) => <EditContent match={match} permission={permission} />}
-            />
-            <Route
-              exact
-              path={newContentRegistrationPage.path}
-              render={() => <NewContentRegistration permission={permission} />}
-            />
-            <Route
-              exact
-              path={categoriesPage.path}
-              render={() => <Categories windowHeight={windowHeight} permission={permission} />}
-            />
-            <Route
-              exact
-              path={newCategoryRegistrationPage.path}
-              render={() => <NewCategoryRegistration permission={permission} />}
-            />
+            {canPageBeDisplayed(usersPage, permission) && (
+              <Route exact path={usersPage.path} render={() => <Users windowHeight={windowHeight} />} />
+            )}
+            {canPageBeDisplayed(newUserRegistrationPage, permission) && (
+              <Route exact path={newUserRegistrationPage.path} render={() => <NewUserRegistration />} />
+            )}
+            {canPageBeDisplayed(contentListPage, permission) && (
+              <Route
+                exact
+                path={contentListPage.path}
+                render={() => <ContentList windowHeight={windowHeight} permission={permission} />}
+              />
+            )}
+            {canPageBeDisplayed(viewContentPage, permission) && (
+              <Route
+                exact
+                path={viewContentPage.path}
+                render={({ match }) => <ViewContent match={match} permission={permission} />}
+              />
+            )}
+            {canPageBeDisplayed(editContentPage, permission) && (
+              <Route
+                exact
+                path={editContentPage.path}
+                render={({ match }) => <EditContent match={match} permission={permission} />}
+              />
+            )}
+            {canPageBeDisplayed(newContentRegistrationPage, permission) && (
+              <Route exact path={newContentRegistrationPage.path} render={() => <NewContentRegistration />} />
+            )}
+            {canPageBeDisplayed(categoriesPage, permission) && (
+              <Route exact path={categoriesPage.path} render={() => <Categories windowHeight={windowHeight} />} />
+            )}
+            {canPageBeDisplayed(newContentRegistrationPage, permission) && (
+              <Route
+                exact
+                path={newCategoryRegistrationPage.path}
+                render={() => <NewCategoryRegistration permission={permission} />}
+              />
+            )}
             <Redirect to={TOP_PAGE_PATH} />
           </Switch>
         </main>
       </div>
       <Footer />
-      {!loggedIn && <Redirect to={LOGIN_PAGE_PATH} />}
     </Fragment>
   );
 };

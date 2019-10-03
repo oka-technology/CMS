@@ -1,13 +1,12 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { Fragment, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
 
 import ContentListTable from './ContentListTable';
 
 import Title from '../../../../template/Title';
 import Button from '../../../../template/Button';
-import { newContentRegistrationPage, contentListPage, TOP_PAGE_PATH } from '../../../../data/pages';
+import { newContentRegistrationPage, contentListPage } from '../../../../data/pages';
 import { Table, THead, TRow, TH } from '../../../../template/Table';
 
 type ContentListProps = {
@@ -59,7 +58,6 @@ const ContentList = ({ permission, windowHeight }: ContentListProps): JSX.Elemen
           permission={permission}
         />
       </Table>
-      {!permission.editor && !permission.viewer && <Redirect to={TOP_PAGE_PATH} />}
     </Fragment>
   );
 };

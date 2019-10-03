@@ -1,23 +1,21 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { Fragment, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
 
 import CategoriesTable from './CategoriesTable';
 
 import Title from '../../../../template/Title';
 import Button from '../../../../template/Button';
-import { newCategoryRegistrationPage, categoriesPage, TOP_PAGE_PATH } from '../../../../data/pages';
+import { newCategoryRegistrationPage, categoriesPage } from '../../../../data/pages';
 import { Table, THead, TRow, TH } from '../../../../template/Table';
 
 type CategoriesProps = {
   windowHeight: number;
-  permission: Permission;
 };
 
 const columnWidthPropotions = ['20%', '60%', '20%'];
 
-const Categories = ({ windowHeight, permission }: CategoriesProps): JSX.Element => {
+const Categories = ({ windowHeight }: CategoriesProps): JSX.Element => {
   useEffect(() => {
     document.title = categoriesPage.pageName;
   }, []);
@@ -50,7 +48,6 @@ const Categories = ({ windowHeight, permission }: CategoriesProps): JSX.Element 
         </THead>
         <CategoriesTable windowHeight={windowHeight} columnWidthPropotions={columnWidthPropotions} />
       </Table>
-      {!permission.editor && <Redirect to={TOP_PAGE_PATH} />}
     </Fragment>
   );
 };

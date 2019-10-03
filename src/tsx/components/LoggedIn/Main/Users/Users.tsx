@@ -1,23 +1,21 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { Fragment, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
 import Button from '../../../../template/Button';
 import { Table, THead, TRow, TH } from '../../../../template/Table';
 import UserTable from './UsersTable';
 
-import { TOP_PAGE_PATH, newUserRegistrationPage, usersPage } from '../../../../data/pages';
+import { newUserRegistrationPage, usersPage } from '../../../../data/pages';
 
 type UsersProps = {
-  permission: Permission;
   windowHeight: number;
 };
 
 const columnWidthPropotions: string[] = ['15%', '35%', '50%'];
 
-const Users = ({ permission, windowHeight }: UsersProps): JSX.Element => {
+const Users = ({ windowHeight }: UsersProps): JSX.Element => {
   useEffect(() => {
     document.title = usersPage.pageName;
   }, []);
@@ -51,7 +49,6 @@ const Users = ({ permission, windowHeight }: UsersProps): JSX.Element => {
         </THead>
         <UserTable windowHeight={windowHeight} columnWidthPropotions={columnWidthPropotions} />
       </Table>
-      {!permission.admin && <Redirect to={TOP_PAGE_PATH} />}
     </Fragment>
   );
 };

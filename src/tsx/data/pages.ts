@@ -1,4 +1,4 @@
-type PageData = {
+export type PageData = {
   pageName: string;
   path: string;
   requiredPermission: Permission;

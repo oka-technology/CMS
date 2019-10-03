@@ -1,13 +1,12 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { useState, Fragment, Dispatch, SetStateAction, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
 import { Label, TextInput, CheckBox } from '../../../../template/Form';
 import Button from '../../../../template/Button';
 import ErrorMessage from '../../../../template/ErrorMessage';
-import { TOP_PAGE_PATH, newUserRegistrationPage } from '../../../../data/pages';
+import { newUserRegistrationPage } from '../../../../data/pages';
 import { registerUser } from '../../../../data/apiClient';
 
 const formStyle = css`
@@ -35,15 +34,7 @@ type PermissionCheckBoxProps = {
   setPermissionFunction: Dispatch<SetStateAction<boolean>>;
 };
 
-type ResultsOfAddUserApi = {
-  successful: boolean;
-};
-
-type AddUserProps = {
-  permission: Permission;
-};
-
-const NewUserRegistration = ({ permission }: AddUserProps): JSX.Element => {
+const NewUserRegistration = (): JSX.Element => {
   const [Email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [hidePassword, setHidePassword] = useState<boolean>(true);
@@ -148,7 +139,6 @@ const NewUserRegistration = ({ permission }: AddUserProps): JSX.Element => {
         />
       </form>
       {!success && <ErrorMessage value="You must fill in all of the fields." />}
-      {!permission.admin && <Redirect to={TOP_PAGE_PATH} />}
     </Fragment>
   );
 };

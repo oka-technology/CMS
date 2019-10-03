@@ -3,7 +3,7 @@ import { jsx, css } from '@emotion/core';
 import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import { arrayOfPagesInSidebar } from '../../../data/pages';
-import permissions from '../../../data/permissions';
+import canPageBeDisplayed from '../../../modules/canPageBeDisplayed';
 
 const listItem = css`
   display: flex;
@@ -52,11 +52,7 @@ type SideBarItemProps = {
 
 const SidebarItem = ({ permission }: SideBarItemProps): JSX.Element => {
   const item: (JSX.Element | undefined)[] = arrayOfPagesInSidebar.map((pageData) => {
-    if (
-      permissions.some(
-        (elem: string) => pageData.requiredPermission[elem] && pageData.requiredPermission[elem] === permission[elem],
-      )
-    ) {
+    if (canPageBeDisplayed(pageData, permission)) {
       const link: string = pageData.path;
       return (
         <li css={listItem} key={pageData.path}>

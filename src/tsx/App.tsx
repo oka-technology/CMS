@@ -139,19 +139,20 @@ const App = (): JSX.Element => {
       <div css={wrapperStyle}>
         <BrowserRouter>
           <Switch>
-            <Route
-              path={TOP_PAGE_PATH}
-              render={() => (
-                <LoggedIn
-                  loggedIn={loggedIn}
-                  loginUser={loginUser}
-                  permission={permission}
-                  onSetLoggedIn={onSetLoggedIn}
-                  onSetLoginUser={onSetLoginUser}
-                  onSetPermission={onSetPermission}
-                />
-              )}
-            />
+            {loggedIn && (
+              <Route
+                path={TOP_PAGE_PATH}
+                render={() => (
+                  <LoggedIn
+                    loginUser={loginUser}
+                    permission={permission}
+                    onSetLoggedIn={onSetLoggedIn}
+                    onSetLoginUser={onSetLoginUser}
+                    onSetPermission={onSetPermission}
+                  />
+                )}
+              />
+            )}
             <Route
               exact
               path={LOGIN_PAGE_PATH}

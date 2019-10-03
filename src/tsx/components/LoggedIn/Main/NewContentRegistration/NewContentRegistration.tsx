@@ -1,13 +1,12 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { useState, Fragment, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
 import { Label, TextInput, FormSelect, TextArea } from '../../../../template/Form';
 import Button from '../../../../template/Button';
 import ErrorMessage from '../../../../template/ErrorMessage';
-import { TOP_PAGE_PATH, newContentRegistrationPage } from '../../../../data/pages';
+import { newContentRegistrationPage } from '../../../../data/pages';
 import { registerContent, loadCategories } from '../../../../data/apiClient';
 import axios from 'axios';
 
@@ -17,16 +16,12 @@ const formStyle = css`
   }
 `;
 
-type AddUserProps = {
-  permission: Permission;
-};
-
 type OptionItem = {
   value: string;
   text: string;
 };
 
-const NewContentRegistration = ({ permission }: AddUserProps): JSX.Element => {
+const NewContentRegistration = (): JSX.Element => {
   const [selectedCategory, setSelectedCategory] = useState<string>('0');
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
@@ -129,7 +124,6 @@ const NewContentRegistration = ({ permission }: AddUserProps): JSX.Element => {
         />
       </form>
       {!success && <ErrorMessage value="You must fill in all of the fields." />}
-      {!permission.editor && <Redirect to={TOP_PAGE_PATH} />}
     </Fragment>
   );
 };
