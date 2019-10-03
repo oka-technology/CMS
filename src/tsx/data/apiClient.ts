@@ -11,7 +11,8 @@ const createApi = <T, U>(method: MethodType, fileName: string) => {
       const { data } = await axios({
         method: method,
         url: endpoint,
-        data: params,
+        data: method === 'post' && params,
+        params: method === 'get' && params,
         cancelToken: cancelTokenSource && cancelTokenSource.token,
       });
       return data;
@@ -93,3 +94,14 @@ export type PayloadLoadUser = {
 };
 
 export const loadUser = createApi<null, PayloadLoadUser[]>('get', 'userList.php');
+
+type ParamsLoadContent = {
+  id: string;
+};
+
+type PayloadLoadContent = {
+  title: string;
+  content: string;
+};
+
+export const loadContent = createApi<ParamsLoadContent, PayloadLoadContent>('get', 'content.php');
