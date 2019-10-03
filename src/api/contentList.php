@@ -16,7 +16,7 @@
       );
 
       $stmt = $dbh->prepare(
-        'SELECT content.id, content.title, content.registrationDate, categories.name as categoryName from content join categories on content.category_id = categories.id;'
+        'SELECT content.id, content.title, content.registrationDate, categories.name as categoryName from content join categories on content.category_id = categories.id order by id;'
       );
       $stmt->execute();
 
