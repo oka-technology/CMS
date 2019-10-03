@@ -89,28 +89,42 @@ const LoggedIn = ({
         <main css={mainStyle(windowHeight)}>
           <Switch>
             <Route
+              exact
               path={usersPage.path}
               render={() => <Users windowHeight={windowHeight} permission={permission} />}
             />
             <Route
+              exact
               path={newUserRegistrationPage.path}
               render={() => <NewUserRegistration permission={permission} />}
             />
             <Route
+              exact
               path={contentListPage.path}
               render={() => <ContentList windowHeight={windowHeight} permission={permission} />}
             />
-            <Route path={viewContentPage.path} render={() => <ViewContent permission={permission} />} />
-            <Route path={editContentPage.path} render={() => <EditContent permission={permission} />} />
             <Route
+              exact
+              path={viewContentPage.path}
+              render={({ match }) => <ViewContent match={match} permission={permission} />}
+            />
+            <Route
+              exact
+              path={editContentPage.path}
+              render={({ match }) => <EditContent match={match} permission={permission} />}
+            />
+            <Route
+              exact
               path={newContentRegistrationPage.path}
               render={() => <NewContentRegistration permission={permission} />}
             />
             <Route
+              exact
               path={categoriesPage.path}
               render={() => <Categories windowHeight={windowHeight} permission={permission} />}
             />
             <Route
+              exact
               path={newCategoryRegistrationPage.path}
               render={() => <NewCategoryRegistration permission={permission} />}
             />
