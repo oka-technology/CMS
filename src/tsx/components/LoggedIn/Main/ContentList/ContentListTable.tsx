@@ -5,13 +5,15 @@ import axios from 'axios';
 import { TBody, TRow, TD } from '../../../../template/Table';
 import Button from '../../../../template/Button';
 import { loadContentList, PayloadLoadContentList } from '../../../../data/apiClient';
+import { editContentPage, viewContentPage } from '../../../../data/pages';
 
 type ContentListTableProps = {
   windowHeight: number;
   columnWidthPropotions: string[];
+  permission: Permission;
 };
 
-const ContentListTable = ({ windowHeight, columnWidthPropotions }: ContentListTableProps): JSX.Element => {
+const ContentListTable = ({ windowHeight, columnWidthPropotions, permission }: ContentListTableProps): JSX.Element => {
   const [contentInfoArray, setContentInfoArray] = useState<PayloadLoadContentList[] | null>();
 
   useEffect(() => {
@@ -45,11 +47,23 @@ const ContentListTable = ({ windowHeight, columnWidthPropotions }: ContentListTa
         <TD width={columnWidthPropotions[2]}>{title}</TD>
         <TD width={columnWidthPropotions[3]}>{registrationDate}</TD>
         <TD width={columnWidthPropotions[4]}>
-          <Button as="routerLink" to="#" value="View" additionalStyle={{ backgroundColor: '#00c8ff', width: '6rem' }} />
+          <Button
+            as="routerLink"
+            to={viewContentPage.path.replace(':id', id)}
+            value="View"
+            additionalStyle={{ backgroundColor: '#00c8ff', width: '6rem' }}
+          />
         </TD>
-        <TD width={columnWidthPropotions[5]}>
-          <Button as="routerLink" to="#" value="Edit" additionalStyle={{ backgroundColor: '#00ed33', width: '6rem' }} />
-        </TD>
+        {permission.editor && (
+          <TD width={columnWidthPropotions[5]}>
+            <Button
+              as="routerLink"
+              to={editContentPage.path.replace(':id', id)}
+              value="Edit"
+              additionalStyle={{ backgroundColor: '#00ed33', width: '6rem' }}
+            />
+          </TD>
+        )}
       </TRow>
     );
   });

@@ -53,7 +53,11 @@ const ContentList = ({ permission, windowHeight }: ContentListProps): JSX.Elemen
             <TH width={columnWidthPropotions[3]}>Registration Date</TH>
           </TRow>
         </THead>
-        <ContentListTable windowHeight={windowHeight} columnWidthPropotions={columnWidthPropotions} />
+        <ContentListTable
+          windowHeight={windowHeight}
+          columnWidthPropotions={columnWidthPropotions}
+          permission={permission}
+        />
       </Table>
       {!permission.editor && !permission.viewer && <Redirect to={TOP_PAGE_PATH} />}
     </Fragment>
