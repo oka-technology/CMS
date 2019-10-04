@@ -101,7 +101,21 @@ type ParamsLoadContent = {
 
 type PayloadLoadContent = {
   title: string;
+  category: string;
   content: string;
 };
 
 export const loadContent = createApi<ParamsLoadContent, PayloadLoadContent>('get', 'content.php');
+
+type ParamsEditContent = {
+  id: string;
+  category: string;
+  title: string;
+  content: string;
+};
+
+type PayloadEditContent = {
+  success: boolean;
+};
+
+export const editContent = createApi<ParamsEditContent, PayloadEditContent>('post', 'editContent.php');
