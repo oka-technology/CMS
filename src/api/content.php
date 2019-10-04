@@ -20,6 +20,7 @@
       $stmt->execute([$_GET['id']]);
       while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         $result['title'] = $row['title'];
+        $result['category'] = $row['category_id'];
         $result['content'] = $row['mainContent'];
       }
     } catch (PDOException $e) {
