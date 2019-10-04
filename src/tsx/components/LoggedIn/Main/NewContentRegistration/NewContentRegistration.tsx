@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { useState, Fragment, useEffect } from 'react';
+import axios from 'axios';
 
 import Title from '../../../../template/Title';
 import { Label, TextInput, FormSelect, TextArea } from '../../../../template/Form';
@@ -8,7 +9,8 @@ import Button from '../../../../template/Button';
 import ErrorMessage from '../../../../template/ErrorMessage';
 import { newContentRegistrationPage } from '../../../../data/pages';
 import { registerContent, loadCategories } from '../../../../data/apiClient';
-import axios from 'axios';
+import bytesOf from '../../../../modules/bytesOf';
+import CapacityBar from './CapacityBar';
 
 const formStyle = css`
   & > *:first-child /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */ {
@@ -28,6 +30,7 @@ const NewContentRegistration = (): JSX.Element => {
   const [success, setSuccess] = useState<boolean>(true);
   const [optionItems, setOptionItems] = useState<OptionItem[] | null>(null);
   const [isLoadingCategories, setIsLoadingCategories] = useState<boolean>(true);
+  const [canRegister, setCanRegister] = useState<boolean>(true);
 
   const onSetCategory = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     setSelectedCategory(e.target.value);
@@ -81,6 +84,14 @@ const NewContentRegistration = (): JSX.Element => {
     };
   }, []);
 
+  useEffect(() => {
+    if (bytesOf(content) > 2240) {
+      setCanRegister(false);
+    } else {
+      setCanRegister(true);
+    }
+  }, [content]);
+
   const SelectCategory = (
     <Fragment>
       {(isLoadingCategories || !optionItems) && (
@@ -116,8 +127,9 @@ const NewContentRegistration = (): JSX.Element => {
         <TextInput type="text" placeholder="" value={title} onChange={onSetTitle} marginTop="0.5rem" id="Title" />
         <Label htmlFor="Content" value="Content" />
         <TextArea value={content} marginTop="0.5rem" onChange={onSetContent} id="Content" />
+        <CapacityBar bytes={bytesOf(content)} />
         <Button
-          as="submit"
+          as={canRegister ? 'submit' : 'blocked'}
           value="Register"
           onClick={registerContentToDB}
           additionalStyle={{ backgroundColor: '#0528c2', marginTop: '4rem' }}
