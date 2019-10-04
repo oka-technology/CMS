@@ -2,11 +2,11 @@
 import { jsx, css } from '@emotion/core';
 import { useEffect, Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import axios from 'axios';
 
 import Button from '../template/Button';
 import { TextInput } from '../template/Form';
 import ErrorMessage from '../template/ErrorMessage';
+import { login } from '../data/apiClient';
 
 const wrapperStyle = css`
   align-items: center;
@@ -52,7 +52,6 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetPermission }: LoginProps): 
   useEffect(() => {
     document.title = 'Log in';
     return () => {
-      document.title = '';
       setReDirect(false);
     };
   }, []);
@@ -63,31 +62,23 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetPermission }: LoginProps): 
   const onSetPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const submit = (e: React.MouseEvent<HTMLElement>) => {
+  const submit = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setMissed(false);
 
-    const params = {
+    const LoginProcessData = await login({
       email: email,
       password: password,
-    };
-    axios
-      .post('./api/loginProcess.php', params)
-      .then((results) => {
-        if (results.data.loggedIn === false) {
-          setPassword('');
-          setMissed(true);
-        } else {
-          onSetLoggedIn(results.data.loggedIn);
-          onSetLoginUser(results.data.userID);
-          onSetPermission(Number(results.data.permission));
-          setReDirect(true);
-        }
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error);
-      });
+    });
+    if (!LoginProcessData || !LoginProcessData.loggedIn) {
+      setPassword('');
+      setMissed(true);
+      return;
+    }
+    onSetLoggedIn(LoginProcessData.loggedIn);
+    onSetLoginUser(LoginProcessData.userID);
+    onSetPermission(Number(LoginProcessData.permission));
+    setReDirect(true);
   };
 
   return (

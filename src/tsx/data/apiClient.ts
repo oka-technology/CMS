@@ -119,3 +119,16 @@ type PayloadEditContent = {
 };
 
 export const editContent = createApi<ParamsEditContent, PayloadEditContent>('post', 'editContent.php');
+
+type ParamsLogin = {
+  email: string;
+  password: string;
+};
+
+type PayloadLogin = {
+  loggedIn: boolean;
+  userID: string;
+  permission: string;
+};
+
+export const login = createApi<ParamsLogin, PayloadLogin>('post', 'loginProcess.php');
