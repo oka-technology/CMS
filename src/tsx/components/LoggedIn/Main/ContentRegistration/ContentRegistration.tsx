@@ -2,15 +2,17 @@
 import { jsx, css } from '@emotion/core';
 import { useState, Fragment, useEffect } from 'react';
 import axios from 'axios';
+import { match } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
 import { Label, TextInput, FormSelect, TextArea } from '../../../../template/Form';
 import Button from '../../../../template/Button';
 import ErrorMessage from '../../../../template/ErrorMessage';
-import { newContentRegistrationPage } from '../../../../data/pages';
-import { registerContent, loadCategories } from '../../../../data/apiClient';
+import { newContentRegistrationPage, editContentPage } from '../../../../data/pages';
+import { registerContent, loadCategories, loadContent, editContent } from '../../../../data/apiClient';
 import bytesOf from '../../../../modules/bytesOf';
-import CapacityBar from './CapacityBar';
+import CapacityBar from '../../../../template/CapacityBar';
+import SuccessMessage from '../../../../template/SuccessMessage';
 
 const formStyle = css`
   & > *:first-child /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */ {
@@ -23,14 +25,22 @@ type OptionItem = {
   text: string;
 };
 
-const NewContentRegistration = (): JSX.Element => {
+type NewContentRegistrationProps = {
+  match?: match<{ id: string }>;
+  mode: 'newRegistration' | 'edit';
+};
+
+const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.Element => {
   const [selectedCategory, setSelectedCategory] = useState<string>('0');
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [success, setSuccess] = useState<boolean>(true);
   const [optionItems, setOptionItems] = useState<OptionItem[] | null>(null);
   const [isLoadingCategories, setIsLoadingCategories] = useState<boolean>(true);
-  const [canRegister, setCanRegister] = useState<boolean>(true);
+  const [registable, setRegistable] = useState<boolean>(true);
+  const [notFound, setNotFound] = useState<boolean>(false);
+  const [isLoadingEditor, setIsLoadingEditor] = useState<boolean>(true);
+  const [updated, setUpdated] = useState<boolean>(false);
 
   const onSetCategory = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     setSelectedCategory(e.target.value);
@@ -42,7 +52,7 @@ const NewContentRegistration = (): JSX.Element => {
     setContent(e.target.value);
   };
 
-  const registerContentToDB = async (e: React.MouseEvent<HTMLElement>) => {
+  const onRegisterContentToDB = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setSuccess(true);
     const data = await registerContent({
@@ -59,9 +69,28 @@ const NewContentRegistration = (): JSX.Element => {
     setContent('');
   };
 
+  const onEditContent = async (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    if (!match) return;
+    const { id } = match.params;
+    setSuccess(true);
+    setUpdated(false);
+    const data = await editContent({
+      id: id,
+      category: selectedCategory,
+      title: title,
+      content: content,
+    });
+    if (!data || !data.success) {
+      setSuccess(false);
+      return;
+    }
+    setUpdated(true);
+  };
+
   useEffect(() => {
-    document.title = newContentRegistrationPage.pageName;
-  }, []);
+    document.title = mode === 'newRegistration' ? newContentRegistrationPage.pageName : editContentPage.pageName;
+  }, [mode]);
 
   useEffect(() => {
     let unmounted: boolean = false;
@@ -86,11 +115,34 @@ const NewContentRegistration = (): JSX.Element => {
 
   useEffect(() => {
     if (bytesOf(content) > 2240) {
-      setCanRegister(false);
+      setRegistable(false);
     } else {
-      setCanRegister(true);
+      setRegistable(true);
     }
   }, [content]);
+
+  useEffect(() => {
+    if (mode === 'newRegistration' || !match) return;
+    let unmounted = false;
+    const cancelTokenSource = axios.CancelToken.source();
+    const { id } = match.params;
+    (async () => {
+      const contentData = await loadContent({ id: id }, cancelTokenSource);
+      if (unmounted) return;
+      if (contentData === null) {
+        setNotFound(true);
+        return;
+      }
+      setTitle(contentData.title);
+      setSelectedCategory(contentData.category);
+      setContent(contentData.content);
+      setIsLoadingEditor(false);
+    })();
+    return () => {
+      unmounted = true;
+      cancelTokenSource.cancel();
+    };
+  }, [match, mode]);
 
   const SelectCategory = (
     <Fragment>
@@ -117,9 +169,25 @@ const NewContentRegistration = (): JSX.Element => {
     </Fragment>
   );
 
+  if (notFound) {
+    return <Title value="404 Not Found" />;
+  }
+
+  if (mode === 'edit' && isLoadingEditor) {
+    return (
+      <p
+        css={css`
+          font-size: 1.6rem;
+        `}
+      >
+        Loading...
+      </p>
+    );
+  }
+
   return (
     <Fragment>
-      <Title value={newContentRegistrationPage.pageName} />
+      <Title value={mode === 'newRegistration' ? newContentRegistrationPage.pageName : editContentPage.pageName} />
       <form css={formStyle} autoComplete="new-password">
         <Label htmlFor="Category" value="Category" />
         {SelectCategory}
@@ -129,15 +197,16 @@ const NewContentRegistration = (): JSX.Element => {
         <TextArea value={content} marginTop="0.5rem" onChange={onSetContent} id="Content" />
         <CapacityBar bytes={bytesOf(content)} />
         <Button
-          as={canRegister ? 'submit' : 'blocked'}
-          value="Register"
-          onClick={registerContentToDB}
+          as={registable ? 'submit' : 'blocked'}
+          value={mode === 'newRegistration' ? 'Register' : 'Update'}
+          onClick={mode === 'newRegistration' ? onRegisterContentToDB : onEditContent}
           additionalStyle={{ backgroundColor: '#0528c2', marginTop: '4rem' }}
         />
       </form>
       {!success && <ErrorMessage value="You must fill in all of the fields." />}
+      {updated && <SuccessMessage value="Updated" />}
     </Fragment>
   );
 };
 
-export default NewContentRegistration;
+export default ContentRegistration;
