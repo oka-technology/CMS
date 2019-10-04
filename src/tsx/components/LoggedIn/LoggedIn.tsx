@@ -11,9 +11,8 @@ import NewUserRegistration from './Main/NewUserRegistration/NewUserRegistration'
 import ContentList from './Main/ContentList/ContentList';
 import NewCategoryRegistration from './Main/NewCategoryRegistration/NewCategoryRegistration';
 import Categories from './Main/Categories/Categories';
-import NewContentRegistration from './Main/NewContentRegistration/NewContentRegistration';
+import ContentRegistration from './Main/ContentRegistration/ContentRegistration';
 import ViewContent from './Main/ViewContent/ViewContent';
-import EditContent from './Main/EditContent/EditContent';
 
 import {
   usersPage,
@@ -38,6 +37,7 @@ const mainStyle = css`
   margin: 0 auto 0 0;
   max-width: 100rem;
   padding: 0 2rem 2rem;
+  width: calc(100% - 20rem);
 `;
 
 type LoggedInProps = {
@@ -102,10 +102,18 @@ const LoggedIn = ({
               <Route exact path={viewContentPage.path} render={({ match }) => <ViewContent match={match} />} />
             )}
             {canPageBeDisplayed(editContentPage, permission) && (
-              <Route exact path={editContentPage.path} render={({ match }) => <EditContent match={match} />} />
+              <Route
+                exact
+                path={editContentPage.path}
+                render={({ match }) => <ContentRegistration mode="edit" match={match} />}
+              />
             )}
             {canPageBeDisplayed(newContentRegistrationPage, permission) && (
-              <Route exact path={newContentRegistrationPage.path} render={() => <NewContentRegistration />} />
+              <Route
+                exact
+                path={newContentRegistrationPage.path}
+                render={() => <ContentRegistration mode="newRegistration" />}
+              />
             )}
             {canPageBeDisplayed(categoriesPage, permission) && (
               <Route exact path={categoriesPage.path} render={() => <Categories windowHeight={windowHeight} />} />
