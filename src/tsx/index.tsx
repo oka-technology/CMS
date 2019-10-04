@@ -18,6 +18,7 @@ import '../api/categories.php';
 import '../api/registerCategory.php';
 import '../api/registerContent.php';
 import '../api/content.php';
+import '../api/editContent.php';
 
 import 'sanitize.css';
 import 'sanitize.css/typography.css';
