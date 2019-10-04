@@ -15,6 +15,11 @@ const sideBarStyle = css`
   }
 `;
 
+const sidebarNavStyle = css`
+  position: sticky;
+  top: 2rem;
+`;
+
 const sidebarListWrapperStyle = css`
   list-style: none;
   margin: 2rem 2rem 0 auto;
@@ -29,7 +34,7 @@ type SidebarProps = {
 const Sidebar = ({ permission }: SidebarProps): JSX.Element => {
   return (
     <aside css={sideBarStyle}>
-      <nav>
+      <nav css={sidebarNavStyle}>
         <ul css={sidebarListWrapperStyle}>
           <SidebarItem permission={permission} />
         </ul>
