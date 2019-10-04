@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import convertCSSPropertiesObjectToString from '../modules/convertCSSPropertiesObjectToString';
 
-const buttonStyle = (additionalStyle: CSSProperties, additionalHoverStyle: CSSProperties) => css`
+const buttonStyle = (additionalStyle: CSSProperties, additionalHoverStyle: CSSProperties, blocked?: boolean) => css`
   align-items: center;
   border-radius: 0.5rem;
   border: 0px;
@@ -15,20 +15,20 @@ const buttonStyle = (additionalStyle: CSSProperties, additionalHoverStyle: CSSPr
   font-size: 1.6rem;
   height: 4rem;
   justify-content: center;
+  opacity: ${blocked ? 0.3 : 1};
   text-decoration: none;
   transition: transform 0.1s;
   width: 10rem;
   ${convertCSSPropertiesObjectToString(additionalStyle)}
 
   &:hover {
-    transform: scale(1.25);
+    transform: ${blocked ? 'scale(1)' : 'scale(1.25)'};
     transition: transform 0.1s cubic-bezier(0.22, 0.61, 0.36, 1);
     ${convertCSSPropertiesObjectToString(additionalHoverStyle)}
   }
 `;
-
 type ButtonProps = {
-  as: 'submit' | 'button' | 'anchor' | 'routerLink';
+  as: 'submit' | 'button' | 'anchor' | 'routerLink' | 'blocked';
   value: string;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   to?: string;
@@ -61,6 +61,8 @@ const Button = ({ as, value, onClick, to, additionalStyle, additionalHoverStyle 
         {value}
       </Link>
     );
+  } else if (as === 'blocked') {
+    return <div css={buttonStyle(additionalStyle, additionalHoverStyle, true)}>{value}</div>;
   } else {
     return <Fragment />;
   }

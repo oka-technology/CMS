@@ -50,7 +50,7 @@ const textareaStyle = (marginTop: string) => css`
   border-radius: 0.5rem;
   font-size: 1.6rem;
   resize: none;
-  height: 20rem;
+  height: 40rem;
   margin-top: ${marginTop};
   width: 100%;
 `;
