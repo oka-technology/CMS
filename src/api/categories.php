@@ -15,7 +15,7 @@
       'password'
     );
     $stmt = $dbh->prepare(
-      'select * from categories;'
+      'SELECT * from categories order by id;'
     );
 
     function counter() {

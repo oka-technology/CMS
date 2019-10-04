@@ -14,7 +14,7 @@
         'password'
       );
 
-      $stmt = $dbh->prepare('select * from userInfo');
+      $stmt = $dbh->prepare('SELECT * from userInfo order by id');
       $stmt->execute();
 
       function counter() {
