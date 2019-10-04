@@ -1,8 +1,11 @@
-# Webpro last assignment
+# CMS
 
 ```sh
+NODE_ENV=production webpack
 docker-compose up
 ```
+
+Visit ``localhost:8080`` on your browser.
 
 ## Default user
 
