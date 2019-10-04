@@ -29,7 +29,7 @@ create table content (
   category_id int not null,
   title varchar(255) not null,
   registrationDate varchar(255) not null,
-  mainContent varchar(560) not null,
+  mainContent varchar(2240) not null,
   foreign key (category_id)
     references categories(id)
 );
