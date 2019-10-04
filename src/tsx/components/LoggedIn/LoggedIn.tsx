@@ -28,14 +28,13 @@ import {
 } from '../../data/pages';
 import canPageBeDisplayed from '../../modules/canPageBeDisplayed';
 
-const insideWrapper = css`
+const insideWrapperStyle = css`
   display: flex;
   flex: 1;
 `;
 
-const mainStyle = (windowHeight: number) => css`
+const mainStyle = css`
   flex-grow: 1;
-  height: calc(${windowHeight}px - 11rem);
   margin: 0 auto 0 0;
   max-width: 100rem;
   padding: 0 2rem 2rem;
@@ -82,9 +81,9 @@ const LoggedIn = ({
         onSetLoginUser={onSetLoginUser}
         onSetPermission={onSetPermission}
       />
-      <div css={insideWrapper}>
-        <Sidebar permission={permission} windowHeight={windowHeight} />
-        <main css={mainStyle(windowHeight)}>
+      <div css={insideWrapperStyle}>
+        <Sidebar permission={permission} />
+        <main css={mainStyle}>
           <Switch>
             {canPageBeDisplayed(usersPage, permission) && (
               <Route exact path={usersPage.path} render={() => <Users windowHeight={windowHeight} />} />

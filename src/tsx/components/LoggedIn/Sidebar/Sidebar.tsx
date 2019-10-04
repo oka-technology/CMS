@@ -5,9 +5,8 @@ import bp from '../../../data/mediaQuery';
 
 import SidebarItem from './SidebarItem';
 
-const sideBarStyle = (windowHeight: number) => css`
+const sideBarStyle = css`
   background-color: #777;
-  height: calc(${windowHeight}px - 11rem);
   min-width: 16rem;
   width: 20rem;
 
@@ -25,12 +24,11 @@ const sidebarListWrapperStyle = css`
 
 type SidebarProps = {
   permission: Permission;
-  windowHeight: number;
 };
 
-const Sidebar = ({ permission, windowHeight }: SidebarProps): JSX.Element => {
+const Sidebar = ({ permission }: SidebarProps): JSX.Element => {
   return (
-    <aside css={sideBarStyle(windowHeight)}>
+    <aside css={sideBarStyle}>
       <nav>
         <ul css={sidebarListWrapperStyle}>
           <SidebarItem permission={permission} />

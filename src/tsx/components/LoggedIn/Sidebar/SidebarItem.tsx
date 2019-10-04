@@ -33,6 +33,7 @@ const listItemAnchor = (now: boolean) => css`
   &:hover {
     background-color: ${now ? '#444' : '#aaa'};
     transform: ${now ? null : 'scale(1.2)'};
+    transition: transform 0.1s;
   }
 `;
 
@@ -54,14 +55,25 @@ const SidebarItem = ({ permission }: SideBarItemProps): JSX.Element => {
   const item: (JSX.Element | undefined)[] = arrayOfPagesInSidebar.map((pageData) => {
     if (canPageBeDisplayed(pageData, permission)) {
       const link: string = pageData.path;
-      return (
-        <li css={listItem} key={pageData.path}>
-          <NavLink to={link} css={listItemAnchor(location.pathname.match(link) !== null)}>
-            <span css={triangle}></span>
-            {pageData.pageName}
-          </NavLink>
-        </li>
-      );
+      if (location.pathname === link) {
+        return (
+          <li css={listItem} key={pageData.path}>
+            <div css={listItemAnchor(location.pathname.match(link) !== null)}>
+              <span css={triangle}></span>
+              {pageData.pageName}
+            </div>
+          </li>
+        );
+      } else {
+        return (
+          <li css={listItem} key={pageData.path}>
+            <NavLink to={link} css={listItemAnchor(location.pathname.match(link) !== null)}>
+              <span css={triangle}></span>
+              {pageData.pageName}
+            </NavLink>
+          </li>
+        );
+      }
     }
   });
 
