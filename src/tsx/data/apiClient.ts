@@ -132,3 +132,11 @@ type PayloadLogin = {
 };
 
 export const login = createApi<ParamsLogin, PayloadLogin>('post', 'loginProcess.php');
+
+type PayloadLogout = {
+  loggedIn: boolean;
+  userID: string;
+  permission: string;
+};
+
+export const logout = createApi<null, PayloadLogout>('post', 'logoutProcess.php');
