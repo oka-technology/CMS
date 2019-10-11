@@ -89,10 +89,6 @@ const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.
   };
 
   useEffect(() => {
-    document.title = mode === 'newRegistration' ? newContentRegistrationPage.pageName : editContentPage.pageName;
-  }, [mode]);
-
-  useEffect(() => {
     let unmounted: boolean = false;
     const cancelTokenSource = axios.CancelToken.source();
     (async () => {
@@ -114,6 +110,10 @@ const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.
   }, []);
 
   useEffect(() => {
+    document.title = mode === 'newRegistration' ? newContentRegistrationPage.pageName : editContentPage.pageName;
+  }, [mode]);
+
+  useEffect(() => {
     if (bytesOf(content) > 2240) {
       setRegistable(false);
     } else {
@@ -122,8 +122,11 @@ const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.
   }, [content]);
 
   useEffect(() => {
-    if (mode === 'newRegistration' || !match) return;
     let unmounted = false;
+    setTitle('');
+    setContent('');
+    setSelectedCategory('0');
+    if (mode === 'newRegistration' || !match) return;
     const cancelTokenSource = axios.CancelToken.source();
     const { id } = match.params;
     (async () => {
