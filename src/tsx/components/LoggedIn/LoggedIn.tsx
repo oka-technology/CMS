@@ -58,17 +58,13 @@ const LoggedIn = ({
   const [windowHeight, setWindowHeight] = useState<number>(window.innerHeight);
 
   useEffect(() => {
-    let unmounted = false;
-    document.title = 'Login Success';
-    window.addEventListener('resize', () => {
-      if (unmounted) return;
+    const resizeEvent = () => {
       setWindowHeight(window.innerHeight);
-    });
+    };
+    document.title = 'Login Success';
+    window.addEventListener('resize', resizeEvent);
     return () => {
-      window.removeEventListener('resize', () => {
-        setWindowHeight(window.innerHeight);
-      });
-      unmounted = true;
+      window.removeEventListener('resize', resizeEvent);
     };
   }, []);
 
