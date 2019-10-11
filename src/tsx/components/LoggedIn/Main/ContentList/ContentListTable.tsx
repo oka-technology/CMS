@@ -6,7 +6,7 @@ import { TBody, TRow, TD } from '../../../../template/Table';
 import Button from '../../../../template/Button';
 import { loadContentList, PayloadLoadContentList } from '../../../../data/apiClient';
 import { editContentPage, viewContentPage } from '../../../../data/pages';
-import canPageBeDisplayed from '../../../../modules/canPageBeDisplayed';
+import displayable from '../../../../modules/displayable';
 
 type ContentListTableProps = {
   windowHeight: number;
@@ -48,7 +48,7 @@ const ContentListTable = ({ windowHeight, columnWidthPropotions, permission }: C
         <TD width={columnWidthPropotions[2]}>{title}</TD>
         <TD width={columnWidthPropotions[3]}>{registrationDate}</TD>
         <TD width={columnWidthPropotions[4]}>
-          {canPageBeDisplayed(viewContentPage, permission) && (
+          {displayable(viewContentPage, permission) && (
             <Button
               as="routerLink"
               to={viewContentPage.path.replace(':id', id)}
@@ -58,7 +58,7 @@ const ContentListTable = ({ windowHeight, columnWidthPropotions, permission }: C
           )}
         </TD>
         <TD width={columnWidthPropotions[5]}>
-          {canPageBeDisplayed(editContentPage, permission) && (
+          {displayable(editContentPage, permission) && (
             <Button
               as="routerLink"
               to={editContentPage.path.replace(':id', id)}

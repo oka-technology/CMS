@@ -25,7 +25,7 @@ import {
   editContentPage,
   TOP_PAGE_PATH,
 } from '../../data/pages';
-import canPageBeDisplayed from '../../modules/canPageBeDisplayed';
+import displayable from '../../modules/displayable';
 
 const insideWrapperStyle = css`
   display: flex;
@@ -85,40 +85,40 @@ const LoggedIn = ({
         <Sidebar permission={permission} />
         <main css={mainStyle}>
           <Switch>
-            {canPageBeDisplayed(usersPage, permission) && (
+            {displayable(usersPage, permission) && (
               <Route exact path={usersPage.path} render={() => <Users windowHeight={windowHeight} />} />
             )}
-            {canPageBeDisplayed(newUserRegistrationPage, permission) && (
+            {displayable(newUserRegistrationPage, permission) && (
               <Route exact path={newUserRegistrationPage.path} render={() => <NewUserRegistration />} />
             )}
-            {canPageBeDisplayed(contentListPage, permission) && (
+            {displayable(contentListPage, permission) && (
               <Route
                 exact
                 path={contentListPage.path}
                 render={() => <ContentList windowHeight={windowHeight} permission={permission} />}
               />
             )}
-            {canPageBeDisplayed(viewContentPage, permission) && (
+            {displayable(viewContentPage, permission) && (
               <Route exact path={viewContentPage.path} render={({ match }) => <ViewContent match={match} />} />
             )}
-            {canPageBeDisplayed(editContentPage, permission) && (
+            {displayable(editContentPage, permission) && (
               <Route
                 exact
                 path={editContentPage.path}
                 render={({ match }) => <ContentRegistration mode="edit" match={match} />}
               />
             )}
-            {canPageBeDisplayed(newContentRegistrationPage, permission) && (
+            {displayable(newContentRegistrationPage, permission) && (
               <Route
                 exact
                 path={newContentRegistrationPage.path}
                 render={() => <ContentRegistration mode="newRegistration" />}
               />
             )}
-            {canPageBeDisplayed(categoriesPage, permission) && (
+            {displayable(categoriesPage, permission) && (
               <Route exact path={categoriesPage.path} render={() => <Categories windowHeight={windowHeight} />} />
             )}
-            {canPageBeDisplayed(newContentRegistrationPage, permission) && (
+            {displayable(newContentRegistrationPage, permission) && (
               <Route
                 exact
                 path={newCategoryRegistrationPage.path}
