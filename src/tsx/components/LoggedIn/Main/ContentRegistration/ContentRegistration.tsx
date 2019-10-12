@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { useState, Fragment, useEffect } from 'react';
+import { useState, Fragment, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import { match } from 'react-router-dom';
+import { match, Prompt } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
 import { Label, TextInput, FormSelect, TextArea } from '../../../../template/Form';
@@ -13,12 +13,21 @@ import { registerContent, loadCategories, loadContent, editContent } from '../..
 import bytesOf from '../../../../modules/bytesOf';
 import CapacityBar from '../../../../template/CapacityBar';
 import SuccessMessage from '../../../../template/SuccessMessage';
+import sameObj from '../../../../modules/sameObj';
 
 const formStyle = css`
   & > *:first-child /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */ {
     margin-top: 0;
   }
 `;
+
+const MESSAGE_WHEN_UNSAVED = "You haven't save. Are you sure you want to leave this page?";
+
+type ContentInfo = {
+  category: string;
+  title: string;
+  content: string;
+};
 
 type OptionItem = {
   value: string;
@@ -31,9 +40,8 @@ type NewContentRegistrationProps = {
 };
 
 const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.Element => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('0');
-  const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
+  const [currContent, setCurrContent] = useState<ContentInfo>({ category: '0', title: '', content: '' });
+  const [prevContent, setPrevContent] = useState<ContentInfo>({ category: '0', title: '', content: '' });
   const [success, setSuccess] = useState<boolean>(true);
   const [optionItems, setOptionItems] = useState<OptionItem[] | null>(null);
   const [isLoadingCategories, setIsLoadingCategories] = useState<boolean>(true);
@@ -42,34 +50,37 @@ const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.
   const [isLoadingEditor, setIsLoadingEditor] = useState<boolean>(true);
   const [updated, setUpdated] = useState<boolean>(false);
 
-  const onSetCategory = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    setSelectedCategory(e.target.value);
+  const isBlocking = useMemo(() => {
+    return !sameObj(currContent, prevContent);
+  }, [currContent, prevContent]);
+
+  const onSetCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const category = e.target.value;
+    setCurrContent((curr) => ({ ...curr, category: category }));
   };
-  const onSetTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setTitle(e.target.value);
+  const onSetTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const title = e.target.value;
+    setCurrContent((curr) => ({ ...curr, title: title }));
+    setRegistable(bytesOf(title) < 256);
   };
-  const onSetContent = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    setContent(e.target.value);
+  const onSetContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const content = e.target.value;
+    setCurrContent((curr) => ({ ...curr, content: content }));
+    setRegistable(bytesOf(content) < 2241);
   };
 
   const onRegisterContentToDB = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     setSuccess(true);
-    const data = await registerContent({
-      category: selectedCategory,
-      title: title,
-      content: content,
-    });
+    const data = await registerContent(currContent);
     if (!data || !data.successful) {
       setSuccess(false);
       return;
     }
-    setSelectedCategory('0');
-    setTitle('');
-    setContent('');
+    setCurrContent({ category: '0', title: '', content: '' });
   };
 
-  const onEditContent = async (e: React.MouseEvent<HTMLElement>) => {
+  const onUpdateContent = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (!match) return;
     const { id } = match.params;
@@ -77,14 +88,15 @@ const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.
     setUpdated(false);
     const data = await editContent({
       id: id,
-      category: selectedCategory,
-      title: title,
-      content: content,
+      category: currContent.category,
+      title: currContent.title,
+      content: currContent.content,
     });
     if (!data || !data.success) {
       setSuccess(false);
       return;
     }
+    setPrevContent(currContent);
     setUpdated(true);
   };
 
@@ -114,18 +126,23 @@ const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.
   }, [mode]);
 
   useEffect(() => {
-    if (bytesOf(content) > 2240) {
-      setRegistable(false);
-    } else {
-      setRegistable(true);
+    const event = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = MESSAGE_WHEN_UNSAVED;
+    };
+    if (isBlocking) {
+      window.addEventListener('beforeunload', event);
     }
-  }, [content]);
+    return () => {
+      window.removeEventListener('beforeunload', event);
+    };
+  }, [isBlocking]);
 
   useEffect(() => {
     let unmounted = false;
-    setTitle('');
-    setContent('');
-    setSelectedCategory('0');
+    setCurrContent({ category: '0', title: '', content: '' });
+    setPrevContent({ category: '0', title: '', content: '' });
+    setUpdated(false);
     if (mode === 'newRegistration' || !match) return;
     const cancelTokenSource = axios.CancelToken.source();
     const { id } = match.params;
@@ -136,9 +153,8 @@ const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.
         setNotFound(true);
         return;
       }
-      setTitle(contentData.title);
-      setSelectedCategory(contentData.category);
-      setContent(contentData.content);
+      setCurrContent(contentData);
+      setPrevContent(contentData);
       setIsLoadingEditor(false);
     })();
     return () => {
@@ -162,7 +178,7 @@ const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.
       )}
       {!isLoadingCategories && optionItems && (
         <FormSelect
-          value={selectedCategory}
+          value={currContent.category}
           onChange={onSetCategory}
           marginTop="0.5rem"
           optionItems={optionItems}
@@ -190,19 +206,27 @@ const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.
 
   return (
     <Fragment>
+      <Prompt when={isBlocking} message={MESSAGE_WHEN_UNSAVED} />
       <Title value={mode === 'newRegistration' ? newContentRegistrationPage.pageName : editContentPage.pageName} />
       <form css={formStyle} autoComplete="new-password">
         <Label htmlFor="Category" value="Category" />
         {SelectCategory}
         <Label htmlFor="Title" value="Title" />
-        <TextInput type="text" placeholder="" value={title} onChange={onSetTitle} marginTop="0.5rem" id="Title" />
+        <TextInput
+          type="text"
+          placeholder=""
+          value={currContent.title}
+          onChange={onSetTitle}
+          marginTop="0.5rem"
+          id="Title"
+        />
         <Label htmlFor="Content" value="Content" />
-        <TextArea value={content} marginTop="0.5rem" onChange={onSetContent} id="Content" />
-        <CapacityBar bytes={bytesOf(content)} />
+        <TextArea value={currContent.content} marginTop="0.5rem" onChange={onSetContent} id="Content" />
+        <CapacityBar bytes={bytesOf(currContent.content)} />
         <Button
           as={registable ? 'submit' : 'blocked'}
           value={mode === 'newRegistration' ? 'Register' : 'Update'}
-          onClick={mode === 'newRegistration' ? onRegisterContentToDB : onEditContent}
+          onClick={mode === 'newRegistration' ? onRegisterContentToDB : onUpdateContent}
           additionalStyle={{ backgroundColor: '#0528c2', marginTop: '4rem' }}
         />
       </form>
