@@ -1,5 +1,11 @@
 # CMS
 
+## About
+
+This was originally created as submission of assignment for my university. I had to create this only in PHP. After I submitting this, I rearchitected this with React.js for my learning.
+
+## How to use
+
 ```sh
 NODE_ENV=production webpack
 docker-compose up
