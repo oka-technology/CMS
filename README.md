@@ -6,7 +6,10 @@ This was originally created as submission of assignment for my university. I had
 
 ## How to use
 
+After installing Node.js
+
 ```sh
+npm i
 NODE_ENV=production webpack
 docker-compose up
 ```
