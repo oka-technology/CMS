@@ -1,7 +1,5 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import convertCSSPropertiesObjectToString from '../modules/convertCSSPropertiesObjectToString';
-import { CSSProperties } from 'react';
 
 const labelStyle = css`
   display: block;
@@ -27,12 +25,12 @@ const checkBoxStyle = css`
   margin-right: 0.8rem;
 `;
 
-const checkBoxEntireStyle = (additionalStyle: CSSProperties) => css`
+const checkBoxEntireStyle = (additionalStyle: ReturnType<typeof css>) => css`
   align-items: center;
   display: flex;
   font-size: 1.6rem;
   width: max-content;
-  ${convertCSSPropertiesObjectToString(additionalStyle)}
+  ${additionalStyle}
 `;
 
 const selectStyle = (marginTop: string) => css`
@@ -73,7 +71,7 @@ type CheckBoxProps = {
   value?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checked: boolean;
-  additionalStyle?: CSSProperties;
+  additionalStyle?: ReturnType<typeof css>;
 };
 
 type FormSelectProps = {
@@ -130,7 +128,7 @@ export const CheckBox = ({
   checked,
   additionalStyle,
 }: CheckBoxProps): JSX.Element => {
-  additionalStyle = additionalStyle ? additionalStyle : {};
+  additionalStyle = additionalStyle ? additionalStyle : css();
   return (
     <label css={checkBoxEntireStyle(additionalStyle)}>
       <input

@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx, css } from '@emotion/core';
 import { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 
@@ -55,7 +55,9 @@ const CategoriesTable = ({
           <Button
             as="routerLink"
             value="Edit"
-            additionalStyle={{ backgroundColor: '#00ed33' }}
+            additionalStyle={css`
+              background-color: #00ed33;
+            `}
           />
         </TD>
       </TRow>
@@ -63,9 +65,11 @@ const CategoriesTable = ({
   });
   return (
     <TBody
-      additionalStyle={{
-        height: `calc(${windowHeight}px - (6rem + 8.5rem + 6.2rem + 2.5rem + 5rem))`,
-      }}
+      additionalStyle={css`
+        height: calc(
+          ${windowHeight}px - (6rem + 8.5rem + 6.2rem + 2.5rem + 5rem)
+        );
+      `}
     >
       {item}
     </TBody>

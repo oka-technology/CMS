@@ -1,13 +1,11 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { Fragment, CSSProperties } from 'react';
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-import convertCSSPropertiesObjectToString from '../modules/convertCSSPropertiesObjectToString';
-
 const buttonStyle = (
-  additionalStyle: CSSProperties,
-  additionalHoverStyle: CSSProperties,
+  additionalStyle: ReturnType<typeof css>,
+  additionalHoverStyle: ReturnType<typeof css>,
   blocked?: boolean,
 ) => css`
   align-items: center;
@@ -23,12 +21,12 @@ const buttonStyle = (
   text-decoration: none;
   transition: transform 0.1s;
   width: 10rem;
-  ${convertCSSPropertiesObjectToString(additionalStyle)}
+  ${additionalStyle}
 
   &:hover {
     transform: ${blocked ? 'scale(1)' : 'scale(1.25)'};
     transition: transform 0.1s cubic-bezier(0.22, 0.61, 0.36, 1);
-    ${convertCSSPropertiesObjectToString(additionalHoverStyle)}
+    ${additionalHoverStyle}
   }
 `;
 type ButtonProps = {
@@ -36,8 +34,8 @@ type ButtonProps = {
   value: string;
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   to?: string;
-  additionalStyle?: CSSProperties;
-  additionalHoverStyle?: CSSProperties;
+  additionalStyle?: ReturnType<typeof css>;
+  additionalHoverStyle?: ReturnType<typeof css>;
 };
 
 const Button = ({
@@ -48,8 +46,8 @@ const Button = ({
   additionalStyle,
   additionalHoverStyle,
 }: ButtonProps): JSX.Element => {
-  additionalStyle = additionalStyle ? additionalStyle : {};
-  additionalHoverStyle = additionalHoverStyle ? additionalHoverStyle : {};
+  additionalStyle = additionalStyle ? additionalStyle : css();
+  additionalHoverStyle = additionalHoverStyle ? additionalHoverStyle : css();
   if (as === 'submit') {
     return (
       <input

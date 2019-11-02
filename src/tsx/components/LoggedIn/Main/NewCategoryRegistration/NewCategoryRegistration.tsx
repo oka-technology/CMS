@@ -65,7 +65,10 @@ const NewCategoryRegistration = ({ permission }: AddUserProps): JSX.Element => {
           as="submit"
           value="Register"
           onClick={registerCategoryToDB}
-          additionalStyle={{ backgroundColor: '#0528c2', marginTop: '4rem' }}
+          additionalStyle={css`
+            background-color: #0528c2;
+            margin-top: 4rem;
+          `}
         />
       </form>
       {!success && <ErrorMessage value="You must fill in all of the fields." />}

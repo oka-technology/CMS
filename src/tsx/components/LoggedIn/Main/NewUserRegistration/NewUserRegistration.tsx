@@ -134,7 +134,10 @@ const NewUserRegistration = (): JSX.Element => {
           value="Hide password"
           onChange={onSetHidePassword}
           checked={hidePassword}
-          additionalStyle={{ fontSize: '1.4rem', marginTop: '0.2rem' }}
+          additionalStyle={css`
+            font-size: 1.4rem;
+            margin-top: 0.2rem;
+          `}
         />
         <p css={permissionItemHeadingStyle}>Permission (Fill one or more)</p>
         <div css={permissionCheckBoxesWrapperStyle}>{permissionCheckBoxes}</div>
@@ -142,7 +145,10 @@ const NewUserRegistration = (): JSX.Element => {
           as="submit"
           value="Register"
           onClick={registerUserToDB}
-          additionalStyle={{ backgroundColor: '#0528c2', marginTop: '4rem' }}
+          additionalStyle={css`
+            background-color: #0528c2;
+            margin-top: 4rem;
+          `}
         />
       </form>
       {!success && <ErrorMessage value="You must fill in all of the fields." />}

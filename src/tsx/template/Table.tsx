@@ -1,8 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { ReactNode, CSSProperties } from 'react';
-
-import convertCSSPropertiesObjectToString from '../modules/convertCSSPropertiesObjectToString';
+import { ReactNode } from 'react';
 
 const tableStyle = css`
   background-color: white;
@@ -21,12 +19,12 @@ const theadStyle = css`
   width: 100%;
 `;
 
-const tbodyStyle = (additionalStyle: CSSProperties) => css`
+const tbodyStyle = (additionalStyle: ReturnType<typeof css>) => css`
   display: block;
   font-size: 1.6rem;
   overflow: scroll;
   width: 100%;
-  ${convertCSSPropertiesObjectToString(additionalStyle)}
+  ${additionalStyle}
 `;
 
 const trStyle = css`
@@ -71,7 +69,7 @@ type THeadProps = {
 
 type TBodyProps = {
   children: ReactNode;
-  additionalStyle?: CSSProperties;
+  additionalStyle?: ReturnType<typeof css>;
 };
 
 type TRowProps = {
@@ -100,7 +98,7 @@ export const TBody = ({
   children,
   additionalStyle,
 }: TBodyProps): JSX.Element => {
-  additionalStyle = additionalStyle ? additionalStyle : {};
+  additionalStyle = additionalStyle ? additionalStyle : css();
   return <tbody css={tbodyStyle(additionalStyle)}>{children}</tbody>;
 };
 

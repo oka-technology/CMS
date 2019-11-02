@@ -32,17 +32,19 @@ const Categories = ({ windowHeight }: CategoriesProps): JSX.Element => {
       >
         <Title
           value={categoriesPage.pageName}
-          additionalStyle={{ float: 'left' }}
+          additionalStyle={css`
+            float: left;
+          `}
         />
         <Button
           as="routerLink"
           to={newCategoryRegistrationPage.path}
           value="New Registration"
-          additionalStyle={{
-            backgroundColor: '#e87c00',
-            width: '15rem',
-            margin: '0 0 0 auto',
-          }}
+          additionalStyle={css`
+            background-color: #e87c00;
+            width: 15rem;
+            margin: 0 0 0 auto;
+          `}
         />
       </div>
       <Table>

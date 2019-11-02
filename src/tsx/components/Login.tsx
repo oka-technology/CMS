@@ -110,12 +110,14 @@ const Login = ({
               as="submit"
               value="Log in"
               onClick={submit}
-              additionalStyle={{
-                width: '100%',
-                backgroundColor: '#0528c2',
-                margin: '3.5rem auto 0',
-              }}
-              additionalHoverStyle={{ transform: 'scale(1.05)' }}
+              additionalStyle={css`
+                width: 100%;
+                background-color: #0528c2;
+                margin: 3.5rem auto 0;
+              `}
+              additionalHoverStyle={css`
+                transform: scale(1.05);
+              `}
             />
           </form>
           {missed && (

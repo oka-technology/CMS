@@ -41,11 +41,11 @@ const ContentList = ({
             as="routerLink"
             to={newContentRegistrationPage.path}
             value="New Registration"
-            additionalStyle={{
-              backgroundColor: '#e87c00',
-              width: '15rem',
-              margin: '0 0 0 auto',
-            }}
+            additionalStyle={css`
+              background-color: #e87c00;
+              width: 15rem;
+              margin: 0 0 0 auto;
+            `}
           />
         ) : null}
       </div>

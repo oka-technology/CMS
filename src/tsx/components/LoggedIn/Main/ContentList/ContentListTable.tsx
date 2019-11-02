@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx, css } from '@emotion/core';
 import { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import { TBody, TRow, TD } from '../../../../template/Table';
@@ -63,7 +63,10 @@ const ContentListTable = ({
                 as="routerLink"
                 to={viewContentPage.path.replace(':id', id)}
                 value="View"
-                additionalStyle={{ backgroundColor: '#00c8ff', width: '6rem' }}
+                additionalStyle={css`
+                  background-color: #00c8ff;
+                  width: 6rem;
+                `}
               />
             )}
           </TD>
@@ -73,7 +76,10 @@ const ContentListTable = ({
                 as="routerLink"
                 to={editContentPage.path.replace(':id', id)}
                 value="Edit"
-                additionalStyle={{ backgroundColor: '#00ed33', width: '6rem' }}
+                additionalStyle={css`
+                  background-color: #00ed33;
+                  width: 6rem;
+                `}
               />
             )}
           </TD>
@@ -83,9 +89,11 @@ const ContentListTable = ({
   );
   return (
     <TBody
-      additionalStyle={{
-        height: `calc(${windowHeight}px - (6rem + 8.5rem + 6.2rem + 2.5rem + 5rem))`,
-      }}
+      additionalStyle={css`
+        height: calc(
+          ${windowHeight}px - (6rem + 8.5rem + 6.2rem + 2.5rem + 5rem)
+        );
+      `}
     >
       {item}
     </TBody>

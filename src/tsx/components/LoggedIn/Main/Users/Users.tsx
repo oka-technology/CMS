@@ -31,11 +31,11 @@ const Users = ({ windowHeight }: UsersProps): JSX.Element => {
         <Button
           as="routerLink"
           value="New Registration"
-          additionalStyle={{
-            backgroundColor: '#e87c00',
-            width: '15rem',
-            margin: '0 0 0 auto',
-          }}
+          additionalStyle={css`
+            background-color: #e87c00;
+            width: 15rem;
+            margin: 0 0 0 auto;
+          `}
           to={newUserRegistrationPage.path}
         />
       </div>
