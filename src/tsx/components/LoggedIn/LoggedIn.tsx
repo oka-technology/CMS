@@ -82,26 +82,45 @@ const LoggedIn = ({
         <main css={mainStyle}>
           <Switch>
             {displayable(usersPage, permission) && (
-              <Route exact path={usersPage.path} render={() => <Users windowHeight={windowHeight} />} />
+              <Route
+                exact
+                path={usersPage.path}
+                render={() => <Users windowHeight={windowHeight} />}
+              />
             )}
             {displayable(newUserRegistrationPage, permission) && (
-              <Route exact path={newUserRegistrationPage.path} render={() => <NewUserRegistration />} />
+              <Route
+                exact
+                path={newUserRegistrationPage.path}
+                render={() => <NewUserRegistration />}
+              />
             )}
             {displayable(contentListPage, permission) && (
               <Route
                 exact
                 path={contentListPage.path}
-                render={() => <ContentList windowHeight={windowHeight} permission={permission} />}
+                render={() => (
+                  <ContentList
+                    windowHeight={windowHeight}
+                    permission={permission}
+                  />
+                )}
               />
             )}
             {displayable(viewContentPage, permission) && (
-              <Route exact path={viewContentPage.path} render={({ match }) => <ViewContent match={match} />} />
+              <Route
+                exact
+                path={viewContentPage.path}
+                render={({ match }) => <ViewContent match={match} />}
+              />
             )}
             {displayable(editContentPage, permission) && (
               <Route
                 exact
                 path={editContentPage.path}
-                render={({ match }) => <ContentRegistration mode="edit" match={match} />}
+                render={({ match }) => (
+                  <ContentRegistration mode="edit" match={match} />
+                )}
               />
             )}
             {displayable(newContentRegistrationPage, permission) && (
@@ -112,13 +131,19 @@ const LoggedIn = ({
               />
             )}
             {displayable(categoriesPage, permission) && (
-              <Route exact path={categoriesPage.path} render={() => <Categories windowHeight={windowHeight} />} />
+              <Route
+                exact
+                path={categoriesPage.path}
+                render={() => <Categories windowHeight={windowHeight} />}
+              />
             )}
             {displayable(newContentRegistrationPage, permission) && (
               <Route
                 exact
                 path={newCategoryRegistrationPage.path}
-                render={() => <NewCategoryRegistration permission={permission} />}
+                render={() => (
+                  <NewCategoryRegistration permission={permission} />
+                )}
               />
             )}
             <Redirect to={TOP_PAGE_PATH} />

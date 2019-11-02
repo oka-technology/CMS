@@ -6,7 +6,10 @@ import ContentListTable from './ContentListTable';
 
 import Title from '../../../../template/Title';
 import Button from '../../../../template/Button';
-import { newContentRegistrationPage, contentListPage } from '../../../../data/pages';
+import {
+  newContentRegistrationPage,
+  contentListPage,
+} from '../../../../data/pages';
 import { Table, THead, TRow, TH } from '../../../../template/Table';
 
 type ContentListProps = {
@@ -16,7 +19,10 @@ type ContentListProps = {
 
 const columnWidthPropotions = ['7%', '20%', '35%', '18%', '10%', '10%'];
 
-const ContentList = ({ permission, windowHeight }: ContentListProps): JSX.Element => {
+const ContentList = ({
+  permission,
+  windowHeight,
+}: ContentListProps): JSX.Element => {
   useEffect(() => {
     document.title = contentListPage.pageName;
   }, []);

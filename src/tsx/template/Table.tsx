@@ -96,7 +96,10 @@ export const THead = ({ children }: THeadProps): JSX.Element => {
   return <thead css={theadStyle}>{children}</thead>;
 };
 
-export const TBody = ({ children, additionalStyle }: TBodyProps): JSX.Element => {
+export const TBody = ({
+  children,
+  additionalStyle,
+}: TBodyProps): JSX.Element => {
   additionalStyle = additionalStyle ? additionalStyle : {};
   return <tbody css={tbodyStyle(additionalStyle)}>{children}</tbody>;
 };

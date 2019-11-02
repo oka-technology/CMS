@@ -52,30 +52,35 @@ type SideBarItemProps = {
 };
 
 const SidebarItem = ({ permission }: SideBarItemProps): JSX.Element => {
-  const item: (JSX.Element | undefined)[] = arrayOfPagesInSidebar.map((pageData) => {
-    if (displayable(pageData, permission)) {
-      const link: string = pageData.path;
-      if (location.pathname === link) {
-        return (
-          <li css={listItem} key={pageData.path}>
-            <div css={listItemAnchor(location.pathname.match(link) !== null)}>
-              <span css={triangle}></span>
-              {pageData.pageName}
-            </div>
-          </li>
-        );
-      } else {
-        return (
-          <li css={listItem} key={pageData.path}>
-            <NavLink to={link} css={listItemAnchor(location.pathname.match(link) !== null)}>
-              <span css={triangle}></span>
-              {pageData.pageName}
-            </NavLink>
-          </li>
-        );
+  const item: (JSX.Element | undefined)[] = arrayOfPagesInSidebar.map(
+    (pageData) => {
+      if (displayable(pageData, permission)) {
+        const link: string = pageData.path;
+        if (location.pathname === link) {
+          return (
+            <li css={listItem} key={pageData.path}>
+              <div css={listItemAnchor(location.pathname.match(link) !== null)}>
+                <span css={triangle}></span>
+                {pageData.pageName}
+              </div>
+            </li>
+          );
+        } else {
+          return (
+            <li css={listItem} key={pageData.path}>
+              <NavLink
+                to={link}
+                css={listItemAnchor(location.pathname.match(link) !== null)}
+              >
+                <span css={triangle}></span>
+                {pageData.pageName}
+              </NavLink>
+            </li>
+          );
+        }
       }
-    }
-  });
+    },
+  );
 
   return <Fragment>{item}</Fragment>;
 };

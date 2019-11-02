@@ -47,7 +47,10 @@ const Users = ({ windowHeight }: UsersProps): JSX.Element => {
             <TH width={columnWidthPropotions[2]}>Permission</TH>
           </TRow>
         </THead>
-        <UserTable windowHeight={windowHeight} columnWidthPropotions={columnWidthPropotions} />
+        <UserTable
+          windowHeight={windowHeight}
+          columnWidthPropotions={columnWidthPropotions}
+        />
       </Table>
     </Fragment>
   );

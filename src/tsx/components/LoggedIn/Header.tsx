@@ -66,7 +66,11 @@ type HeaderProps = {
 };
 
 const Svg = () => (
-  <svg css={logoutImageStyle} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 570 487.88">
+  <svg
+    css={logoutImageStyle}
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 570 487.88"
+  >
     <title>log out</title>
     <polygon points="154.48 349.66 99.43 276.61 362.26 276.61 362.26 212.83 99.43 212.83 154.48 139.78 79.09 139.78 0 244.72 79.09 349.66 154.48 349.66" />
     <path
@@ -100,7 +104,8 @@ const Header = ({
       <div css={rightItemStyle}>
         <p css={userStyle}>
           You're logging in with
-          <span css={loggingInUserNameStyle}>{` ${loginUser} `}</span>({convertPermissionObjectToString(permission)})
+          <span css={loggingInUserNameStyle}>{` ${loginUser} `}</span>(
+          {convertPermissionObjectToString(permission)})
         </p>
         <a css={logoutAnchorStyle} onClick={onLogout}>
           <Svg />

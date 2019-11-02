@@ -43,7 +43,11 @@ type LoginProps = {
   onSetPermission: (permission: number) => void;
 };
 
-const Login = ({ onSetLoggedIn, onSetLoginUser, onSetPermission }: LoginProps): JSX.Element => {
+const Login = ({
+  onSetLoggedIn,
+  onSetLoginUser,
+  onSetPermission,
+}: LoginProps): JSX.Element => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [missed, setMissed] = useState<boolean>(false);
@@ -88,7 +92,13 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetPermission }: LoginProps): 
         <main css={mainStyle}>
           <h1 css={titleStyle}>CMS</h1>
           <form css={formStyle} autoComplete="on">
-            <TextInput type="text" placeholder="Email" value={email} onChange={onSetEmail} marginTop="0" />
+            <TextInput
+              type="text"
+              placeholder="Email"
+              value={email}
+              onChange={onSetEmail}
+              marginTop="0"
+            />
             <TextInput
               type="password"
               placeholder="Password"
@@ -100,11 +110,17 @@ const Login = ({ onSetLoggedIn, onSetLoginUser, onSetPermission }: LoginProps): 
               as="submit"
               value="Log in"
               onClick={submit}
-              additionalStyle={{ width: '100%', backgroundColor: '#0528c2', margin: '3.5rem auto 0' }}
+              additionalStyle={{
+                width: '100%',
+                backgroundColor: '#0528c2',
+                margin: '3.5rem auto 0',
+              }}
               additionalHoverStyle={{ transform: 'scale(1.05)' }}
             />
           </form>
-          {missed && <ErrorMessage value="The Email and password you entered did not match our records." />}
+          {missed && (
+            <ErrorMessage value="The Email and password you entered did not match our records." />
+          )}
         </main>
       </div>
     </Fragment>

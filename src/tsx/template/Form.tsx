@@ -104,7 +104,14 @@ export const Label = ({ htmlFor, value }: LabelProps): JSX.Element => {
   );
 };
 
-export const TextInput = ({ type, placeholder, value, onChange, marginTop, id }: TextInputProps): JSX.Element => {
+export const TextInput = ({
+  type,
+  placeholder,
+  value,
+  onChange,
+  marginTop,
+  id,
+}: TextInputProps): JSX.Element => {
   return (
     <input
       css={textInputStyle(marginTop)}
@@ -117,17 +124,33 @@ export const TextInput = ({ type, placeholder, value, onChange, marginTop, id }:
   );
 };
 
-export const CheckBox = ({ value, onChange, checked, additionalStyle }: CheckBoxProps): JSX.Element => {
+export const CheckBox = ({
+  value,
+  onChange,
+  checked,
+  additionalStyle,
+}: CheckBoxProps): JSX.Element => {
   additionalStyle = additionalStyle ? additionalStyle : {};
   return (
     <label css={checkBoxEntireStyle(additionalStyle)}>
-      <input css={checkBoxStyle} type="checkbox" checked={checked} onChange={onChange} />
+      <input
+        css={checkBoxStyle}
+        type="checkbox"
+        checked={checked}
+        onChange={onChange}
+      />
       {value}
     </label>
   );
 };
 
-export const FormSelect = ({ onChange, optionItems, id, marginTop, value }: FormSelectProps): JSX.Element => {
+export const FormSelect = ({
+  onChange,
+  optionItems,
+  id,
+  marginTop,
+  value,
+}: FormSelectProps): JSX.Element => {
   const innerItem: JSX.Element[] = optionItems.map(({ value, text }) => (
     <option value={value} key={value}>
       {text}
@@ -149,6 +172,18 @@ export const FormSelect = ({ onChange, optionItems, id, marginTop, value }: Form
   );
 };
 
-export const TextArea = ({ value, onChange, marginTop, id }: TextAreaProps): JSX.Element => {
-  return <textarea css={textareaStyle(marginTop)} value={value} onChange={onChange} id={id} />;
+export const TextArea = ({
+  value,
+  onChange,
+  marginTop,
+  id,
+}: TextAreaProps): JSX.Element => {
+  return (
+    <textarea
+      css={textareaStyle(marginTop)}
+      value={value}
+      onChange={onChange}
+      id={id}
+    />
+  );
 };

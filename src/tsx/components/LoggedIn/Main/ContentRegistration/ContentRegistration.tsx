@@ -5,11 +5,24 @@ import axios from 'axios';
 import { match, Prompt } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
-import { Label, TextInput, FormSelect, TextArea } from '../../../../template/Form';
+import {
+  Label,
+  TextInput,
+  FormSelect,
+  TextArea,
+} from '../../../../template/Form';
 import Button from '../../../../template/Button';
 import ErrorMessage from '../../../../template/ErrorMessage';
-import { newContentRegistrationPage, editContentPage } from '../../../../data/pages';
-import { registerContent, loadCategories, loadContent, editContent } from '../../../../data/apiClient';
+import {
+  newContentRegistrationPage,
+  editContentPage,
+} from '../../../../data/pages';
+import {
+  registerContent,
+  loadCategories,
+  loadContent,
+  editContent,
+} from '../../../../data/apiClient';
 import bytesOf from '../../../../modules/bytesOf';
 import CapacityBar from '../../../../template/CapacityBar';
 import SuccessMessage from '../../../../template/SuccessMessage';
@@ -21,7 +34,8 @@ const formStyle = css`
   }
 `;
 
-const MESSAGE_WHEN_UNSAVED = "You haven't save. Are you sure you want to leave this page?";
+const MESSAGE_WHEN_UNSAVED =
+  "You haven't save. Are you sure you want to leave this page?";
 
 type ContentInfo = {
   category: string;
@@ -39,9 +53,20 @@ type NewContentRegistrationProps = {
   mode: 'newRegistration' | 'edit';
 };
 
-const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.Element => {
-  const [currContent, setCurrContent] = useState<ContentInfo>({ category: '0', title: '', content: '' });
-  const [prevContent, setPrevContent] = useState<ContentInfo>({ category: '0', title: '', content: '' });
+const ContentRegistration = ({
+  match,
+  mode,
+}: NewContentRegistrationProps): JSX.Element => {
+  const [currContent, setCurrContent] = useState<ContentInfo>({
+    category: '0',
+    title: '',
+    content: '',
+  });
+  const [prevContent, setPrevContent] = useState<ContentInfo>({
+    category: '0',
+    title: '',
+    content: '',
+  });
   const [success, setSuccess] = useState<boolean>(true);
   const [optionItems, setOptionItems] = useState<OptionItem[] | null>(null);
   const [isLoadingCategories, setIsLoadingCategories] = useState<boolean>(true);
@@ -111,7 +136,12 @@ const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.
         setIsLoadingCategories(false);
         return;
       }
-      const optionItemsOfCategory: OptionItem[] = categoriesData.map(({ id, title }) => ({ value: id, text: title }));
+      const optionItemsOfCategory: OptionItem[] = categoriesData.map(
+        ({ id, title }) => ({
+          value: id,
+          text: title,
+        }),
+      );
       setOptionItems(optionItemsOfCategory);
       setIsLoadingCategories(false);
     })();
@@ -122,7 +152,10 @@ const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.
   }, []);
 
   useEffect(() => {
-    document.title = mode === 'newRegistration' ? newContentRegistrationPage.pageName : editContentPage.pageName;
+    document.title =
+      mode === 'newRegistration'
+        ? newContentRegistrationPage.pageName
+        : editContentPage.pageName;
   }, [mode]);
 
   useEffect(() => {
@@ -173,7 +206,9 @@ const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.
             margin-top: 0.5rem;
           `}
         >
-          {isLoadingCategories ? 'Loading...' : "You haven't registered any categories."}
+          {isLoadingCategories
+            ? 'Loading...'
+            : "You haven't registered any categories."}
         </p>
       )}
       {!isLoadingCategories && optionItems && (
@@ -207,7 +242,13 @@ const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.
   return (
     <Fragment>
       <Prompt when={isBlocking} message={MESSAGE_WHEN_UNSAVED} />
-      <Title value={mode === 'newRegistration' ? newContentRegistrationPage.pageName : editContentPage.pageName} />
+      <Title
+        value={
+          mode === 'newRegistration'
+            ? newContentRegistrationPage.pageName
+            : editContentPage.pageName
+        }
+      />
       <form css={formStyle} autoComplete="new-password">
         <Label htmlFor="Category" value="Category" />
         {SelectCategory}
@@ -221,12 +262,19 @@ const ContentRegistration = ({ match, mode }: NewContentRegistrationProps): JSX.
           id="Title"
         />
         <Label htmlFor="Content" value="Content" />
-        <TextArea value={currContent.content} marginTop="0.5rem" onChange={onSetContent} id="Content" />
+        <TextArea
+          value={currContent.content}
+          marginTop="0.5rem"
+          onChange={onSetContent}
+          id="Content"
+        />
         <CapacityBar bytes={bytesOf(currContent.content)} />
         <Button
           as={registable ? 'submit' : 'blocked'}
           value={mode === 'newRegistration' ? 'Register' : 'Update'}
-          onClick={mode === 'newRegistration' ? onRegisterContentToDB : onUpdateContent}
+          onClick={
+            mode === 'newRegistration' ? onRegisterContentToDB : onUpdateContent
+          }
           additionalStyle={{ backgroundColor: '#0528c2', marginTop: '4rem' }}
         />
       </form>

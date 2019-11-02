@@ -5,15 +5,23 @@ import axios from 'axios';
 
 import { TBody, TRow, TD } from '../../../../template/Table';
 import Button from '../../../../template/Button';
-import { loadCategories, PayloadLoadCategories } from '../../../../data/apiClient';
+import {
+  loadCategories,
+  PayloadLoadCategories,
+} from '../../../../data/apiClient';
 
 type CategoriesTableProps = {
   windowHeight: number;
   columnWidthPropotions: string[];
 };
 
-const CategoriesTable = ({ windowHeight, columnWidthPropotions }: CategoriesTableProps): JSX.Element => {
-  const [contentInfoArray, setContentInfoArray] = useState<PayloadLoadCategories[] | null>();
+const CategoriesTable = ({
+  windowHeight,
+  columnWidthPropotions,
+}: CategoriesTableProps): JSX.Element => {
+  const [contentInfoArray, setContentInfoArray] = useState<
+    PayloadLoadCategories[] | null
+  >();
 
   useEffect(() => {
     let unmounted = false;
@@ -44,13 +52,21 @@ const CategoriesTable = ({ windowHeight, columnWidthPropotions }: CategoriesTabl
         <TD width={columnWidthPropotions[0]}>{id}</TD>
         <TD width={columnWidthPropotions[1]}>{title}</TD>
         <TD width={columnWidthPropotions[2]}>
-          <Button as="routerLink" value="Edit" additionalStyle={{ backgroundColor: '#00ed33' }} />
+          <Button
+            as="routerLink"
+            value="Edit"
+            additionalStyle={{ backgroundColor: '#00ed33' }}
+          />
         </TD>
       </TRow>
     );
   });
   return (
-    <TBody additionalStyle={{ height: `calc(${windowHeight}px - (6rem + 8.5rem + 6.2rem + 2.5rem + 5rem))` }}>
+    <TBody
+      additionalStyle={{
+        height: `calc(${windowHeight}px - (6rem + 8.5rem + 6.2rem + 2.5rem + 5rem))`,
+      }}
+    >
       {item}
     </TBody>
   );

@@ -1,4 +1,6 @@
-export const convertPermissionNumToObject = (permission: number): Permission => {
+export const convertPermissionNumToObject = (
+  permission: number,
+): Permission => {
   const permissionBinary: string = permission.toString(2).padStart(3, '0');
   const admin: boolean = permissionBinary[2] === '1';
   const editor: boolean = permissionBinary[1] === '1';
@@ -6,7 +8,11 @@ export const convertPermissionNumToObject = (permission: number): Permission => 
   return { admin, editor, viewer };
 };
 
-export const convertPermissionObjectToString = ({ admin, editor, viewer }: Permission): string => {
+export const convertPermissionObjectToString = ({
+  admin,
+  editor,
+  viewer,
+}: Permission): string => {
   const arr: string[] = [];
   admin ? arr.push('Admin') : null;
   editor ? arr.push('Editor') : null;

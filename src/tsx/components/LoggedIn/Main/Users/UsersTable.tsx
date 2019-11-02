@@ -11,8 +11,13 @@ type UserListProps = {
   columnWidthPropotions: string[];
 };
 
-const UserList = ({ windowHeight, columnWidthPropotions }: UserListProps): JSX.Element => {
-  const [userInfoArray, setUserInfoArray] = useState<PayloadLoadUser[] | null>();
+const UserList = ({
+  windowHeight,
+  columnWidthPropotions,
+}: UserListProps): JSX.Element => {
+  const [userInfoArray, setUserInfoArray] = useState<
+    PayloadLoadUser[] | null
+  >();
 
   useEffect(() => {
     let unmounted = false;
@@ -52,7 +57,11 @@ const UserList = ({ windowHeight, columnWidthPropotions }: UserListProps): JSX.E
     );
   });
   return (
-    <TBody additionalStyle={{ height: `calc(${windowHeight}px - (6rem + 8.5rem + 6.2rem + 2.5rem + 5rem))` }}>
+    <TBody
+      additionalStyle={{
+        height: `calc(${windowHeight}px - (6rem + 8.5rem + 6.2rem + 2.5rem + 5rem))`,
+      }}
+    >
       {rows}
     </TBody>
   );

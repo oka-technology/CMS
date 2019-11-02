@@ -16,8 +16,9 @@ const globalStyle = css`
     color: inherit;
   }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', YuGothic, 'ヒラギノ角ゴ ProN W3',
-      Hiragino Kaku Gothic ProN, Arial, 'メイリオ', Meiryo, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', YuGothic,
+      'ヒラギノ角ゴ ProN W3', Hiragino Kaku Gothic ProN, Arial, 'メイリオ',
+      Meiryo, sans-serif;
     height: 100%;
     position: relative;
     width: 100%;
@@ -48,7 +49,11 @@ const App = (): JSX.Element => {
   const [hasError, setHasError] = useState(false);
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [loginUser, setLoginUser] = useState<string>('');
-  const [permission, setPermission] = useState<Permission>({ admin: false, editor: false, viewer: false });
+  const [permission, setPermission] = useState<Permission>({
+    admin: false,
+    editor: false,
+    viewer: false,
+  });
 
   const onSetLoggedIn = (bool: boolean): void => {
     setLoggedIn(bool);
@@ -165,7 +170,11 @@ const App = (): JSX.Element => {
                 />
               )}
             />
-            {loggedIn ? <Redirect to={TOP_PAGE_PATH} /> : <Redirect to={LOGIN_PAGE_PATH} />}
+            {loggedIn ? (
+              <Redirect to={TOP_PAGE_PATH} />
+            ) : (
+              <Redirect to={LOGIN_PAGE_PATH} />
+            )}
           </Switch>
         </BrowserRouter>
       </div>

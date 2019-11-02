@@ -113,7 +113,14 @@ const NewUserRegistration = (): JSX.Element => {
       <Title value={newUserRegistrationPage.pageName} />
       <form css={formStyle} autoComplete="new-password">
         <Label value="E-mail" htmlFor="email" />
-        <TextInput type="text" placeholder="" value={Email} onChange={onSetEmail} marginTop="0.5rem" id="email" />
+        <TextInput
+          type="text"
+          placeholder=""
+          value={Email}
+          onChange={onSetEmail}
+          marginTop="0.5rem"
+          id="email"
+        />
         <Label value="Password" htmlFor="password" />
         <TextInput
           type={hidePassword ? 'password' : 'text'}

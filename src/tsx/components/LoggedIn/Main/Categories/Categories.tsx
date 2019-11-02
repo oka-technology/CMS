@@ -6,7 +6,10 @@ import CategoriesTable from './CategoriesTable';
 
 import Title from '../../../../template/Title';
 import Button from '../../../../template/Button';
-import { newCategoryRegistrationPage, categoriesPage } from '../../../../data/pages';
+import {
+  newCategoryRegistrationPage,
+  categoriesPage,
+} from '../../../../data/pages';
 import { Table, THead, TRow, TH } from '../../../../template/Table';
 
 type CategoriesProps = {
@@ -27,7 +30,10 @@ const Categories = ({ windowHeight }: CategoriesProps): JSX.Element => {
           align-items: center;
         `}
       >
-        <Title value={categoriesPage.pageName} additionalStyle={{ float: 'left' }} />
+        <Title
+          value={categoriesPage.pageName}
+          additionalStyle={{ float: 'left' }}
+        />
         <Button
           as="routerLink"
           to={newCategoryRegistrationPage.path}
@@ -46,7 +52,10 @@ const Categories = ({ windowHeight }: CategoriesProps): JSX.Element => {
             <TH width={columnWidthPropotions[1]}>Title</TH>
           </TRow>
         </THead>
-        <CategoriesTable windowHeight={windowHeight} columnWidthPropotions={columnWidthPropotions} />
+        <CategoriesTable
+          windowHeight={windowHeight}
+          columnWidthPropotions={columnWidthPropotions}
+        />
       </Table>
     </Fragment>
   );

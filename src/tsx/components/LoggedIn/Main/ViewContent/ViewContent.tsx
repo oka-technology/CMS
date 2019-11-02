@@ -43,16 +43,18 @@ const ViewContent = ({ match }: ViewContentProps): JSX.Element => {
     };
   }, [id]);
 
-  const convertedContent: JSX.Element[] = content.split('\n').map((row, index, arr) => {
-    return index + 1 !== arr.length ? (
-      <Fragment key={index}>
-        {row}
-        <br />
-      </Fragment>
-    ) : (
-      <Fragment key={index}>{row}</Fragment>
-    );
-  });
+  const convertedContent: JSX.Element[] = content
+    .split('\n')
+    .map((row, index, arr) => {
+      return index + 1 !== arr.length ? (
+        <Fragment key={index}>
+          {row}
+          <br />
+        </Fragment>
+      ) : (
+        <Fragment key={index}>{row}</Fragment>
+      );
+    });
 
   return (
     <Fragment>

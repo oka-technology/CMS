@@ -7,7 +7,10 @@ import Title from '../../../../template/Title';
 import { Label, TextInput } from '../../../../template/Form';
 import Button from '../../../../template/Button';
 import ErrorMessage from '../../../../template/ErrorMessage';
-import { TOP_PAGE_PATH, newCategoryRegistrationPage } from '../../../../data/pages';
+import {
+  TOP_PAGE_PATH,
+  newCategoryRegistrationPage,
+} from '../../../../data/pages';
 import { registerCategory } from '../../../../data/apiClient';
 
 const formStyle = css`
