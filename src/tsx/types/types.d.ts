@@ -1,6 +1,8 @@
-type Permission = {
-  viewer: boolean;
-  editor: boolean;
-  admin: boolean;
-  [key: string]: boolean;
-};
+import permissionArr from '../data/permissionArr';
+type PermissionTypeNames = typeof permissionArr[number];
+
+declare global {
+  type Permission = {
+    [key in PermissionTypeNames]: boolean;
+  };
+}

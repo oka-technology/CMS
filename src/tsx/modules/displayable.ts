@@ -1,9 +1,9 @@
 import { PageData } from '../data/pages';
-import permissions from '../data/permissions';
+import permissionArr from '../data/permissionArr';
 
 const displayable = (pageData: PageData, permission: Permission): boolean => {
-  return permissions.some(
-    (elem: string) =>
+  return permissionArr.some(
+    (elem) =>
       pageData.requiredPermission[elem] &&
       pageData.requiredPermission[elem] === permission[elem],
   );
