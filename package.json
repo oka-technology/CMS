@@ -30,13 +30,13 @@
     "terser-webpack-plugin": "^1.4.1"
   },
   "devDependencies": {
+    "@okatechnology/eslint-config": "0.0.7",
     "@types/mini-css-extract-plugin": "^0.8.0",
     "@types/node": "^12.7.1",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.8.5",
     "@types/styled-components": "^4.1.18",
     "@types/webpack": "^4.32.1",
-    "@whatasoda/eslint-config": "^1.2.4",
     "css-loader": "^3.2.0",
     "extract-loader": "^3.1.0",
     "file-loader": "^4.2.0",
