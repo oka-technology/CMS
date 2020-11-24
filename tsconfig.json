@@ -5,13 +5,17 @@
     "target": "es5",
     "sourceMap": true,
     "strict": true,
-    "jsx": "react",
+    "jsx": "react-jsxdev",
     "typeRoots": [
       "node_modules/@types",
-      "src/tsx/types"
+      "src/frontend/types"
     ]
   },
   "exclude": [
     "node_modules"
+  ],
+  "include": [
+    ".eslintrc.js",
+    "**/*"
   ]
 }

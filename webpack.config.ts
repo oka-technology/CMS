@@ -1,6 +1,7 @@
 import path from 'path';
 import { Configuration } from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const __DEV__: boolean = process.env.NODE_ENV !== 'production';
 
@@ -14,25 +15,26 @@ export default (): Configuration => ({
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'src/template.html',
+    }),
+  ],
+  cache: {
+    type: 'filesystem',
+    buildDependencies: {
+      config: [__filename],
+    },
+  },
   module: {
     rules: [
       {
         test: /\.tsx?$/i,
         exclude: /node_modules/,
-        use: ['ts-loader'],
-      },
-      {
-        test: /\.html$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-            },
-          },
-          'extract-loader',
-          'html-loader',
-        ],
+        loader: 'ts-loader',
+        options: {
+          transpileonly: true,
+        },
       },
       {
         test: /\.css$/,
@@ -40,26 +42,18 @@ export default (): Configuration => ({
       },
       {
         test: /\.php$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'api/',
-            },
-          },
-        ],
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: 'api/',
+        },
       },
       {
         test: /\.htaccess$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name]',
-            },
-          },
-        ],
+        loader: 'file-loader',
+        options: {
+          name: '[name]',
+        },
       },
     ],
   },
