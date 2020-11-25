@@ -1,4 +1,4 @@
-import React, { VFC } from 'react';
+import { VFC } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Layout from './layout/Layout';
 import {
