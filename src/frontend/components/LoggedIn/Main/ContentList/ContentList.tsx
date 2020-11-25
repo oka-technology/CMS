@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import ContentListTable from './ContentListTable';
 
@@ -11,13 +9,22 @@ import {
   contentListPage,
 } from '../../../../data/pages';
 import { Table, THead, TRow, TH } from '../../../../template/Table';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 type ContentListProps = {
   permission: Permission;
   windowHeight: number;
 };
 
-const columnWidthPropotions = ['7%', '20%', '35%', '18%', '10%', '10%'];
+const columnWidthPropotions = [
+  '7%',
+  '20%',
+  '35%',
+  '18%',
+  '10%',
+  '10%',
+] as const;
 
 const ContentList = ({
   permission,
@@ -28,34 +35,24 @@ const ContentList = ({
   }, []);
 
   return (
-    <Fragment>
-      <div
-        css={css`
-          display: flex;
-          align-items: center;
-        `}
-      >
+    <>
+      <NewRegistrationWrapper>
         <Title value={contentListPage.pageName} />
         {permission.editor ? (
-          <Button
-            as="routerLink"
-            to={newContentRegistrationPage.path}
-            value="New Registration"
-            additionalStyle={css`
-              background-color: #e87c00;
-              width: 15rem;
-              margin: 0 0 0 auto;
-            `}
-          />
+          <Link to={newContentRegistrationPage.path}>
+            <RegisterButton>New Registration</RegisterButton>
+          </Link>
         ) : null}
-      </div>
+      </NewRegistrationWrapper>
       <Table>
         <THead>
           <TRow>
-            <TH width={columnWidthPropotions[0]}>ID</TH>
-            <TH width={columnWidthPropotions[1]}>Category</TH>
-            <TH width={columnWidthPropotions[2]}>Title</TH>
-            <TH width={columnWidthPropotions[3]}>Registration Date</TH>
+            <StyledTH width={columnWidthPropotions[0]}>ID</StyledTH>
+            <StyledTH width={columnWidthPropotions[1]}>Category</StyledTH>
+            <StyledTH width={columnWidthPropotions[2]}>Title</StyledTH>
+            <StyledTH width={columnWidthPropotions[3]}>
+              Registration Date
+            </StyledTH>
           </TRow>
         </THead>
         <ContentListTable
@@ -64,8 +61,26 @@ const ContentList = ({
           permission={permission}
         />
       </Table>
-    </Fragment>
+    </>
   );
 };
 
 export default ContentList;
+
+const NewRegistrationWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const RegisterButton = styled(Button)`
+  background-color: #e87c00;
+  width: 15rem;
+  margin: 0 0 0 auto;
+`;
+
+interface StyledTHProps {
+  width: `${number}%`;
+}
+const StyledTH = styled(TH)<StyledTHProps>`
+  width: ${({ width }) => width};
+`;

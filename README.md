@@ -8,13 +8,24 @@ This was originally created as submission of assignment for my university. I had
 
 After installing Node.js
 
+- If you want to develop, execute below
+
 ```sh
 npm i
-NODE_ENV=production webpack
+npm run build:dev
 docker-compose up
 ```
 
-Visit ``localhost:8080`` on your browser.
+Visit `localhost:8080` on your browser.
+
+- Or if you want to export production files, execute below
+
+```sh
+npm i
+npm run build:pro
+```
+
+Files will be exported to `dist` folder
 
 ## Default user
 

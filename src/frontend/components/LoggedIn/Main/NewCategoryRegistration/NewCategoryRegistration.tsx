@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-import { useState, Fragment, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
@@ -12,12 +10,8 @@ import {
   newCategoryRegistrationPage,
 } from '../../../../data/pages';
 import { registerCategory } from '../../../../data/apiClient';
-
-const formStyle = css`
-  & > *:first-child /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */ {
-    margin-top: 0;
-  }
-`;
+import styled from 'styled-components';
+import SubmitButtonInner from '../../../../template/SubmitButtonInner';
 
 type AddUserProps = {
   permission: Permission;
@@ -49,32 +43,46 @@ const NewCategoryRegistration = ({ permission }: AddUserProps): JSX.Element => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       <Title value={newCategoryRegistrationPage.pageName} />
-      <form css={formStyle}>
+      <Form>
         <Label value="Title" htmlFor="categoryName" />
-        <TextInput
+        <CategoryNameInput
           type="text"
           placeholder=""
           value={categoryName}
           onChange={onSetCategoryName}
-          marginTop="0.5rem"
           id="categoryName"
         />
-        <Button
-          as="submit"
-          value="Register"
-          onClick={registerCategoryToDB}
-          additionalStyle={css`
-            background-color: #0528c2;
-            margin-top: 4rem;
-          `}
-        />
-      </form>
-      {!success && <ErrorMessage value="You must fill in all of the fields." />}
+        <SubmitButton>
+          <SubmitButtonInner
+            type="submit"
+            onClick={registerCategoryToDB}
+            value="Register"
+          />
+        </SubmitButton>
+      </Form>
+      {!success && (
+        <ErrorMessage>You must fill in all of the fields.</ErrorMessage>
+      )}
       {!permission.editor && <Redirect to={TOP_PAGE_PATH} />}
-    </Fragment>
+    </>
   );
 };
 
 export default NewCategoryRegistration;
+
+const Form = styled.form`
+  & > *:first-child {
+    margin-top: 0;
+  }
+`;
+
+const SubmitButton = styled(Button)`
+  background-color: #0528c2;
+  margin-top: 4rem;
+`;
+
+const CategoryNameInput = styled(TextInput)`
+  margin-top: 0.5rem;
+`;

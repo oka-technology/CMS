@@ -1,7 +1,18 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import styled from 'styled-components';
 
-const wrapper = css`
+const Footer = (): JSX.Element => {
+  return (
+    <Wrapper>
+      <Text>
+        <small>&copy; 2019 OKA TECHNOLOGY</small>
+      </Text>
+    </Wrapper>
+  );
+};
+
+export default Footer;
+
+const Wrapper = styled.footer`
   align-items: center;
   background-color: #333;
   color: #fff;
@@ -11,19 +22,7 @@ const wrapper = css`
   justify-content: center;
 `;
 
-const footerText = css`
+const Text = styled.p`
   font-size: 1.6rem;
   margin: 0;
 `;
-
-const Footer = (): JSX.Element => {
-  return (
-    <footer css={wrapper}>
-      <p css={footerText}>
-        <small>&copy; 2019 OKA TECHNOLOGY</small>
-      </p>
-    </footer>
-  );
-};
-
-export default Footer;

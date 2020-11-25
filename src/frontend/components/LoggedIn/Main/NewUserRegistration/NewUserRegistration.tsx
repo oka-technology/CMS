@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-import { useState, Fragment, Dispatch, SetStateAction, useEffect } from 'react';
+import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 
 import Title from '../../../../template/Title';
 import { Label, TextInput, CheckBox } from '../../../../template/Form';
@@ -8,25 +6,8 @@ import Button from '../../../../template/Button';
 import ErrorMessage from '../../../../template/ErrorMessage';
 import { newUserRegistrationPage } from '../../../../data/pages';
 import { registerUser } from '../../../../data/apiClient';
-
-const formStyle = css`
-  & > *:first-child /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */ {
-    margin-top: 0;
-  }
-`;
-
-const permissionItemHeadingStyle = css`
-  font-size: 1.8rem;
-  margin: 3rem 0 0;
-`;
-
-const permissionCheckBoxesWrapperStyle = css`
-  display: flex;
-  margin-top: 0.5rem;
-  & > *:not(:first-child) /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */ {
-    margin-left: 3rem;
-  }
-`;
+import styled from 'styled-components';
+import SubmitButtonInner from '../../../../template/SubmitButtonInner';
 
 type PermissionCheckBoxProps = {
   permissionName: string;
@@ -109,51 +90,83 @@ const NewUserRegistration = (): JSX.Element => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       <Title value={newUserRegistrationPage.pageName} />
-      <form css={formStyle} autoComplete="new-password">
+      <Form autoComplete="new-password">
         <Label value="E-mail" htmlFor="email" />
-        <TextInput
+        <StyledTextInput
           type="text"
           placeholder=""
           value={Email}
           onChange={onSetEmail}
-          marginTop="0.5rem"
           id="email"
         />
         <Label value="Password" htmlFor="password" />
-        <TextInput
+        <StyledTextInput
           type={hidePassword ? 'password' : 'text'}
           placeholder=""
           value={password}
           onChange={onSetPassword}
-          marginTop="0.5rem"
           id="password"
         />
-        <CheckBox
+        <StyledCheckBox
           value="Hide password"
           onChange={onSetHidePassword}
           checked={hidePassword}
-          additionalStyle={css`
-            font-size: 1.4rem;
-            margin-top: 0.2rem;
-          `}
         />
-        <p css={permissionItemHeadingStyle}>Permission (Fill one or more)</p>
-        <div css={permissionCheckBoxesWrapperStyle}>{permissionCheckBoxes}</div>
-        <Button
-          as="submit"
-          value="Register"
-          onClick={registerUserToDB}
-          additionalStyle={css`
-            background-color: #0528c2;
-            margin-top: 4rem;
-          `}
-        />
-      </form>
-      {!success && <ErrorMessage value="You must fill in all of the fields." />}
-    </Fragment>
+        <PermissionItemHeading>
+          Permission (Fill one or more)
+        </PermissionItemHeading>
+        <PermissionCheckBoxesWrapper>
+          {permissionCheckBoxes}
+        </PermissionCheckBoxesWrapper>
+
+        <SubmitButton>
+          <SubmitButtonInner
+            type="submit"
+            onClick={registerUserToDB}
+            value="Register"
+          />
+        </SubmitButton>
+      </Form>
+      {!success && (
+        <ErrorMessage>You must fill in all of the fields.</ErrorMessage>
+      )}
+    </>
   );
 };
 
 export default NewUserRegistration;
+
+const Form = styled.form`
+  & > *:first-child {
+    margin-top: 0;
+  }
+`;
+
+const StyledTextInput = styled(TextInput)`
+  margin-top: 0.5rem;
+`;
+
+const StyledCheckBox = styled(CheckBox)`
+  font-size: 1.4rem;
+  margin-top: 0.2rem;
+`;
+
+const PermissionItemHeading = styled.p`
+  font-size: 1.8rem;
+  margin: 3rem 0 0;
+`;
+
+const PermissionCheckBoxesWrapper = styled.div`
+  display: flex;
+  margin-top: 0.5rem;
+  & > *:not(:first-child) {
+    margin-left: 3rem;
+  }
+`;
+
+const SubmitButton = styled(Button)`
+  background-color: #0528c2;
+  margin-top: 4rem;
+`;

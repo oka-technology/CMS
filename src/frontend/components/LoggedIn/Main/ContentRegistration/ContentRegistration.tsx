@@ -1,7 +1,4 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-import { useState, Fragment, useEffect, useMemo } from 'react';
-import axios from 'axios';
+import { useState, useEffect, useMemo } from 'react';
 import { match, Prompt } from 'react-router-dom';
 
 import Title from '../../../../template/Title';
@@ -27,12 +24,8 @@ import bytesOf from '../../../../modules/bytesOf';
 import CapacityBar from '../../../../template/CapacityBar';
 import SuccessMessage from '../../../../template/SuccessMessage';
 import sameObj from '../../../../modules/sameObj';
-
-const formStyle = css`
-  & > *:first-child /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */ {
-    margin-top: 0;
-  }
-`;
+import styled from 'styled-components';
+import SubmitButtonInner from '../../../../template/SubmitButtonInner';
 
 const MESSAGE_WHEN_UNSAVED =
   "You haven't save. Are you sure you want to leave this page?";
@@ -126,10 +119,9 @@ const ContentRegistration = ({
   };
 
   useEffect(() => {
-    let unmounted: boolean = false;
-    const cancelTokenSource = axios.CancelToken.source();
-    (async () => {
-      const categoriesData = await loadCategories(null, cancelTokenSource);
+    let unmounted = false;
+    void (async () => {
+      const categoriesData = await loadCategories({});
       if (unmounted) return;
       if (!categoriesData) {
         setOptionItems(null);
@@ -146,7 +138,6 @@ const ContentRegistration = ({
       setIsLoadingCategories(false);
     })();
     return () => {
-      cancelTokenSource.cancel();
       unmounted = true;
     };
   }, []);
@@ -177,10 +168,9 @@ const ContentRegistration = ({
     setPrevContent({ category: '0', title: '', content: '' });
     setUpdated(false);
     if (mode === 'newRegistration' || !match) return;
-    const cancelTokenSource = axios.CancelToken.source();
     const { id } = match.params;
-    (async () => {
-      const contentData = await loadContent({ id: id }, cancelTokenSource);
+    void (async () => {
+      const contentData = await loadContent({ id: id });
       if (unmounted) return;
       if (contentData === null) {
         setNotFound(true);
@@ -192,35 +182,27 @@ const ContentRegistration = ({
     })();
     return () => {
       unmounted = true;
-      cancelTokenSource.cancel();
     };
   }, [match, mode]);
 
   const SelectCategory = (
-    <Fragment>
+    <>
       {(isLoadingCategories || !optionItems) && (
-        <p
-          css={css`
-            font-size: 1.6rem;
-            height: 3.4rem;
-            margin-top: 0.5rem;
-          `}
-        >
+        <LoadingStatus>
           {isLoadingCategories
             ? 'Loading...'
             : "You haven't registered any categories."}
-        </p>
+        </LoadingStatus>
       )}
       {!isLoadingCategories && optionItems && (
         <FormSelect
           value={currContent.category}
           onChange={onSetCategory}
-          marginTop="0.5rem"
           optionItems={optionItems}
           id="Category"
         />
       )}
-    </Fragment>
+    </>
   );
 
   if (notFound) {
@@ -228,19 +210,11 @@ const ContentRegistration = ({
   }
 
   if (mode === 'edit' && isLoadingEditor) {
-    return (
-      <p
-        css={css`
-          font-size: 1.6rem;
-        `}
-      >
-        Loading...
-      </p>
-    );
+    return <LoadingStatus>Loading...</LoadingStatus>;
   }
 
   return (
-    <Fragment>
+    <>
       <Prompt when={isBlocking} message={MESSAGE_WHEN_UNSAVED} />
       <Title
         value={
@@ -249,42 +223,73 @@ const ContentRegistration = ({
             : editContentPage.pageName
         }
       />
-      <form css={formStyle} autoComplete="new-password">
+      <Form autoComplete="new-password">
         <Label htmlFor="Category" value="Category" />
         {SelectCategory}
         <Label htmlFor="Title" value="Title" />
-        <TextInput
+        <TitleInput
           type="text"
           placeholder=""
           value={currContent.title}
           onChange={onSetTitle}
-          marginTop="0.5rem"
           id="Title"
         />
         <Label htmlFor="Content" value="Content" />
-        <TextArea
+        <ContentsTextArea
           value={currContent.content}
-          marginTop="0.5rem"
           onChange={onSetContent}
           id="Content"
         />
         <CapacityBar bytes={bytesOf(currContent.content)} />
-        <Button
-          as={registable ? 'submit' : 'blocked'}
-          value={mode === 'newRegistration' ? 'Register' : 'Update'}
-          onClick={
-            mode === 'newRegistration' ? onRegisterContentToDB : onUpdateContent
-          }
-          additionalStyle={css`
-            background-color: #0528c2;
-            margin-top: 4rem;
-          `}
-        />
-      </form>
-      {!success && <ErrorMessage value="You must fill in all of the fields." />}
-      {updated && <SuccessMessage value="Updated" />}
-    </Fragment>
+        {registable ? (
+          <RegisterButton>
+            <SubmitButtonInner
+              type="submit"
+              onClick={
+                mode === 'newRegistration'
+                  ? onRegisterContentToDB
+                  : onUpdateContent
+              }
+              value={mode === 'newRegistration' ? 'Register' : 'Update'}
+            />
+          </RegisterButton>
+        ) : (
+          <RegisterButton blocked={true}>
+            {mode === 'newRegistration' ? 'Register' : 'Update'}
+          </RegisterButton>
+        )}
+      </Form>
+      {!success && (
+        <ErrorMessage>You must fill in all of the fields.</ErrorMessage>
+      )}
+      {updated && <SuccessMessage>Updated</SuccessMessage>}
+    </>
   );
 };
 
 export default ContentRegistration;
+
+const LoadingStatus = styled.p`
+  font-size: 1.6rem;
+  height: 3.4rem;
+  margin-top: 0.5rem;
+`;
+
+const Form = styled.form`
+  & > *:first-child {
+    margin-top: 0;
+  }
+`;
+
+const RegisterButton = styled(Button)`
+  background-color: #0528c2;
+  margin-top: 4rem;
+`;
+
+const TitleInput = styled(TextInput)`
+  margin-top: 0.5rem;
+`;
+
+const ContentsTextArea = styled(TextArea)`
+  margin-top: 0.5rem;
+`;

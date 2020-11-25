@@ -1,40 +1,12 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-import { useEffect, Fragment, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import Button from '../template/Button';
 import { TextInput } from '../template/Form';
 import ErrorMessage from '../template/ErrorMessage';
 import { login } from '../data/apiClient';
-
-const wrapperStyle = css`
-  align-items: center;
-  display: flex;
-  background-color: #555;
-  height: 100%;
-  justify-content: center;
-`;
-
-const mainStyle = css`
-  background-color: #fff;
-  border-radius: 2rem;
-  margin: auto;
-  padding: 2rem;
-  width: 55rem;
-`;
-
-const titleStyle = css`
-  font-size: 3rem;
-  margin: 0 0 1.5rem;
-  text-align: center;
-`;
-
-const formStyle = css`
-  & > *:first-child /* emotion-disable-server-rendering-unsafe-selector-warning-please-do-not-use-this-the-warning-exists-for-a-reason */ {
-    margin-top: 2.5rem;
-  }
-`;
+import styled from 'styled-components';
+import SubmitButtonInner from '../template/SubmitButtonInner';
 
 type LoginProps = {
   loggedIn: boolean;
@@ -86,47 +58,85 @@ const Login = ({
   };
 
   return (
-    <Fragment>
+    <>
       {reDirect ? <Redirect to="/home" /> : null}
-      <div css={wrapperStyle}>
-        <main css={mainStyle}>
-          <h1 css={titleStyle}>CMS</h1>
-          <form css={formStyle} autoComplete="on">
-            <TextInput
+      <Wrapper>
+        <Main>
+          <Title>CMS</Title>
+          <Form autoComplete="on">
+            <StyledTextInput
               type="text"
               placeholder="Email"
               value={email}
               onChange={onSetEmail}
-              marginTop="0"
             />
-            <TextInput
+            <StyledTextInput
               type="password"
               placeholder="Password"
               value={password}
               onChange={onSetPassword}
-              marginTop="2rem"
             />
-            <Button
-              as="submit"
-              value="Log in"
-              onClick={submit}
-              additionalStyle={css`
-                width: 100%;
-                background-color: #0528c2;
-                margin: 3.5rem auto 0;
-              `}
-              additionalHoverStyle={css`
-                transform: scale(1.05);
-              `}
-            />
-          </form>
+            <StyledButton>
+              <SubmitButtonInner
+                type="submit"
+                onClick={submit}
+                value="Log in"
+              />
+            </StyledButton>
+          </Form>
           {missed && (
-            <ErrorMessage value="The Email and password you entered did not match our records." />
+            <ErrorMessage>
+              The Email and password you entered did not match our records.
+            </ErrorMessage>
           )}
-        </main>
-      </div>
-    </Fragment>
+        </Main>
+      </Wrapper>
+    </>
   );
 };
 
 export default Login;
+
+const Wrapper = styled.div`
+  align-items: center;
+  display: flex;
+  background-color: #555;
+  height: 100%;
+  justify-content: center;
+`;
+
+const Main = styled.main`
+  background-color: #fff;
+  border-radius: 2rem;
+  margin: auto;
+  padding: 2rem;
+  width: 55rem;
+`;
+
+const Title = styled.h1`
+  font-size: 3rem;
+  margin: 0 0 1.5rem;
+  text-align: center;
+`;
+
+const StyledTextInput = styled(TextInput)``;
+
+const Form = styled.form`
+  & > *:first-child {
+    margin-top: 2.5rem;
+  }
+
+  & > ${StyledTextInput} + ${StyledTextInput} {
+    margin-top: 2rem;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
+  background-color: #0528c2;
+  margin: 3.5rem auto 0;
+
+  :hover {
+    transform: scale(1.05);
+  }
+`;

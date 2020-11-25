@@ -1,27 +1,25 @@
-import axios, { CancelTokenSource } from 'axios';
+const API_PATH_PREFIX = 'http://localhost:8080/api/';
 
-const API_PATH_PREFIX = './api/';
+type MethodType = 'POST' | 'GET';
 
-type MethodType = 'post' | 'get';
-
-const createApi = <T, U>(method: MethodType, fileName: string) => {
-  const endpoint = API_PATH_PREFIX + fileName;
-  return async (
-    params: T,
-    cancelTokenSource?: CancelTokenSource,
-  ): Promise<U | null> => {
+const createApi = <T extends Record<string, any>, U>(
+  method: MethodType,
+  fileName: string,
+) => {
+  const endpoint = new URL(API_PATH_PREFIX + fileName);
+  return async (params: T): Promise<U | null> => {
+    const searchParams = new URLSearchParams(params);
+    if (method === 'GET') {
+      endpoint.search = searchParams.toString();
+    }
     try {
-      const { data } = await axios({
-        method: method,
-        url: endpoint,
-        data: method === 'post' && params,
-        params: method === 'get' && params,
-        cancelToken: cancelTokenSource && cancelTokenSource.token,
-      });
-      return data;
+      return (await (
+        await fetch(endpoint.toString(), {
+          method: method,
+          body: method === 'POST' ? JSON.stringify(params) : undefined,
+        })
+      ).json()) as U;
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
       return null;
     }
   };
@@ -34,9 +32,9 @@ type PayloadCheckWhetherLoggedIn = {
 };
 
 export const checkWhetherLoggedIn = createApi<
-  null,
+  Record<string, never>,
   PayloadCheckWhetherLoggedIn
->('get', 'checkWhetherLoggedIn.php');
+>('GET', 'checkWhetherLoggedIn.php');
 
 type ParamsRegisterContent = {
   category: string;
@@ -51,17 +49,17 @@ type PayloadRegisterContent = {
 export const registerContent = createApi<
   ParamsRegisterContent,
   PayloadRegisterContent
->('post', 'registerContent.php');
+>('POST', 'registerContent.php');
 
 export type PayloadLoadCategories = {
   id: string;
   title: string;
 };
 
-export const loadCategories = createApi<null, PayloadLoadCategories[]>(
-  'get',
-  'categories.php',
-);
+export const loadCategories = createApi<
+  Record<string, never>,
+  PayloadLoadCategories[]
+>('GET', 'categories.php');
 
 export type PayloadLoadContentList = {
   id: string;
@@ -70,10 +68,10 @@ export type PayloadLoadContentList = {
   registrationDate: string;
 };
 
-export const loadContentList = createApi<null, PayloadLoadContentList[]>(
-  'get',
-  'contentList.php',
-);
+export const loadContentList = createApi<
+  Record<string, never>,
+  PayloadLoadContentList[]
+>('GET', 'contentList.php');
 
 type ParamsRegisterCategory = {
   categoryName: string;
@@ -86,7 +84,7 @@ type PayloadRegisterCategory = {
 export const registerCategory = createApi<
   ParamsRegisterCategory,
   PayloadRegisterCategory
->('post', 'registerCategory.php');
+>('POST', 'registerCategory.php');
 
 type ParamsRegisterUser = {
   email: string;
@@ -101,7 +99,7 @@ type PayloadRegisterUser = {
 };
 
 export const registerUser = createApi<ParamsRegisterUser, PayloadRegisterUser>(
-  'post',
+  'POST',
   'registerUser.php',
 );
 
@@ -111,8 +109,8 @@ export type PayloadLoadUser = {
   permission: string;
 };
 
-export const loadUser = createApi<null, PayloadLoadUser[]>(
-  'get',
+export const loadUser = createApi<Record<string, never>, PayloadLoadUser[]>(
+  'GET',
   'userList.php',
 );
 
@@ -127,7 +125,7 @@ type PayloadLoadContent = {
 };
 
 export const loadContent = createApi<ParamsLoadContent, PayloadLoadContent>(
-  'get',
+  'GET',
   'content.php',
 );
 
@@ -143,7 +141,7 @@ type PayloadEditContent = {
 };
 
 export const editContent = createApi<ParamsEditContent, PayloadEditContent>(
-  'post',
+  'POST',
   'editContent.php',
 );
 
@@ -159,7 +157,7 @@ type PayloadLogin = {
 };
 
 export const login = createApi<ParamsLogin, PayloadLogin>(
-  'post',
+  'POST',
   'loginProcess.php',
 );
 
@@ -169,7 +167,7 @@ type PayloadLogout = {
   permission: string;
 };
 
-export const logout = createApi<null, PayloadLogout>(
-  'post',
+export const logout = createApi<Record<string, never>, PayloadLogout>(
+  'POST',
   'logoutProcess.php',
 );

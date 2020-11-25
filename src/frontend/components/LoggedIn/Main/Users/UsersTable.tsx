@@ -1,14 +1,12 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
 import { useState, useEffect, Fragment } from 'react';
-import axios from 'axios';
 import { TBody, TRow, TD } from '../../../../template/Table';
 import { convertPermissionNumToString } from '../../../../modules/convertPermission';
 import { loadUser, PayloadLoadUser } from '../../../../data/apiClient';
+import styled from 'styled-components';
 
 type UserListProps = {
   windowHeight: number;
-  columnWidthPropotions: string[];
+  columnWidthPropotions: readonly string[];
 };
 
 const UserList = ({
@@ -21,9 +19,8 @@ const UserList = ({
 
   useEffect(() => {
     let unmounted = false;
-    const cancelTokenSource = axios.CancelToken.source();
-    (async () => {
-      const usersData = await loadUser(null, cancelTokenSource);
+    void (async () => {
+      const usersData = await loadUser({});
       if (unmounted) return;
       if (!usersData) {
         setUserInfoArray(null);
@@ -33,7 +30,6 @@ const UserList = ({
     })();
     return () => {
       unmounted = true;
-      cancelTokenSource.cancel();
     };
   }, []);
 
@@ -46,27 +42,32 @@ const UserList = ({
         </tr>
       </tbody>
     );
-  const rows: JSX.Element[] = userInfoArray.map(({ id, name, permission }) => {
-    const stringPermission = convertPermissionNumToString(Number(permission));
-    return (
-      <TRow key={id}>
-        <TD width={columnWidthPropotions[0]}>{id}</TD>
-        <TD width={columnWidthPropotions[1]}>{name}</TD>
-        <TD width={columnWidthPropotions[2]}>{stringPermission}</TD>
-      </TRow>
-    );
-  });
   return (
-    <TBody
-      additionalStyle={css`
-        height: calc(
-          ${windowHeight}px - (6rem + 8.5rem + 6.2rem + 2.5rem + 5rem)
+    <StyledTBody windowHeight={windowHeight}>
+      {userInfoArray.map(({ id, name, permission }) => {
+        const stringPermission = convertPermissionNumToString(
+          Number(permission),
         );
-      `}
-    >
-      {rows}
-    </TBody>
+        return (
+          <TRow key={id}>
+            <TD width={columnWidthPropotions[0]}>{id}</TD>
+            <TD width={columnWidthPropotions[1]}>{name}</TD>
+            <TD width={columnWidthPropotions[2]}>{stringPermission}</TD>
+          </TRow>
+        );
+      })}
+    </StyledTBody>
   );
 };
 
 export default UserList;
+
+interface StyledTBodyProps {
+  windowHeight: number;
+}
+const StyledTBody = styled(TBody)<StyledTBodyProps>`
+  height: calc(
+    ${({ windowHeight }) => windowHeight}px -
+      (6rem + 8.5rem + 6.2rem + 2.5rem + 5rem)
+  );
+`;

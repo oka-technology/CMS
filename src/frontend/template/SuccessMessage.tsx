@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx, css, keyframes } from '@emotion/core';
+import styled, { keyframes } from 'styled-components';
 
 const successMessageAnimation = keyframes`
   from {
@@ -12,19 +11,11 @@ const successMessageAnimation = keyframes`
   }
 `;
 
-const successMessageStyle = css`
+const SuccessMessage = styled.p`
   color: blue;
   font-size: 1.6rem;
   margin-bottom: 0;
   animation: ${successMessageAnimation} 0.7s ease-out;
 `;
-
-type SuccessMessageProps = {
-  value: string;
-};
-
-const SuccessMessage = ({ value }: SuccessMessageProps): JSX.Element => {
-  return <p css={successMessageStyle}>{value}</p>;
-};
 
 export default SuccessMessage;

@@ -1,11 +1,52 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-import { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
 import { arrayOfPagesInSidebar } from '../../../data/pages';
 import displayable from '../../../modules/displayable';
 
-const listItem = css`
+type SideBarItemProps = {
+  permission: Permission;
+};
+
+const SidebarItem = ({ permission }: SideBarItemProps): JSX.Element => {
+  const item: (JSX.Element | undefined)[] = arrayOfPagesInSidebar.map(
+    (pageData) => {
+      if (displayable(pageData, permission)) {
+        const link: string = pageData.path;
+        const searchParam = new RegExp(link);
+        if (location.pathname === link) {
+          return (
+            <ListItem key={pageData.path}>
+              <ListItemAnchor
+                current={searchParam.exec(location.pathname) !== null}
+              >
+                <Triangle></Triangle>
+                {pageData.pageName}
+              </ListItemAnchor>
+            </ListItem>
+          );
+        } else {
+          return (
+            <ListItem key={pageData.path}>
+              <NavLink to={link}>
+                <ListItemAnchor
+                  current={searchParam.exec(location.pathname) !== null}
+                >
+                  {pageData.pageName}
+                </ListItemAnchor>
+              </NavLink>
+            </ListItem>
+          );
+        }
+      }
+    },
+  );
+
+  return <>{item}</>;
+};
+
+export default SidebarItem;
+
+const ListItem = styled.li`
   display: flex;
   font-size: 1.6rem;
   height: 6rem;
@@ -17,9 +58,13 @@ const listItem = css`
   }
 `;
 
-const listItemAnchor = (now: boolean) => css`
+interface ListItemAnchorProps {
+  current: boolean;
+}
+
+const ListItemAnchor = styled.div<ListItemAnchorProps>`
   align-items: center;
-  background-color: ${now ? '#444' : null};
+  background-color: ${({ current }) => (current ? '#444' : null)};
   border-radius: 0.5rem;
   color: #fff;
   display: flex;
@@ -31,13 +76,13 @@ const listItemAnchor = (now: boolean) => css`
   transition: transform 0.1s;
 
   &:hover {
-    background-color: ${now ? '#444' : '#aaa'};
-    transform: ${now ? null : 'scale(1.2)'};
+    background-color: ${({ current }) => (current ? '#444' : '#aaa')};
+    transform: ${({ current }) => (current ? null : 'scale(1.2)')};
     transition: transform 0.1s;
   }
 `;
 
-const triangle = css`
+const Triangle = styled.span`
   border-top: 0.4rem solid transparent;
   border-left: 0.6rem solid #fff;
   border-bottom: 0.4rem solid transparent;
@@ -46,43 +91,3 @@ const triangle = css`
   margin-right: 1rem;
   width: 0.8rem;
 `;
-
-type SideBarItemProps = {
-  permission: Permission;
-};
-
-const SidebarItem = ({ permission }: SideBarItemProps): JSX.Element => {
-  const item: (JSX.Element | undefined)[] = arrayOfPagesInSidebar.map(
-    (pageData) => {
-      if (displayable(pageData, permission)) {
-        const link: string = pageData.path;
-        if (location.pathname === link) {
-          return (
-            <li css={listItem} key={pageData.path}>
-              <div css={listItemAnchor(location.pathname.match(link) !== null)}>
-                <span css={triangle}></span>
-                {pageData.pageName}
-              </div>
-            </li>
-          );
-        } else {
-          return (
-            <li css={listItem} key={pageData.path}>
-              <NavLink
-                to={link}
-                css={listItemAnchor(location.pathname.match(link) !== null)}
-              >
-                <span css={triangle}></span>
-                {pageData.pageName}
-              </NavLink>
-            </li>
-          );
-        }
-      }
-    },
-  );
-
-  return <Fragment>{item}</Fragment>;
-};
-
-export default SidebarItem;

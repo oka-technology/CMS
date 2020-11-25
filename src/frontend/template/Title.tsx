@@ -1,21 +1,18 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import styled from 'styled-components';
 
-const style = (additionalStyle: ReturnType<typeof css>) => css`
-  font-size: 3rem;
-  height: 4.5rem;
-  margin: 2rem 0;
-  ${additionalStyle}
-`;
-
-type TitleProps = {
+interface TitleProps {
+  className?: string;
   value: string;
-  additionalStyle?: ReturnType<typeof css>;
-};
+}
 
-const Title = ({ value, additionalStyle }: TitleProps): JSX.Element => {
-  additionalStyle = additionalStyle ? additionalStyle : css();
-  return <h1 css={style(additionalStyle)}>{value}</h1>;
+const Title = ({ value, className }: TitleProps): JSX.Element => {
+  return <Wrapper className={className}>{value}</Wrapper>;
 };
 
 export default Title;
+
+const Wrapper = styled.h1`
+  font-size: 3rem;
+  height: 4.5rem;
+  margin: 2rem 0;
+`;

@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-import { useEffect, Fragment, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './Header';
@@ -26,27 +24,15 @@ import {
   TOP_PAGE_PATH,
 } from '../../data/pages';
 import displayable from '../../modules/displayable';
+import styled from 'styled-components';
 
-const insideWrapperStyle = css`
-  display: flex;
-  flex: 1;
-`;
-
-const mainStyle = css`
-  flex-grow: 1;
-  margin: 0 auto 0 0;
-  max-width: 100rem;
-  padding: 0 2rem 2rem;
-  width: calc(100% - 20rem);
-`;
-
-type LoggedInProps = {
+interface LoggedInProps {
   loginUser: string;
   permission: Permission;
   onSetLoggedIn: (bool: boolean) => void;
   onSetLoginUser: (name: string) => void;
   onSetPermission: (permission: number) => void;
-};
+}
 
 const LoggedIn = ({
   loginUser,
@@ -69,7 +55,7 @@ const LoggedIn = ({
   }, []);
 
   return (
-    <Fragment>
+    <>
       <Header
         loginUser={loginUser}
         permission={permission}
@@ -77,9 +63,9 @@ const LoggedIn = ({
         onSetLoginUser={onSetLoginUser}
         onSetPermission={onSetPermission}
       />
-      <div css={insideWrapperStyle}>
+      <InsideWrapper>
         <Sidebar permission={permission} />
-        <main css={mainStyle}>
+        <Main>
           <Switch>
             {displayable(usersPage, permission) && (
               <Route
@@ -148,11 +134,24 @@ const LoggedIn = ({
             )}
             <Redirect to={TOP_PAGE_PATH} />
           </Switch>
-        </main>
-      </div>
+        </Main>
+      </InsideWrapper>
       <Footer />
-    </Fragment>
+    </>
   );
 };
 
 export default LoggedIn;
+
+const InsideWrapper = styled.div`
+  display: flex;
+  flex: 1;
+`;
+
+const Main = styled.main`
+  flex-grow: 1;
+  margin: 0 auto 0 0;
+  max-width: 100rem;
+  padding: 0 2rem 2rem;
+  width: calc(100% - 20rem);
+`;

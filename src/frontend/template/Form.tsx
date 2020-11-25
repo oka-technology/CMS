@@ -1,18 +1,16 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import styled from 'styled-components';
 
-const labelStyle = css`
+const LabelWrapper = styled.label`
   display: block;
   font-size: 1.8rem;
   margin-top: 3rem;
 `;
 
-const textInputStyle = (marginTop: string) => css`
+const TextInputWrapper = styled.input`
   border-radius: 0.5rem;
   display: block;
   font-size: 1.6rem;
   height: 4rem;
-  margin-top: ${marginTop};
   width: 100%;
 
   &::placeholder {
@@ -20,36 +18,33 @@ const textInputStyle = (marginTop: string) => css`
   }
 `;
 
-const checkBoxStyle = css`
+const CheckBoxInner = styled.input`
   display: block;
   margin-right: 0.8rem;
 `;
 
-const checkBoxEntireStyle = (additionalStyle: ReturnType<typeof css>) => css`
+const CheckBoxWrapper = styled.label`
   align-items: center;
   display: flex;
   font-size: 1.6rem;
   width: max-content;
-  ${additionalStyle}
 `;
 
-const selectStyle = (marginTop: string) => css`
+const SelectWrapper = styled.select`
   border-radius: 0.5rem;
   font-size: 1.6rem;
-  margin-top: ${marginTop};
   width: 100%;
 `;
 
-const optionStyle = css`
+const SelectOption = styled.option`
   color: red;
 `;
 
-const textareaStyle = (marginTop: string) => css`
+const TextAreaWrapper = styled.textarea`
   border-radius: 0.5rem;
   font-size: 1.6rem;
   resize: none;
   height: 40rem;
-  margin-top: ${marginTop};
   width: 100%;
 `;
 
@@ -63,7 +58,7 @@ type TextInputProps = {
   placeholder: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  marginTop: string;
+  className?: string;
   id?: string;
 };
 
@@ -71,15 +66,15 @@ type CheckBoxProps = {
   value?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checked: boolean;
-  additionalStyle?: ReturnType<typeof css>;
+  className?: string;
 };
 
 type FormSelectProps = {
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   optionItems: OptionItem[];
   id?: string;
-  marginTop: string;
   value: string;
+  className?: string;
 };
 
 type OptionItem = {
@@ -90,16 +85,12 @@ type OptionItem = {
 type TextAreaProps = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  marginTop: string;
+  className?: string;
   id?: string;
 };
 
 export const Label = ({ htmlFor, value }: LabelProps): JSX.Element => {
-  return (
-    <label css={labelStyle} htmlFor={htmlFor}>
-      {value}
-    </label>
-  );
+  return <LabelWrapper htmlFor={htmlFor}>{value}</LabelWrapper>;
 };
 
 export const TextInput = ({
@@ -107,12 +98,12 @@ export const TextInput = ({
   placeholder,
   value,
   onChange,
-  marginTop,
   id,
+  className,
 }: TextInputProps): JSX.Element => {
   return (
-    <input
-      css={textInputStyle(marginTop)}
+    <TextInputWrapper
+      className={className}
       type={type}
       placeholder={placeholder}
       value={value}
@@ -126,19 +117,13 @@ export const CheckBox = ({
   value,
   onChange,
   checked,
-  additionalStyle,
+  className,
 }: CheckBoxProps): JSX.Element => {
-  additionalStyle = additionalStyle ? additionalStyle : css();
   return (
-    <label css={checkBoxEntireStyle(additionalStyle)}>
-      <input
-        css={checkBoxStyle}
-        type="checkbox"
-        checked={checked}
-        onChange={onChange}
-      />
+    <CheckBoxWrapper className={className}>
+      <CheckBoxInner type="checkbox" checked={checked} onChange={onChange} />
       {value}
-    </label>
+    </CheckBoxWrapper>
   );
 };
 
@@ -146,39 +131,36 @@ export const FormSelect = ({
   onChange,
   optionItems,
   id,
-  marginTop,
+  className,
   value,
 }: FormSelectProps): JSX.Element => {
-  const innerItem: JSX.Element[] = optionItems.map(({ value, text }) => (
-    <option value={value} key={value}>
-      {text}
-    </option>
-  ));
   return (
-    <select
+    <SelectWrapper
       value={value}
-      css={selectStyle(marginTop)}
+      className={className}
       onChange={onChange}
       id={id}
       style={value === '0' ? { color: 'red' } : undefined}
     >
-      <option css={optionStyle} value="0">
-        not selected
-      </option>
-      {innerItem}
-    </select>
+      <SelectOption value="0">not selected</SelectOption>
+      {optionItems.map(({ value, text }) => (
+        <option value={value} key={value}>
+          {text}
+        </option>
+      ))}
+    </SelectWrapper>
   );
 };
 
 export const TextArea = ({
   value,
   onChange,
-  marginTop,
+  className,
   id,
 }: TextAreaProps): JSX.Element => {
   return (
-    <textarea
-      css={textareaStyle(marginTop)}
+    <TextAreaWrapper
+      className={className}
       value={value}
       onChange={onChange}
       id={id}

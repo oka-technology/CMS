@@ -1,16 +1,14 @@
-/** @jsx jsx */
-import { jsx, css, Global } from '@emotion/core';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { useState, Fragment, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
 
 import LoggedIn from './components/LoggedIn/LoggedIn';
 import Login from './components/Login';
 import { convertPermissionNumToObject } from './modules/convertPermission';
 import { TOP_PAGE_PATH, LOGIN_PAGE_PATH } from './data/pages';
 import { checkWhetherLoggedIn } from './data/apiClient';
+import styled, { createGlobalStyle } from 'styled-components';
 
-const globalStyle = css`
+const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     color: inherit;
@@ -31,17 +29,6 @@ const globalStyle = css`
   * {
     flex-shrink: 0;
   }
-`;
-
-const wrapperStyle = css`
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 100%;
 `;
 
 const App = (): JSX.Element => {
@@ -66,14 +53,13 @@ const App = (): JSX.Element => {
   };
 
   useEffect(() => {
-    axios.get('./api/sessionConfiguration.php');
+    void fetch('./api/sessionConfiguration.php');
   }, []);
 
   useEffect(() => {
-    let unmounted: boolean = false;
-    const cancelTokenSource = axios.CancelToken.source();
-    (async () => {
-      const data = await checkWhetherLoggedIn(null, cancelTokenSource);
+    let unmounted = false;
+    void (async () => {
+      const data = await checkWhetherLoggedIn({});
       if (unmounted) return;
       if (!data) {
         setHasError(true);
@@ -85,63 +71,34 @@ const App = (): JSX.Element => {
       setIsLoading(false);
     })();
     return () => {
-      cancelTokenSource.cancel();
       unmounted = true;
     };
   }, []);
 
   if (isLoading) {
     return (
-      <div css={wrapperStyle}>
-        <div
-          css={css`
-            align-items: center;
-            display: flex;
-            background-color: #555;
-            height: 100%;
-            justify-content: center;
-          `}
-        >
-          <p
-            css={css`
-              color: white;
-            `}
-          >
-            Loading...
-          </p>
-        </div>
-      </div>
+      <Wrapper>
+        <LoadingWrapper>
+          <p>Loading...</p>
+        </LoadingWrapper>
+      </Wrapper>
     );
   }
 
   if (hasError) {
     return (
-      <div css={wrapperStyle}>
-        <div
-          css={css`
-            align-items: center;
-            display: flex;
-            background-color: #555;
-            height: 100%;
-            justify-content: center;
-          `}
-        >
-          <p
-            css={css`
-              color: tomato;
-            `}
-          >
-            Eroor
-          </p>
-        </div>
-      </div>
+      <Wrapper>
+        <LoadingWrapper>
+          <ErrorMessage>Eroor</ErrorMessage>
+        </LoadingWrapper>
+      </Wrapper>
     );
   }
 
   return (
-    <Fragment>
-      <Global styles={globalStyle} />
-      <div css={wrapperStyle}>
+    <>
+      <GlobalStyle />
+      <Wrapper>
         <BrowserRouter>
           <Switch>
             {loggedIn && (
@@ -177,9 +134,33 @@ const App = (): JSX.Element => {
             )}
           </Switch>
         </BrowserRouter>
-      </div>
-    </Fragment>
+      </Wrapper>
+    </>
   );
 };
 
 export default App;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+`;
+
+const LoadingWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  background-color: #555;
+  height: 100%;
+  justify-content: center;
+  color: white;
+`;
+
+const ErrorMessage = styled.p`
+  color: tomato;
+`;

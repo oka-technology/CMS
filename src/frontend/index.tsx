@@ -1,10 +1,7 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
 import ReactDOM from 'react-dom';
 
 import App from './App';
 
-import '../index.html';
 import '../.htaccess';
 import '../api/loginProcess.php';
 import '../api/checkWhetherLoggedIn.php';

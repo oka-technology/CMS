@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
+    "lib": ["DOM", "es2020"],
     "module": "commonjs",
     "target": "es5",
     "sourceMap": true,

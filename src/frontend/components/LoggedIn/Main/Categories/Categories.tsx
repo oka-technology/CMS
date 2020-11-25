@@ -1,9 +1,5 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-import { Fragment, useEffect } from 'react';
-
+import { useEffect } from 'react';
 import CategoriesTable from './CategoriesTable';
-
 import Title from '../../../../template/Title';
 import Button from '../../../../template/Button';
 import {
@@ -11,47 +7,32 @@ import {
   categoriesPage,
 } from '../../../../data/pages';
 import { Table, THead, TRow, TH } from '../../../../template/Table';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-type CategoriesProps = {
+interface CategoriesProps {
   windowHeight: number;
-};
+}
 
-const columnWidthPropotions = ['20%', '60%', '20%'];
+const columnWidthPropotions = ['20%', '60%', '20%'] as const;
 
 const Categories = ({ windowHeight }: CategoriesProps): JSX.Element => {
   useEffect(() => {
     document.title = categoriesPage.pageName;
   }, []);
   return (
-    <Fragment>
-      <div
-        css={css`
-          display: flex;
-          align-items: center;
-        `}
-      >
-        <Title
-          value={categoriesPage.pageName}
-          additionalStyle={css`
-            float: left;
-          `}
-        />
-        <Button
-          as="routerLink"
-          to={newCategoryRegistrationPage.path}
-          value="New Registration"
-          additionalStyle={css`
-            background-color: #e87c00;
-            width: 15rem;
-            margin: 0 0 0 auto;
-          `}
-        />
-      </div>
+    <>
+      <TitleWrapper>
+        <StyledTitle value={categoriesPage.pageName} />
+        <Link to={newCategoryRegistrationPage.path}>
+          <StyledButton>New Registration</StyledButton>
+        </Link>
+      </TitleWrapper>
       <Table>
         <THead>
           <TRow>
-            <TH width={columnWidthPropotions[0]}>ID</TH>
-            <TH width={columnWidthPropotions[1]}>Title</TH>
+            <StyledTH width={columnWidthPropotions[0]}>ID</StyledTH>
+            <StyledTH width={columnWidthPropotions[1]}>Title</StyledTH>
           </TRow>
         </THead>
         <CategoriesTable
@@ -59,8 +40,31 @@ const Categories = ({ windowHeight }: CategoriesProps): JSX.Element => {
           columnWidthPropotions={columnWidthPropotions}
         />
       </Table>
-    </Fragment>
+    </>
   );
 };
 
 export default Categories;
+
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const StyledTitle = styled(Title)`
+  float: left;
+`;
+
+const StyledButton = styled(Button)`
+  background-color: #e87c00;
+  width: 15rem;
+  margin: 0 0 auto;
+`;
+
+interface StyledTHProps {
+  width: `${number}%`;
+}
+
+const StyledTH = styled(TH)<StyledTHProps>`
+  width: ${({ width }) => width};
+`;

@@ -1,7 +1,6 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import styled from 'styled-components';
 
-const MAX_BYTES: number = 2240;
+const MAX_BYTES = 2240;
 
 const colorBP = {
   r: [0, 50, 255, 255],
@@ -44,20 +43,16 @@ const color = (bytes: number) => {
   }
 };
 
-const barStyle = (bytes: number) => css`
-  background-color: ${color(bytes)};
+interface BarProps {
+  bytes: number;
+}
+
+const Bar = styled.div<BarProps>`
+  background-color: ${({ bytes }) => color(bytes)};
   height: 0.3rem;
   margin-top: 1.5rem;
   max-width: 100%;
-  width: ${(100 * bytes) / MAX_BYTES}%;
+  width: ${({ bytes }) => (100 * bytes) / MAX_BYTES}%;
 `;
 
-type CapacityBarProps = {
-  bytes: number;
-};
-
-const CapacityBar = ({ bytes: bytes }: CapacityBarProps): JSX.Element => {
-  return <div css={barStyle(bytes)}></div>;
-};
-
-export default CapacityBar;
+export default Bar;

@@ -1,8 +1,6 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
-import { ReactNode } from 'react';
+import styled from 'styled-components';
 
-const tableStyle = css`
+export const Table = styled.table`
   background-color: white;
   display: block;
   margin: 0 auto;
@@ -10,7 +8,7 @@ const tableStyle = css`
   width: 100%;
 `;
 
-const theadStyle = css`
+export const THead = styled.thead`
   border-top: 3px solid #aaa;
   border-bottom: 3px solid #aaa;
   display: block;
@@ -19,15 +17,14 @@ const theadStyle = css`
   width: 100%;
 `;
 
-const tbodyStyle = (additionalStyle: ReturnType<typeof css>) => css`
+export const TBody = styled.tbody`
   display: block;
   font-size: 1.6rem;
   overflow: scroll;
   width: 100%;
-  ${additionalStyle}
 `;
 
-const trStyle = css`
+export const TRow = styled.tr`
   display: block;
   height: 6rem;
   line-height: 2rem;
@@ -42,74 +39,17 @@ const trStyle = css`
   }
 `;
 
-const thStyle = (width: string) => css`
+export const TH = styled.th`
   align-items: center;
   display: inline-flex;
   height: 100%;
   padding: 0 0 0 1.5rem;
   text-align: left;
-  width: ${width};
 `;
 
-const tdStyle = (width: string) => css`
+export const TD = styled.td`
   align-items: center;
   display: inline-flex;
   height: 100%;
   padding-left: 1.5rem;
-  width: ${width};
 `;
-
-type TableProps = {
-  children: ReactNode;
-};
-
-type THeadProps = {
-  children: ReactNode;
-};
-
-type TBodyProps = {
-  children: ReactNode;
-  additionalStyle?: ReturnType<typeof css>;
-};
-
-type TRowProps = {
-  children: ReactNode;
-};
-
-type THProps = {
-  width: string;
-  children: ReactNode;
-};
-
-type TDProps = {
-  children: ReactNode;
-  width: string;
-};
-
-export const Table = ({ children }: TableProps): JSX.Element => {
-  return <table css={tableStyle}>{children}</table>;
-};
-
-export const THead = ({ children }: THeadProps): JSX.Element => {
-  return <thead css={theadStyle}>{children}</thead>;
-};
-
-export const TBody = ({
-  children,
-  additionalStyle,
-}: TBodyProps): JSX.Element => {
-  additionalStyle = additionalStyle ? additionalStyle : css();
-  return <tbody css={tbodyStyle(additionalStyle)}>{children}</tbody>;
-};
-
-export const TRow = ({ children }: TRowProps): JSX.Element => {
-  return <tr css={trStyle}>{children}</tr>;
-};
-
-export const TH = ({ children, width }: THProps): JSX.Element => {
-  return <th css={thStyle(width)}>{children}</th>;
-};
-
-export const TD = ({ children, width }: TDProps): JSX.Element => {
-  return <td css={tdStyle(width)}>{children}</td>;
-};
