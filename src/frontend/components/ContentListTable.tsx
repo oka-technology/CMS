@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, Fragment, VFC } from 'react';
 import { TBody, TRow, TD } from '../template/Table';
 import Button from '../template/Button';
 import { loadContentList, PayloadLoadContentList } from '../data/apiClient';
@@ -6,21 +6,22 @@ import { editContentPage, viewContentPage } from '../data/pages';
 import displayable from '../modules/displayable';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import useWindowHeight from '../layout/useWindowHeight';
 
-type ContentListTableProps = {
-  windowHeight: number;
+interface ContentListTableProps {
   columnWidthPropotions: readonly string[];
   permission: Permission;
-};
+}
 
-const ContentListTable = ({
-  windowHeight,
+const ContentListTable: VFC<ContentListTableProps> = ({
   columnWidthPropotions,
   permission,
-}: ContentListTableProps): JSX.Element => {
+}) => {
   const [contentInfoArray, setContentInfoArray] = useState<
     PayloadLoadContentList[] | null
   >();
+
+  const windowHeight = useWindowHeight();
 
   useEffect(() => {
     let unmounted = false;

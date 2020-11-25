@@ -1,21 +1,22 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, Fragment, VFC } from 'react';
 
 import { TBody, TRow, TD } from '../template/Table';
 import { loadCategories, PayloadLoadCategories } from '../data/apiClient';
 import styled from 'styled-components';
+import useWindowHeight from '../layout/useWindowHeight';
 
-type CategoriesTableProps = {
-  windowHeight: number;
+interface CategoriesTableProps {
   columnWidthPropotions: readonly string[];
-};
+}
 
-const CategoriesTable = ({
-  windowHeight,
+const CategoriesTable: VFC<CategoriesTableProps> = ({
   columnWidthPropotions,
-}: CategoriesTableProps): JSX.Element => {
+}) => {
   const [contentInfoArray, setContentInfoArray] = useState<
     PayloadLoadCategories[] | null
   >();
+
+  const windowHeight = useWindowHeight();
 
   useEffect(() => {
     let unmounted = false;

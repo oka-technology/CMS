@@ -1,21 +1,20 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, Fragment, VFC } from 'react';
 import { TBody, TRow, TD } from '../template/Table';
 import { convertPermissionNumToString } from '../modules/convertPermission';
 import { loadUser, PayloadLoadUser } from '../data/apiClient';
 import styled from 'styled-components';
+import useWindowHeight from '../layout/useWindowHeight';
 
-type UserListProps = {
-  windowHeight: number;
+interface UserListProps {
   columnWidthPropotions: readonly string[];
-};
+}
 
-const UserList = ({
-  windowHeight,
-  columnWidthPropotions,
-}: UserListProps): JSX.Element => {
+const UserList: VFC<UserListProps> = ({ columnWidthPropotions }) => {
   const [userInfoArray, setUserInfoArray] = useState<
     PayloadLoadUser[] | null
   >();
+
+  const windowHeight = useWindowHeight();
 
   useEffect(() => {
     let unmounted = false;

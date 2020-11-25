@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, VFC } from 'react';
 
 import ContentListTable from '../components/ContentListTable';
 
@@ -9,10 +9,9 @@ import { Table, THead, TRow, TH } from '../template/Table';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-type ContentListProps = {
+interface ContentListProps {
   permission: Permission;
-  windowHeight: number;
-};
+}
 
 const columnWidthPropotions = [
   '7%',
@@ -23,10 +22,7 @@ const columnWidthPropotions = [
   '10%',
 ] as const;
 
-const ContentList = ({
-  permission,
-  windowHeight,
-}: ContentListProps): JSX.Element => {
+const ContentList: VFC<ContentListProps> = ({ permission }) => {
   useEffect(() => {
     document.title = contentListPage.pageName;
   }, []);
@@ -53,7 +49,6 @@ const ContentList = ({
           </TRow>
         </THead>
         <ContentListTable
-          windowHeight={windowHeight}
           columnWidthPropotions={columnWidthPropotions}
           permission={permission}
         />

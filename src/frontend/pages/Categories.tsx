@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, VFC } from 'react';
 import CategoriesTable from '../components/CategoriesTable';
 import Title from '../template/Title';
 import Button from '../template/Button';
@@ -7,13 +7,11 @@ import { Table, THead, TRow, TH } from '../template/Table';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-interface CategoriesProps {
-  windowHeight: number;
-}
+interface CategoriesProps {}
 
 const columnWidthPropotions = ['20%', '60%', '20%'] as const;
 
-const Categories = ({ windowHeight }: CategoriesProps): JSX.Element => {
+const Categories: VFC<CategoriesProps> = () => {
   useEffect(() => {
     document.title = categoriesPage.pageName;
   }, []);
@@ -32,10 +30,7 @@ const Categories = ({ windowHeight }: CategoriesProps): JSX.Element => {
             <StyledTH width={columnWidthPropotions[1]}>Title</StyledTH>
           </TRow>
         </THead>
-        <CategoriesTable
-          windowHeight={windowHeight}
-          columnWidthPropotions={columnWidthPropotions}
-        />
+        <CategoriesTable columnWidthPropotions={columnWidthPropotions} />
       </Table>
     </>
   );

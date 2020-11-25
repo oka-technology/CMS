@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, VFC } from 'react';
 
 import Title from '../template/Title';
 import Button from '../template/Button';
@@ -9,13 +9,11 @@ import { newUserRegistrationPage, usersPage } from '../data/pages';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-type UsersProps = {
-  windowHeight: number;
-};
+interface UsersProps {}
 
 const columnWidthPropotions = ['15%', '35%', '50%'] as const;
 
-const Users = ({ windowHeight }: UsersProps): JSX.Element => {
+const Users: VFC<UsersProps> = () => {
   useEffect(() => {
     document.title = usersPage.pageName;
   }, []);
@@ -35,10 +33,7 @@ const Users = ({ windowHeight }: UsersProps): JSX.Element => {
             <StyledTH width={columnWidthPropotions[2]}>Permission</StyledTH>
           </TRow>
         </THead>
-        <UserTable
-          windowHeight={windowHeight}
-          columnWidthPropotions={columnWidthPropotions}
-        />
+        <UserTable columnWidthPropotions={columnWidthPropotions} />
       </Table>
     </>
   );

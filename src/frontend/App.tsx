@@ -1,12 +1,8 @@
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
-import LoggedIn from './components/Layout';
-import Login from './pages/Login';
 import { convertPermissionNumToObject } from './modules/convertPermission';
-import { TOP_PAGE_PATH, LOGIN_PAGE_PATH } from './data/pages';
 import { checkWhetherLoggedIn } from './data/apiClient';
 import styled, { createGlobalStyle } from 'styled-components';
+import Router from './Router';
 
 const GlobalStyle = createGlobalStyle`
   a {
@@ -43,13 +39,13 @@ const App = (): JSX.Element => {
     viewer: false,
   });
 
-  const onSetLoggedIn = (bool: boolean): void => {
+  const onSetLoggedIn = (bool: boolean) => {
     setLoggedIn(bool);
   };
-  const onSetLoginUser = (name: string): void => {
+  const onSetLoginUser = (name: string) => {
     setLoginUser(name);
   };
-  const onSetPermission = (permission: number): void => {
+  const onSetPermission = (permission: number) => {
     setPermission(convertPermissionNumToObject(permission));
   };
 
@@ -103,41 +99,14 @@ const App = (): JSX.Element => {
     <>
       <GlobalStyle />
       <Wrapper>
-        <BrowserRouter>
-          <Switch>
-            {loggedIn && (
-              <Route
-                path={TOP_PAGE_PATH}
-                render={() => (
-                  <LoggedIn
-                    loginUser={loginUser}
-                    permission={permission}
-                    onSetLoggedIn={onSetLoggedIn}
-                    onSetLoginUser={onSetLoginUser}
-                    onSetPermission={onSetPermission}
-                  />
-                )}
-              />
-            )}
-            <Route
-              exact
-              path={LOGIN_PAGE_PATH}
-              render={() => (
-                <Login
-                  loggedIn={loggedIn}
-                  onSetLoggedIn={onSetLoggedIn}
-                  onSetLoginUser={onSetLoginUser}
-                  onSetPermission={onSetPermission}
-                />
-              )}
-            />
-            {loggedIn ? (
-              <Redirect to={TOP_PAGE_PATH} />
-            ) : (
-              <Redirect to={LOGIN_PAGE_PATH} />
-            )}
-          </Switch>
-        </BrowserRouter>
+        <Router
+          loggedIn={loggedIn}
+          loginUser={loginUser}
+          onSetLoggedIn={onSetLoggedIn}
+          onSetLoginUser={onSetLoginUser}
+          onSetPermission={onSetPermission}
+          permission={permission}
+        />
       </Wrapper>
     </>
   );
