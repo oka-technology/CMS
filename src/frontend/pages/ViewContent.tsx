@@ -1,18 +1,16 @@
-import { match } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, VFC } from 'react';
 
-import Title from '../../../../template/Title';
-import { loadContent } from '../../../../data/apiClient';
+import Title from '../template/Title';
+import { loadContent } from '../data/apiClient';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 
-type ViewContentProps = {
-  match: match<{ id: string }>;
-};
+interface ViewContentProps {}
 
-const ViewContent = ({ match }: ViewContentProps): JSX.Element => {
+const ViewContent: VFC<ViewContentProps> = () => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
-  const { id } = match.params;
+  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     document.title = title;

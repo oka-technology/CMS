@@ -3,14 +3,14 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './Header';
 import Footer from './Footer';
-import Sidebar from './Sidebar/Sidebar';
-import Users from './Main/Users/Users';
-import NewUserRegistration from './Main/NewUserRegistration/NewUserRegistration';
-import ContentList from './Main/ContentList/ContentList';
-import NewCategoryRegistration from './Main/NewCategoryRegistration/NewCategoryRegistration';
-import Categories from './Main/Categories/Categories';
-import ContentRegistration from './Main/ContentRegistration/ContentRegistration';
-import ViewContent from './Main/ViewContent/ViewContent';
+import Sidebar from './Sidebar';
+import Users from '../pages/Users';
+import NewUserRegistration from '../pages/NewUserRegistration';
+import ContentList from '../pages/ContentList';
+import NewCategoryRegistration from '../pages/NewCategoryRegistration';
+import Categories from '../pages/Categories';
+import ContentRegistration from '../pages/ContentRegistration';
+import ViewContent from '../pages/ViewContent';
 
 import {
   usersPage,
@@ -22,8 +22,8 @@ import {
   viewContentPage,
   editContentPage,
   TOP_PAGE_PATH,
-} from '../../data/pages';
-import displayable from '../../modules/displayable';
+} from '../data/pages';
+import displayable from '../modules/displayable';
 import styled from 'styled-components';
 
 interface LoggedInProps {
@@ -97,16 +97,14 @@ const LoggedIn = ({
               <Route
                 exact
                 path={viewContentPage.path}
-                render={({ match }) => <ViewContent match={match} />}
+                render={() => <ViewContent />}
               />
             )}
             {displayable(editContentPage, permission) && (
               <Route
                 exact
                 path={editContentPage.path}
-                render={({ match }) => (
-                  <ContentRegistration mode="edit" match={match} />
-                )}
+                render={() => <ContentRegistration mode="edit" />}
               />
             )}
             {displayable(newContentRegistrationPage, permission) && (

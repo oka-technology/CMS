@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-import LoggedIn from './components/LoggedIn/LoggedIn';
-import Login from './components/Login';
+import LoggedIn from './components/Layout';
+import Login from './pages/Login';
 import { convertPermissionNumToObject } from './modules/convertPermission';
 import { TOP_PAGE_PATH, LOGIN_PAGE_PATH } from './data/pages';
 import { checkWhetherLoggedIn } from './data/apiClient';

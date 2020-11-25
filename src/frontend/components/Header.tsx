@@ -1,6 +1,6 @@
-import { convertPermissionObjectToString } from '../../modules/convertPermission';
-import mq from '../../data/mediaQuery';
-import { logout } from '../../data/apiClient';
+import { convertPermissionObjectToString } from '../modules/convertPermission';
+import mq from '../data/mediaQuery';
+import { logout } from '../data/apiClient';
 import styled from 'styled-components';
 
 interface HeaderProps {

@@ -1,12 +1,9 @@
 import { useState, useEffect, Fragment } from 'react';
-import { TBody, TRow, TD } from '../../../../template/Table';
-import Button from '../../../../template/Button';
-import {
-  loadContentList,
-  PayloadLoadContentList,
-} from '../../../../data/apiClient';
-import { editContentPage, viewContentPage } from '../../../../data/pages';
-import displayable from '../../../../modules/displayable';
+import { TBody, TRow, TD } from '../template/Table';
+import Button from '../template/Button';
+import { loadContentList, PayloadLoadContentList } from '../data/apiClient';
+import { editContentPage, viewContentPage } from '../data/pages';
+import displayable from '../modules/displayable';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 

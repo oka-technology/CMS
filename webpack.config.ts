@@ -20,6 +20,7 @@ export default (): Configuration => ({
     new HtmlWebpackPlugin({
       template: 'src/template.html',
       filename: 'index.html',
+      base: '/',
     }),
     new MiniCssExtractPlugin({
       filename: 'baseStyle.css',

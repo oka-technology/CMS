@@ -1,31 +1,23 @@
 import { useState, useEffect, useMemo } from 'react';
-import { match, Prompt } from 'react-router-dom';
+import { Prompt, useParams } from 'react-router-dom';
 
-import Title from '../../../../template/Title';
-import {
-  Label,
-  TextInput,
-  FormSelect,
-  TextArea,
-} from '../../../../template/Form';
-import Button from '../../../../template/Button';
-import ErrorMessage from '../../../../template/ErrorMessage';
-import {
-  newContentRegistrationPage,
-  editContentPage,
-} from '../../../../data/pages';
+import Title from '../template/Title';
+import { Label, TextInput, FormSelect, TextArea } from '../template/Form';
+import Button from '../template/Button';
+import ErrorMessage from '../template/ErrorMessage';
+import { newContentRegistrationPage, editContentPage } from '../data/pages';
 import {
   registerContent,
   loadCategories,
   loadContent,
   editContent,
-} from '../../../../data/apiClient';
-import bytesOf from '../../../../modules/bytesOf';
-import CapacityBar from '../../../../template/CapacityBar';
-import SuccessMessage from '../../../../template/SuccessMessage';
-import sameObj from '../../../../modules/sameObj';
+} from '../data/apiClient';
+import bytesOf from '../modules/bytesOf';
+import CapacityBar from '../template/CapacityBar';
+import SuccessMessage from '../template/SuccessMessage';
+import sameObj from '../modules/sameObj';
 import styled from 'styled-components';
-import SubmitButtonInner from '../../../../template/SubmitButtonInner';
+import SubmitButtonInner from '../template/SubmitButtonInner';
 
 const MESSAGE_WHEN_UNSAVED =
   "You haven't save. Are you sure you want to leave this page?";
@@ -42,12 +34,10 @@ type OptionItem = {
 };
 
 type NewContentRegistrationProps = {
-  match?: match<{ id: string }>;
   mode: 'newRegistration' | 'edit';
 };
 
 const ContentRegistration = ({
-  match,
   mode,
 }: NewContentRegistrationProps): JSX.Element => {
   const [currContent, setCurrContent] = useState<ContentInfo>({
@@ -67,6 +57,8 @@ const ContentRegistration = ({
   const [notFound, setNotFound] = useState<boolean>(false);
   const [isLoadingEditor, setIsLoadingEditor] = useState<boolean>(true);
   const [updated, setUpdated] = useState<boolean>(false);
+
+  const { id } = useParams<{ id?: string }>();
 
   const isBlocking = useMemo(() => {
     return !sameObj(currContent, prevContent);
@@ -100,8 +92,7 @@ const ContentRegistration = ({
 
   const onUpdateContent = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    if (!match) return;
-    const { id } = match.params;
+    if (id === undefined) return;
     setSuccess(true);
     setUpdated(false);
     const data = await editContent({
@@ -167,10 +158,9 @@ const ContentRegistration = ({
     setCurrContent({ category: '0', title: '', content: '' });
     setPrevContent({ category: '0', title: '', content: '' });
     setUpdated(false);
-    if (mode === 'newRegistration' || !match) return;
-    const { id } = match.params;
+    if (mode === 'newRegistration' || id === undefined) return;
     void (async () => {
-      const contentData = await loadContent({ id: id });
+      const contentData = await loadContent({ id });
       if (unmounted) return;
       if (contentData === null) {
         setNotFound(true);
@@ -183,7 +173,7 @@ const ContentRegistration = ({
     return () => {
       unmounted = true;
     };
-  }, [match, mode]);
+  }, [id, mode]);
 
   const SelectCategory = (
     <>

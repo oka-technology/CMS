@@ -1,17 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import Title from '../../../../template/Title';
-import { Label, TextInput } from '../../../../template/Form';
-import Button from '../../../../template/Button';
-import ErrorMessage from '../../../../template/ErrorMessage';
-import {
-  TOP_PAGE_PATH,
-  newCategoryRegistrationPage,
-} from '../../../../data/pages';
-import { registerCategory } from '../../../../data/apiClient';
+import Title from '../template/Title';
+import { Label, TextInput } from '../template/Form';
+import Button from '../template/Button';
+import ErrorMessage from '../template/ErrorMessage';
+import { TOP_PAGE_PATH, newCategoryRegistrationPage } from '../data/pages';
+import { registerCategory } from '../data/apiClient';
 import styled from 'styled-components';
-import SubmitButtonInner from '../../../../template/SubmitButtonInner';
+import SubmitButtonInner from '../template/SubmitButtonInner';
 
 type AddUserProps = {
   permission: Permission;

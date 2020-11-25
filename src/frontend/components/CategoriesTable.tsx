@@ -1,10 +1,7 @@
 import { useState, useEffect, Fragment } from 'react';
 
-import { TBody, TRow, TD } from '../../../../template/Table';
-import {
-  loadCategories,
-  PayloadLoadCategories,
-} from '../../../../data/apiClient';
+import { TBody, TRow, TD } from '../template/Table';
+import { loadCategories, PayloadLoadCategories } from '../data/apiClient';
 import styled from 'styled-components';
 
 type CategoriesTableProps = {

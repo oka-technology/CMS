@@ -1,7 +1,7 @@
 import { useState, useEffect, Fragment } from 'react';
-import { TBody, TRow, TD } from '../../../../template/Table';
-import { convertPermissionNumToString } from '../../../../modules/convertPermission';
-import { loadUser, PayloadLoadUser } from '../../../../data/apiClient';
+import { TBody, TRow, TD } from '../template/Table';
+import { convertPermissionNumToString } from '../modules/convertPermission';
+import { loadUser, PayloadLoadUser } from '../data/apiClient';
 import styled from 'styled-components';
 
 type UserListProps = {

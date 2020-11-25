@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { arrayOfPagesInSidebar } from '../../../data/pages';
-import displayable from '../../../modules/displayable';
+import { arrayOfPagesInSidebar } from '../data/pages';
+import displayable from '../modules/displayable';
 
 type SideBarItemProps = {
   permission: Permission;

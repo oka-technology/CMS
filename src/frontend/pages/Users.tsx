@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 
-import Title from '../../../../template/Title';
-import Button from '../../../../template/Button';
-import { Table, THead, TRow, TH } from '../../../../template/Table';
-import UserTable from './UsersTable';
+import Title from '../template/Title';
+import Button from '../template/Button';
+import { Table, THead, TRow, TH } from '../template/Table';
+import UserTable from '../components/UsersTable';
 
-import { newUserRegistrationPage, usersPage } from '../../../../data/pages';
+import { newUserRegistrationPage, usersPage } from '../data/pages';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 

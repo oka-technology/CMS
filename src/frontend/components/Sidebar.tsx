@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import mq from '../../../data/mediaQuery';
+import mq from '../data/mediaQuery';
 
 import SidebarItem from './SidebarItem';
 

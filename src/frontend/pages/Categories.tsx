@@ -1,12 +1,9 @@
 import { useEffect } from 'react';
-import CategoriesTable from './CategoriesTable';
-import Title from '../../../../template/Title';
-import Button from '../../../../template/Button';
-import {
-  newCategoryRegistrationPage,
-  categoriesPage,
-} from '../../../../data/pages';
-import { Table, THead, TRow, TH } from '../../../../template/Table';
+import CategoriesTable from '../components/CategoriesTable';
+import Title from '../template/Title';
+import Button from '../template/Button';
+import { newCategoryRegistrationPage, categoriesPage } from '../data/pages';
+import { Table, THead, TRow, TH } from '../template/Table';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 

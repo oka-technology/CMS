@@ -18,8 +18,8 @@ const createPageData = (
   };
 };
 
-export const TOP_PAGE_PATH: string = '/home';
-export const LOGIN_PAGE_PATH: string = '/login';
+export const TOP_PAGE_PATH = '/home';
+export const LOGIN_PAGE_PATH = '/login';
 export const usersPage: PageData = createPageData(
   'Users',
   `${TOP_PAGE_PATH}/`,

@@ -1,13 +1,13 @@
 import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 
-import Title from '../../../../template/Title';
-import { Label, TextInput, CheckBox } from '../../../../template/Form';
-import Button from '../../../../template/Button';
-import ErrorMessage from '../../../../template/ErrorMessage';
-import { newUserRegistrationPage } from '../../../../data/pages';
-import { registerUser } from '../../../../data/apiClient';
+import Title from '../template/Title';
+import { Label, TextInput, CheckBox } from '../template/Form';
+import Button from '../template/Button';
+import ErrorMessage from '../template/ErrorMessage';
+import { newUserRegistrationPage } from '../data/pages';
+import { registerUser } from '../data/apiClient';
 import styled from 'styled-components';
-import SubmitButtonInner from '../../../../template/SubmitButtonInner';
+import SubmitButtonInner from '../template/SubmitButtonInner';
 
 type PermissionCheckBoxProps = {
   permissionName: string;
