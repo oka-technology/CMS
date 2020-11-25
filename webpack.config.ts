@@ -1,6 +1,8 @@
 import path from 'path';
 import { Configuration } from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const __DEV__: boolean = process.env.NODE_ENV !== 'production';
 
@@ -9,61 +11,63 @@ export default (): Configuration => ({
   optimization: {
     minimizer: [new TerserPlugin({})],
   },
-  entry: path.resolve(__dirname, 'src/tsx/index.tsx'),
+  entry: path.resolve(__dirname, 'src/frontend/index.tsx'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'src/template.html',
+      filename: 'index.html',
+      base: '/',
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'baseStyle.css',
+    }),
+  ],
+  cache: {
+    type: 'filesystem',
+    buildDependencies: {
+      config: [__filename],
+    },
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/i,
         exclude: /node_modules/,
-        use: ['ts-loader'],
-      },
-      {
-        test: /\.html$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-            },
-          },
-          'extract-loader',
-          'html-loader',
-        ],
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+        },
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.php$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'api/',
-            },
-          },
-        ],
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: 'api/',
+        },
       },
       {
         test: /\.htaccess$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name]',
-            },
-          },
-        ],
+        loader: 'file-loader',
+        options: {
+          name: '[name]',
+        },
       },
     ],
   },
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, 'dist'),
+    port: 8000,
   },
 });
