@@ -16,7 +16,7 @@ docker-compose up -d
 npm run build:dev
 ```
 
-Visit http://localhost:8080 on your browser.
+Visit <http://localhost:8080> on your browser.
 When to stop development, execute below
 
 ```sh
