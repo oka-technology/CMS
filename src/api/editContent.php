@@ -1,13 +1,15 @@
 <?php
   require_once('convertPermission.php'); 
   session_save_path('/var/www/html/session'); 
+  /**
+   * $_POST = {
+   *   id: string,
+   *   category: string,
+   *   title: string,
+   *   content: string,
+   * }
+  */ 
   $_POST = json_decode(file_get_contents('php://input'), true);
-  // $_POST = {
-  //   id: string,
-  //   category: string,
-  //   title: string,
-  //   content: string,
-  // }
   session_start();
   if (convertPermission($_SESSION['permission'])[1] != 1) {
     $result['success'] = false;

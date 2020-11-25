@@ -17,6 +17,7 @@ const createApi = <T extends Record<string, any>, U>(
         await fetch(endpoint.toString(), {
           method: method,
           body: method === 'POST' ? JSON.stringify(params) : undefined,
+          mode: 'no-cors',
         })
       ).json()) as U;
     } catch (error) {

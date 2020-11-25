@@ -22,12 +22,12 @@ const Categories = ({ windowHeight }: CategoriesProps): JSX.Element => {
   }, []);
   return (
     <>
-      <TitleWrapper>
+      <Head>
         <StyledTitle value={categoriesPage.pageName} />
         <Link to={newCategoryRegistrationPage.path}>
           <StyledButton>New Registration</StyledButton>
         </Link>
-      </TitleWrapper>
+      </Head>
       <Table>
         <THead>
           <TRow>
@@ -46,9 +46,10 @@ const Categories = ({ windowHeight }: CategoriesProps): JSX.Element => {
 
 export default Categories;
 
-const TitleWrapper = styled.div`
+const Head = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const StyledTitle = styled(Title)`

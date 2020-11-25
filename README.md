@@ -6,17 +6,22 @@ This was originally created as submission of assignment for my university. I had
 
 ## How to use
 
-After installing Node.js
+After installing Node.js and Docker,
 
 - If you want to develop, execute below
 
 ```sh
 npm i
+docker-compose up -d
 npm run build:dev
-docker-compose up
 ```
 
-Visit `localhost:8080` on your browser.
+Visit http://localhost:8080 on your browser.
+When to stop development, execute below
+
+```sh
+docker-compose down
+```
 
 - Or if you want to export production files, execute below
 

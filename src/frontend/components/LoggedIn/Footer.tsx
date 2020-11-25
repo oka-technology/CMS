@@ -1,10 +1,12 @@
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 const Footer = (): JSX.Element => {
+  const date = useMemo(() => new Date(), []);
   return (
     <Wrapper>
       <Text>
-        <small>&copy; 2019 OKA TECHNOLOGY</small>
+        <small>&copy; {date.getFullYear()} OKA TECHNOLOGY</small>
       </Text>
     </Wrapper>
   );

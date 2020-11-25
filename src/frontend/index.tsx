@@ -2,7 +2,6 @@ import ReactDOM from 'react-dom';
 
 import App from './App';
 
-import '../.htaccess';
 import '../api/loginProcess.php';
 import '../api/checkWhetherLoggedIn.php';
 import '../api/logoutProcess.php';

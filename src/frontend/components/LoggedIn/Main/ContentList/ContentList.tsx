@@ -36,14 +36,14 @@ const ContentList = ({
 
   return (
     <>
-      <NewRegistrationWrapper>
+      <Head>
         <Title value={contentListPage.pageName} />
         {permission.editor ? (
           <Link to={newContentRegistrationPage.path}>
             <RegisterButton>New Registration</RegisterButton>
           </Link>
         ) : null}
-      </NewRegistrationWrapper>
+      </Head>
       <Table>
         <THead>
           <TRow>
@@ -67,9 +67,10 @@ const ContentList = ({
 
 export default ContentList;
 
-const NewRegistrationWrapper = styled.div`
+const Head = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const RegisterButton = styled(Button)`

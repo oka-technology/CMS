@@ -25,6 +25,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 62.5%;
     overflow: auto;
     height: 100%;
+    letter-spacing: 0.5;
   }
   * {
     flex-shrink: 0;
@@ -53,7 +54,9 @@ const App = (): JSX.Element => {
   };
 
   useEffect(() => {
-    void fetch('./api/sessionConfiguration.php');
+    void fetch('http://localhost:8080/api/sessionConfiguration.php', {
+      mode: 'no-cors',
+    });
   }, []);
 
   useEffect(() => {
@@ -63,6 +66,7 @@ const App = (): JSX.Element => {
       if (unmounted) return;
       if (!data) {
         setHasError(true);
+        setIsLoading(false);
         return;
       }
       setLoggedIn(data.loggedIn);
@@ -89,7 +93,7 @@ const App = (): JSX.Element => {
     return (
       <Wrapper>
         <LoadingWrapper>
-          <ErrorMessage>Eroor</ErrorMessage>
+          <ErrorMessage>Error</ErrorMessage>
         </LoadingWrapper>
       </Wrapper>
     );
